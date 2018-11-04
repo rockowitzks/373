@@ -5,21 +5,27 @@ public abstract class Company {
 	private String name;
 	private double rating;
 
+	// pre: nothing
+	// post: sets the name to empty and rating to 1 
 	public Company() {
 		this.name = "";
 		this.setRating(1);
 	}
 	
-	// pre: 
-	// post: 
+	// pre: nothing
+	// post: returns this object's name
 	public String getName() {
 		return this.name;
 	}
 
+	// pre: nothing
+	// post: returns this object's rating
 	public double getRating() {
 		return this.rating;
 	}
 
+	// pre: a String name
+	// post: sets the field name to the parameter name
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -35,10 +41,9 @@ public abstract class Company {
 		System.out.println("Not a valid number");
 	}
 
-	public double calculatePrice() {
-		int price = 0;
-		return price;
-	}
+	// pre: nothing 
+	// post: caclulates price
+	public abstract double calculatePrice();
 
 	
 }
