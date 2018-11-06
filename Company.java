@@ -4,12 +4,26 @@ package reservables;
 public abstract class Company {
 	private String name;
 	private double rating;
-
+	private double multiplier;
+	private double price;
+	protected enum comapanies {};
+	
 	// pre: nothing
 	// post: sets the name to empty and rating to 1 
 	public Company() {
 		this.name = "";
-		this.setRating(1);
+		this.rating = 0;
+		this.multiplier = 0;
+		this.price = 0;
+	}
+	
+	// pre: the parameters that correspond to field lists
+	// post sets the fields to the corresponding parameters
+	public Company(String name, double rating, double multiplier, double price) {
+		this.setName(name);
+		this.setRating(rating);
+		this.setMultiplier(multiplier);
+		this.setPrice(price);
 	}
 	
 	// pre: nothing
@@ -40,9 +54,38 @@ public abstract class Company {
 		}
 		System.out.println("Not a valid number");
 	}
+	
+	
 
+	// pre: nothing
+	// post: returns the object's multiplier
+	public double getMultiplier() {
+		return this.multiplier;
+	}
+
+	// pre: an int multiplier
+	// post: if the parameter is positive, sets the field multiplier to the parameter multiplier
+	public void setMultiplier(double multiplier) {
+		if(multiplier >= 0) {
+		this.multiplier = multiplier;
+		} else {
+			System.out.println("The multiplier given, " + multiplier + " is negative.");;
+		}
+	}
+
+	// pre: nothing
+	// post: returns price
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	
 	// pre: nothing 
-	// post: caclulates price
+	// post: calculates price
 	public abstract double calculatePrice();
 
 	

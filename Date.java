@@ -13,6 +13,15 @@ public class Date {
 		this.setDay(1);
 		this.setYear(2018);
 	}
+	
+	// pre: parameters that correspond to fields
+	// post: sets fields to corresponding parameters
+	public Date(int day, int month, int year) {
+		this.setDay(day);
+		this.setMonth(month);
+		this.setYear(year);
+	}
+	
 	// pre: nothing
 	// post: returns the object's month
 	public int getMonth() {
