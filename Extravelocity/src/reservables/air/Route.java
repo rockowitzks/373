@@ -1,16 +1,22 @@
 package reservables.air;
+
+import java.util.*;
+import software.*;
+
+
 public class Route {
 	private Airport begin;
-	private ArrayList<> flights;
+	private ArrayList<Flight> flights;
 	private Airport end;
-	private ArrayList<> layoverList;
+	private ArrayList<Layover> layoverList;
 	private int totalTime;
+	private double price;
 
 	public Airport getBegin() {
 		return this.begin;
 	}
 
-	public ArrayList<> getFlights() {
+	public ArrayList<Flight> getFlights() {
 		return this.flights;
 	}
 
@@ -18,7 +24,7 @@ public class Route {
 		return this.end;
 	}
 
-	public ArrayList<> getLayoverList() {
+	public ArrayList<Layover> getLayoverList() {
 		return this.layoverList;
 	}
 
@@ -30,7 +36,7 @@ public class Route {
 		this.begin = begin;
 	}
 
-	public void setFlights(ArrayList<> flights) {
+	public void setFlights(ArrayList<Flight> flights) {
 		this.flights = flights;
 	}
 
@@ -38,7 +44,7 @@ public class Route {
 		this.end = end;
 	}
 
-	public void setLayoverList(ArrayList<> layoverList) {
+	public void setLayoverList(ArrayList<Layover> layoverList) {
 		this.layoverList = layoverList;
 	}
 
@@ -46,7 +52,20 @@ public class Route {
 		this.totalTime = totalTime;
 	}
 
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	
+	public void calculatePrice(Entry entry) {
+		
+	}
+
 	public boolean checkValidity( ) {
+		return false;
 		// TODO should be implemented
 	}
 
