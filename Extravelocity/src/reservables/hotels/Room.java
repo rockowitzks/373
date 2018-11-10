@@ -1,22 +1,20 @@
 package reservables.hotels;
 
+import users.Account;
+
 public class Room {
-	private String type;
-	private double price;
-	private boolean occupado;
+	private double multiplier;
+	private boolean occupied;
 	private int number;
 	private Hotel hotel;
+	private Account guest;
 
-	public String getType() {
-		return this.type;
+	public double getMultiplier() {
+		return this.multiplier;
 	}
-
-	public double getPrice() {
-		return this.price;
-	}
-
-	public boolean getOccupado() {
-		return this.occupado;
+	
+	public boolean getOccupied() {
+		return this.occupied;
 	}
 
 	public int getNumber() {
@@ -27,16 +25,12 @@ public class Room {
 		return this.hotel;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setMultiplier(double multiplier) {
+		this.multiplier = multiplier;
 	}
 
-	public void setPrice(double price) {
-		this.price = price;
-	}
-
-	public void setOccupado(boolean occupado) {
-		this.occupado = occupado;
+	public void setOccupied(boolean occupied) {
+		this.occupied = occupied;
 	}
 
 	public void setNumber(int number) {
@@ -47,7 +41,20 @@ public class Room {
 		this.hotel = hotel;
 	}
 
-	public  Room() {
-		// TODO should be implemented
+	public Room() {
+		multiplier = 0;
+		occupied = false;
+		number = 0;
+		hotel = new Hotel();
+		setGuest(new Account());
 	}
+
+	public Account getGuest() {
+		return guest;
+	}
+
+	public void setGuest(Account guest) {
+		this.guest = guest;
+	}
+	
 }
