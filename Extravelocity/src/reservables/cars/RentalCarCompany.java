@@ -1,21 +1,23 @@
 package reservables.cars;
 
-public class RentalCarCompany extends Company {
-	public ArrayList<> locations;
+import java.util.*;
 
-	public ArrayList<> getLocations() {
+import reservables.*;
+
+public class RentalCarCompany extends Company {
+	public ArrayList<Location> locations;
+
+	public ArrayList<Location> getLocations() {
 		return this.locations;
 	}
 
-	public void setLocations(ArrayList<> locations) {
+	public void setLocations(ArrayList<Location> locations) {
 		this.locations = locations;
 	}
 
 	public  RentalCarCompany() {
-		// TODO should be implemented
+		super();
+		locations = new ArrayList<Location>();
 	}
 
-	public double calculatePrice( ) {
-		// TODO should be implemented
-	}
 }

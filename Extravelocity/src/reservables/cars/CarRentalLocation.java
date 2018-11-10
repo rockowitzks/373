@@ -1,10 +1,13 @@
 package reservables.cars;
 
-public class CarRentalLocation {
-	private ArrayList<> cars;
+import java.util.*;
+import reservables.*;
+
+public class CarRentalLocation extends Location {
+	private ArrayList<Car> cars;
 	private RentalCarCompany company;
 
-	public ArrayList<> getCars() {
+	public ArrayList<Car> getCars() {
 		return this.cars;
 	}
 
@@ -12,7 +15,7 @@ public class CarRentalLocation {
 		return this.company;
 	}
 
-	public void setCars(ArrayList<> cars) {
+	public void setCars(ArrayList<Car> cars) {
 		this.cars = cars;
 	}
 
@@ -20,7 +23,10 @@ public class CarRentalLocation {
 		this.company = company;
 	}
 
-	public  CarRentalLocation() {
-		// TODO should be implemented
+	public CarRentalLocation() {
+		super();
+		cars = new ArrayList<Car>();
+		company = new RentalCarCompany();
 	}
+
 }

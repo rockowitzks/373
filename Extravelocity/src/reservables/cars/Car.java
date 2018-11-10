@@ -1,13 +1,19 @@
 package reservables.cars;
 
+import users.*;
+
+import java.time.LocalDate;
+import java.time.Period;
+
+import software.*;
+
 public class Car {
 	private String make;
 	private String model;
-	private String license plate;
+	private String licensePlate;
 	private boolean isAvailable;
-	private String type;
+	private int carClass;
 	private Account renter;
-	private int price;
 	private double mpg;
 	private double stars;
 	private double miles;
@@ -21,24 +27,20 @@ public class Car {
 		return this.model;
 	}
 
-	public String getLicense plate() {
-		return this.license plate;
+	public String getLicensePlate() {
+		return this.licensePlate;
 	}
 
 	public boolean getIsAvailable() {
 		return this.isAvailable;
 	}
 
-	public String getType() {
-		return this.type;
+	public int getCarClass() {
+		return this.carClass;
 	}
 
 	public Account getRenter() {
 		return this.renter;
-	}
-
-	public int getPrice() {
-		return this.price;
 	}
 
 	public double getMpg() {
@@ -65,25 +67,22 @@ public class Car {
 		this.model = model;
 	}
 
-	public void setLicense plate(String license plate) {
-		this.license plate = license plate;
+	public void setLicensePlate(String licensePlate) {
+		this.licensePlate = licensePlate;
 	}
 
 	public void setIsAvailable(boolean isAvailable) {
 		this.isAvailable = isAvailable;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setCarClass(int carClass) {
+		this.carClass = carClass;
 	}
 
 	public void setRenter(Account renter) {
 		this.renter = renter;
 	}
 
-	public void setPrice(int price) {
-		this.price = price;
-	}
 
 	public void setMpg(double mpg) {
 		this.mpg = mpg;
@@ -100,8 +99,59 @@ public class Car {
 	public void setCarRentalLocation(CarRentalLocation carRentalLocation) {
 		this.carRentalLocation = carRentalLocation;
 	}
-
+	// pre: uninstantiated
+	// post: new car object created, all fields initialized defautly
 	public  Car() {
-		// TODO should be implemented
+		make = "";
+		model = "";
+		licensePlate = "";
+		isAvailable = true;
+		carClass = 0;
+		renter = new Account();
+		mpg = 0;
+		stars = 0;
+		miles = 0;
+		carRentalLocation = new CarRentalLocation();
 	}
+	
+	public Car(String make, String model, String lic, boolean isAvail, int carClass, Account renter, int price, double mpg, double stars, double miles, CarRentalLocation location) {
+		this.make = make;
+		this.model = model;
+		this.licensePlate = lic;
+		this.isAvailable = isAvail;
+		this.carClass = carClass;
+		this.renter = renter;
+		this.mpg = mpg;
+		this.stars = stars;
+		this.miles = miles;
+		this.carRentalLocation = location;
+	}
+	
+	//pre: type Entry, parameter provided
+	//post: calculates the price of the rental car using factors, returns as double
+	public double calculateCarPrice(Entry entry) {
+		
+		LocalDate now = LocalDate.now();
+		LocalDate takeCar = LocalDate.of(entry.getTakeDate().getYear() , entry.getTakeDate().getMonth() , entry.getTakeDate().getDay());
+		LocalDate returnCar = LocalDate.of(entry.getReturnDate().getYear() , entry.getReturnDate().getMonth() , entry.getReturnDate().getDay());
+		Period rentalDuration = Period.between(returnCar, takeCar);
+		Period urgencyFactor = Period.between(takeCar, now);
+		double classMultiplier;
+		if(this.getCarClass() == 3) {
+			classMultiplier = 2.0;
+		}
+		else if(this.getCarClass() == 2) {
+			classMultiplier = 1.5;
+		}
+		else if (this.getCarClass() == 1) {
+			classMultiplier = 1.0;
+		}
+		else {
+			classMultiplier = 0;
+		}
+		double price =  classMultiplier * carRentalLocation.getCompany().getMultiplier() * rentalDuration.getDays() * (1 + (5.0 * Math.exp((double)urgencyFactor.getDays())));
+		return price;
+		
+	}
+
 }
