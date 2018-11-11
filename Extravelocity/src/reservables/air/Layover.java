@@ -1,4 +1,5 @@
 package reservables.air;
+
 public class Layover {
 	private Airport airport;
 	private Flight previous;

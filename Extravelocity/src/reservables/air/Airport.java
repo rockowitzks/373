@@ -1,15 +1,27 @@
 package reservables.air;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.*;
 
-public class Airport {
+
+public class Airport implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Flight> arrivalList;
 	private ArrayList<Flight> departureList;
 	private ArrayList<Airline> airlineList;
-	private double longitude;
-	private double latitude;
+	private ArrayList<Connection> connections;
+	private String longitude;
+	private String latitude;
+//>>>>>>> Stashed changes
 	private String name;
 	private int group;
+	private String city;
 	private double airportMultiplier;
 
 	// pre: nothing
@@ -18,13 +30,14 @@ public class Airport {
 		arrivalList = new ArrayList<Flight>();
 		departureList = new ArrayList<Flight>();
 		airlineList = new ArrayList<Airline>();
+		connections = new ArrayList<Connection>();
 		this.group = 0;
 	}
 	
 	// pre: parameters corresponding to fields
 	// post: sets fields to parameters
 	public Airport(ArrayList<Flight> arrivalList, ArrayList<Flight> departureList, String name,
-			ArrayList<Airline> airlineList, double longitude, double latitude, int group) {
+			ArrayList<Airline> airlineList, String longitude, String latitude, int group) {
 		this.arrivalList = arrivalList;
 		this.departureList = departureList;
 		this.latitude = latitude;
@@ -34,6 +47,21 @@ public class Airport {
 		this.name = name;
 	}
 	
+	//pre: parameters correspond to fields found in file
+	//post: sets fields to parametrs
+	public Airport(String name, String city, String lat, String ln, double multiplier) {
+		arrivalList = new ArrayList<Flight>();
+		departureList = new ArrayList<Flight>();
+		airlineList = new ArrayList<Airline>();
+		connections = new ArrayList<Connection>();
+		this.name = name;
+		this.setCity(city);
+		this.latitude = lat;
+		this.longitude = ln;
+		this.airportMultiplier = multiplier;
+		
+	}
+
 	// pre: nothing
 	// post: returns arrivalList
 	public ArrayList<Flight> getArrivalList() {
@@ -94,25 +122,25 @@ public class Airport {
 	
 	// pre: nothing
 	// post: returns longitude
-	public double getLongitude() {
+	public String getLongitude() {
 		return this.longitude;
 	}
 
 	// pre: a double longitude
 	// post: sets the field longitude to the parameter longitude
-	public void setLongitude(double longitude) {
+	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
 
 	// pre: nothing
 	// post: returns latitude
-	public double getLatitude() {
+	public String getLatitude() {
 		return this.latitude;
 	}
 
 	// pre: a double latitude
 	// post: sets the field latitude to the parameter latitude
-	public void setLatitude(double latitude) {
+	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
 
@@ -132,6 +160,14 @@ public class Airport {
 	// post:sets the field group to the parameter group
 	public void setGroup(int group) {
 		this.group = group;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 	// pre: a flight arrival
@@ -155,4 +191,13 @@ public class Airport {
 		System.out.println("Error: airline " + airline.getName() + " already exists in " + this.getName() 
 		+ ".");
 	}
+	public void addConnection(Connection cn) {
+		this.connections.add(cn);
+	}
+	
+	public void airportOut(FileOutputStream out) throws IOException {
+		ObjectOutputStream objOut = new ObjectOutputStream(out);
+		objOut.writeObject(this);
+	}
+
 }

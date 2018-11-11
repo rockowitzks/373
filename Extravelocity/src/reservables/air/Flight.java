@@ -1,11 +1,16 @@
 package reservables.air;
 
 import java.util.*;
+import java.io.Serializable;
 import java.time.*;
 
 import software.*;
 
-public class Flight {
+public class Flight implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 495014402600898777L;
 	private String flightNumber;
 	private Airline airline;
 	private Aircraft aircraft;

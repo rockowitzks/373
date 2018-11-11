@@ -1,9 +1,0 @@
-/**
- * 
- */
-/**
- * @author rocko
- *
- */
-module Extravelocity {
-}
