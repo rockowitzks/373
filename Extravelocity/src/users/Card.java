@@ -1,61 +1,77 @@
+package users;
+
+
 
 public class Card {
 	private String type;
-	private double multiplier;
-	private int securityCode;
-	private int cardNumber;
-	private Date expirationDate;
-	private String company;
+	private double bankMultiplier;
+	private String securityCode;
+	private String cardNumber;
+	private String expirationDate;
+	private String bank;
 
 	public String getType() {
 		return this.type;
 	}
 
-	public double getMultiplier() {
-		return this.multiplier;
+	public double getBankMultiplier() {
+		return this.bankMultiplier;
 	}
 
-	public int getSecurityCode() {
+	public String getSecurityCode() {
 		return this.securityCode;
 	}
 
-	public int getCardNumber() {
+	public String getCardNumber() {
 		return this.cardNumber;
 	}
 
-	public Date getExpirationDate() {
+	public String getExpirationDate() {
 		return this.expirationDate;
 	}
 
-	public String getCompany() {
-		return this.company;
+	public String getBank() {
+		return this.bank;
 	}
 
 	public void setType(String type) {
 		this.type = type;
 	}
 
-	public void setMultiplier(double multiplier) {
-		this.multiplier = multiplier;
+	public void setBankMultiplier(double multiplier) {
+		this.bankMultiplier = multiplier;
 	}
 
-	public void setSecurityCode(int securityCode) {
+	public void setSecurityCode(String securityCode) {
 		this.securityCode = securityCode;
 	}
 
-	public void setCardNumber(int cardNumber) {
+	public void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber;
 	}
 
-	public void setExpirationDate(Date expirationDate) {
+	public void setExpirationDate(String expirationDate) {
 		this.expirationDate = expirationDate;
 	}
 
-	public void setCompany(String company) {
-		this.company = company;
+	public void setBank(String bank) {
+		this.bank = bank;
 	}
 
 	public  Card() {
-		// TODO should be implemented
+		type = null;
+		bankMultiplier = 0;
+		securityCode = null;
+		cardNumber = null;
+		expirationDate = null;
+		bank = null;
+	}
+	
+	public Card(String type, double bankMultiplier, String securityCode, String cardNumber, String expirationDate) {
+		this.type = type;
+		this.bankMultiplier = bankMultiplier;
+		this.securityCode = securityCode;
+		this.cardNumber = cardNumber;
+		this.expirationDate = expirationDate;
 	}
 }

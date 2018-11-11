@@ -1,5 +1,9 @@
 package users;
 
+import reservables.air.Route;
+import reservables.cars.Car;
+import reservables.hotels.Hotel;
+
 public class Reservation {
 	private Account account;
 	private Route departingRoute;
@@ -48,6 +52,18 @@ public class Reservation {
 	}
 
 	public  Reservation() {
-		// TODO should be implemented
+		account = new Account();
+		departingRoute = new Route();
+		returningRoute = new Route();
+		car = new Car();
+		hotel = new Hotel();
+	}
+	
+	public Reservation(Account account, Route departingRoute, Route returningRoute, Car car, Hotel hotel) {
+		this.account = account;
+		this.departingRoute = departingRoute;
+		this.returningRoute = returningRoute;
+		this.car = car;
+		this.hotel = hotel;
 	}
 }

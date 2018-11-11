@@ -1,10 +1,19 @@
+package users;
+
+import java.util.ArrayList;
+
+import reservables.air.*;
+import reservables.cars.*;
+import reservables.hotels.*;
+import software.*;
+
 
 public class Account {
 	private String name;
 	private String email;
 	private String accountName;
 	private String password;
-	private ArrayList<> reservations;
+	private ArrayList<Reservation> reservations;
 	private Website website;
 
 	public String getName() {
@@ -23,7 +32,7 @@ public class Account {
 		return this.password;
 	}
 
-	public ArrayList<> getReservations() {
+	public ArrayList<Reservation> getReservations() {
 		return this.reservations;
 	}
 
@@ -47,7 +56,7 @@ public class Account {
 		this.password = password;
 	}
 
-	public void setReservations(ArrayList<> reservations) {
+	public void setReservations(ArrayList<Reservation> reservations) {
 		this.reservations = reservations;
 	}
 
@@ -55,31 +64,50 @@ public class Account {
 		this.website = website;
 	}
 
-	public  Account() {
-		// TODO should be implemented
+	public Account() {
+		name = null;
+		email = null;
+		accountName = null;
+		password = null;
+		reservations = new ArrayList<Reservation>();
+
+	}
+	
+	public Account(String name, String email, String accountName, String password) {
+		this.name = name;
+		this.email = email;
+		this.accountName = accountName;
+		this.password = password;
+		this.reservations = new ArrayList<Reservation>();
+
 	}
 
 	public void createReservation( ) {
 		// TODO should be implemented
 	}
 
-	public Hotel selectHotel( ) {
+	public Hotel selectHotel() {
+		return null;
 		// TODO should be implemented
 	}
 
 	public Car selectCar( ) {
+		return null;
 		// TODO should be implemented
 	}
 
 	public Route selectDepart( ) {
+		return null;
 		// TODO should be implemented
 	}
 
 	public Route selectReturn( ) {
+		return null;
 		// TODO should be implemented
 	}
 
 	public boolean confirmReservation( ) {
+		return false;
 		// TODO should be implemented
 	}
 }
