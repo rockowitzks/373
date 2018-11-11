@@ -7,12 +7,12 @@ import reservables.cars.*;
 import reservables.hotels.*;
 import software.*;
 
-// TO DO FOR SUNDAY: add print methods for Website's arrayList, 
 public class Account {
 	private String name;
 	private String email;
 	private String accountName;
 	private String password;
+	private Card card;
 	private ArrayList<Reservation> reservations;
 	private Website website;
 
@@ -58,7 +58,18 @@ public class Account {
 	public String getPassword() {
 		return this.password;
 	}
-
+	
+	// pre: nothing
+	// post: returns card
+	public Card getCard() {
+		return this.card;
+	}
+	
+	// pre: a Card card
+	// post: sets the field card to the parameter card
+	public void setCard(Card card) {
+		this.card = card;
+	}
 	// pre: nothing
 	// post: returns reservation
 	public ArrayList<Reservation> getReservations() {
@@ -100,6 +111,13 @@ public class Account {
 	public void setReservations(ArrayList<Reservation> reservations) {
 		this.reservations = reservations;
 	}
+	
+	// pre: a Reservation reservation 
+	// post: adds the reservation to the account's reservation list and set's the reservation's account to this
+	public void AddRerservation(Reservation reservation) {
+		this.getReservations().add(reservation);
+		reservation.setAccount(this);
+	}
 
 	// pre: a Website website
 	// post: sets the field website to the parameter website
@@ -109,8 +127,8 @@ public class Account {
 
 	// pre: 
 	// post:
-	public void createReservation( ) {
-		// TODO should be implemented
+	public void createReservation() {
+		
 	}
 
 	// pre: nothing
@@ -124,35 +142,106 @@ public class Account {
 		
 		Scanner input = new Scanner(System.in);
 		while(true) {
-		System.out.println("Which hotel would you like to select? (Write in the number)");
-		int index = input.nextInt();
-		if(index < 0 || index >= this.getWebsite().getHotelList().size()) {
-			System.out.println("Not a valid number");
-			continue;
+			System.out.println("Which hotel would you like to select? (Write in the number)");
+			int index = input.nextInt();
+			if(index < 0 || index >= this.getWebsite().getHotelList().size()) {
+				System.out.println(index + " is not a valid number because it is negative or greater than the "
+						+ "last index of the hotel list " + (this.website.getHotelList().size() - 1) + ".");
+				continue;
+			}
+			input.close();
+			return this.getWebsite().getHotelList().get(index);
 		}
+	}
+
+	// pre: nothing
+	// post: returns the Car that the user selects
+	public Car selectCar() {
+		if(this.getWebsite().getCarList().isEmpty()) {
+			System.out.println("Error: car list is empty");
+			System.exit(-1);
+			return null;
+		}
+		
+		Scanner input = new Scanner(System.in);
+		while(true) {
+			System.out.println("Which car would you like to select? (Write in the number)");
+			int index = input.nextInt();
+			if(index < 0 || index >= this.getWebsite().getCarList().size()) {
+				System.out.println(index + " is not a valid number because it is negative or greater than the "
+						+ "last index of the car list " + (this.website.getCarList().size() - 1) + ".");
+				continue;
+			}
+			input.close();
+			return this.getWebsite().getCarList().get(index);
+		}
+	}
+
+	// pre: nothing
+	// post: asks the user to select the departing route 
+	public Route selectDepartingRoute() {
+		if(this.getWebsite().getDepartureRouteList().isEmpty()) {
+			System.out.println("Error: departure route list list is empty");
+			System.exit(-1);
+			return null;
+		}
+		
+		Scanner input = new Scanner(System.in);
+		while(true) {
+			System.out.println("Which departing route would you like to select? (Write in the number)");
+			int index = input.nextInt();
+			if(index < 0 || index >= this.getWebsite().getDepartureRouteList().size()) {
+				System.out.println(index + " is not a valid number because it is negative or greater than the "
+						+ "last index of the departing route list " + 
+						(this.website.getDepartureRouteList().size() - 1) + ".");
+				continue;
+			}
+			input.close();
+			return this.getWebsite().getDepartureRouteList().get(index);
+		}
+	}
+
+	// pre: nothing
+	// post: asks the user to select the departing route
+	public Route selectReturningRoute() {
+		if(this.getWebsite().getReturnRouteList().isEmpty()) {
+			System.out.println("Error: return route list list is empty");
+			System.exit(-1);
+			return null;
+		}
+		
+		Scanner input = new Scanner(System.in);
+		while(true) {
+			System.out.println("Which return route would you like to select? (Write in the number)");
+			int index = input.nextInt();
+			if(index < 0 || index >= this.getWebsite().getReturnRouteList().size()) {
+				System.out.println(index + " is not a valid number because it is negative or greater than the "
+						+ "last index of the returning route list " + 
+						(this.website.getReturnRouteList().size() - 1) + ".");
+				continue;
+			}
+			input.close();
+			return this.getWebsite().getReturnRouteList().get(index);
+		}
+	}
+
+	// pre: nothing
+	// post: prints the parameters of reservation, and asks the user to confirm if that is what they desire
+	// if they answer yes, adds it to reservation list and returns true, otherwise returns false
+	public boolean confirmReservation(Reservation reservation) {
+		reservation.printReservation();
+		System.out.println("Is this reservation satisfactory? (Type y or n)");
+		Scanner input = new Scanner(System.in);
 		input.close();
-		return this.getWebsite().getHotelList().get(index);
-	}
-				
-	}
-
-	public Car selectCar( ) {
-		return null;
-		// TODO should be implemented
-	}
-
-	public Route selectDepart( ) {
-		return null;
-		// TODO should be implemented
-	}
-
-	public Route selectReturn( ) {
-		return null;
-		// TODO should be implemented
-	}
-
-	public boolean confirmReservation( ) {
+		String answer = input.nextLine().trim();
+		if(answer.equalsIgnoreCase("y") || answer.equalsIgnoreCase("yes")) {
+			System.out.println("Alright, reservation added");
+			this.AddRerservation(reservation);
+			return true;
+		}
+		
+		System.out.println("Reservation not added. Returning to main menu");
 		return false;
-		// TODO should be implemented
+		
 	}
 }

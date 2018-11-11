@@ -1,7 +1,6 @@
 package reservables.air;
 
 import java.util.*;
-
 import software.*;
 
 
@@ -63,8 +62,10 @@ public class Route {
 		this.totalTime = totalTime;
 	}
 
+	// pre: nothing
+	// post: returns price
 	public double getPrice() {
-		return price;
+		return this.price;
 	}
 
 	public void setPrice(double price) {
@@ -75,12 +76,12 @@ public class Route {
 		
 	}
 
-	public boolean checkValidity( ) {
+	public boolean checkValidity() {
 		return false;
 		// TODO should be implemented
 	}
 
-	public void calcLayover( ) {
+	public void calcLayover() {
 		// TODO should be implemented
 	}
 }

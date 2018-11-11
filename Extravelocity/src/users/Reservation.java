@@ -90,4 +90,10 @@ public class Reservation {
 	public void setHotel(Hotel hotel) {
 		this.hotel = hotel;
 	}
+	
+	// pre: nothing
+	// post: prints the reservation's fields
+	public void printReservation() {
+		// FIXME
+	}
 }

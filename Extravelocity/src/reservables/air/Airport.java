@@ -8,9 +8,9 @@ import java.util.*;
 
 
 public class Airport implements Serializable {
-	/**
-	 * 
-	 */
+	
+	  
+	 
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Flight> arrivalList;
 	private ArrayList<Flight> departureList;
