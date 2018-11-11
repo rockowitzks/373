@@ -216,8 +216,37 @@ public class Website {
 		// TODO should be implemented
 	}
 
-	public void calculateRoutes(Airport destination, Airport departing) {
-		// TODO should be implemented
+	//pre: airports and flights generated, user gives return date and departure dates, return and departure airports.
+	//post: generates list of viable routes for passenger to take
+	public void calculateRoutes(Entry data) {
+		HashMap<String, Airport> routed = new HashMap<String,Airport>();
+		double minDirectPrice = 300000000;
+		double minPrice = 1000000000;
+		double minDuration;
+		ArrayList<Route> possibleRoutes = new ArrayList<Route>();
+		routed.put(data.getDepartureAirport().getName(), data.getDepartureAirport());
+		ArrayList<Route> routes = new ArrayList<Route>();
+		for (int i = 0; i < data.getDepartureAirport().getDepartureList().size(); i++) {
+			//if direct flight has available seats always shown, checks pricing to find minimum price.
+			if (data.getDepartureAirport().getDepartureList().get(i).getArriving().getName() == data.getReturnAirport().getName() 
+			&& !data.getDepartureAirport().getDepartureList().get(i).hasEnoughSeats(data.getPassengers())) {
+				routes.add(new Route(data.getDepartureAirport().getDepartureList().get(i)));
+				if (data.getDepartureAirport().getDepartureList().get(i).calculatePrice(data) < minDirectPrice) {
+					minDirectPrice = data.getDepartureAirport().getDepartureList().get(i).calculatePrice(data);
+				}
+				if (data.getDepartureAirport().getDepartureList().get(i).calculatePrice(data) < minPrice) {
+					minPrice = data.getDepartureAirport().getDepartureList().get(i).calculatePrice(data);
+				}
+			} //if route through airport not already started being built start building, only if price less than default flight.
+			else if (!routed.containsKey(data.getDepartureAirport().getDepartureList().get(i).getArriving().getName() && data.getDepartureAirport().getDepartureList().get(i).hasEnoughSeats(data.getPassengers()) {
+				if (data.getDepartureAirport().getDepartureList().get(i).calculatePrice(data) < minPrice) {
+					possibleRoutes.add(new Route(data.getDepartureAirport().getDepartureList().get(i)));
+					routed.put(data.getDepartureAirport().getDepartureList().get(i).getArriving().getName(), data.getDepartureAirport().getDepartureList().get(i).getArriving());
+				}
+			}
+		}
+		
+		
 	}
 	
 	public void fetchUserData() throws FileNotFoundException {
@@ -236,6 +265,9 @@ public class Website {
 			    }
 			    sc.close();
 	}
+	
+	//pre: files exist to be read from, generate called from driver
+	//post: airportList generated airports have cities, lat and long, connections, and names
 	public void generateAirports( ) throws IOException {
 		int i = 0;
 		String name;
@@ -243,16 +275,10 @@ public class Website {
 		String lat;
 		String line;
 		String ln;
-		double multiplier;
-		//Double mult;
-		
+		double multiplier;		
 		Airport na; 
-		//ArrayList<Airport> airports = new ArrayList<Airport>();
-		//String[] airportNames;// = ("PHX","JFK","LAX","WDC","SEA","POR","DEN","HOU","AUS","SYD","LON",TUC,SDG,SFC,PAR,REY,BER,MOS,STP,CHI,CHA,ATL,MIA,NAS,PHI,BEI,HOK,SAT,BOS,BOI,PRE,KWC,RIY,DFW,JOH,ADB,"CAI","ATH")
-		FileInputStream in = null;
-		FileOutputStream out = null;
-		in = new FileInputStream("Airport_data.txt");
-		out = new FileOutputStream("airport.ser");
+		FileInputStream in = new FileInputStream("Airport_data.txt");
+		FileOutputStream out = new FileOutputStream("airport.ser");
 		Scanner sc = new Scanner(in);
 		while (sc.hasNext()) {
 			name = sc.nextLine();
