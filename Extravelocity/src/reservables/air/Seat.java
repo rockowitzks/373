@@ -78,10 +78,10 @@ public class Seat {
 	// post: if priority is 0,1, or 2, sets the field priority to the parameter priority, else prints an error
 	public void setPriority(int priority) {
 		switch (priority) {
-		case 0: priority = 0; break;
-		case 1: priority = 1; break;
-		case 2: priority = 2; break;
-		default: System.out.println("Error, priority " + priority + " is not 0,1, or 2."); break;
+		case 0: priority = 0; 
+		case 1: priority = 1; 
+		case 2: priority = 2; 
+		default: System.out.println("Error, priority " + priority + " is not 0,1, or 2."); 
 		}
 	}
 	
@@ -90,13 +90,12 @@ public class Seat {
 	public double getSeatMultiplier() {
 		double answer = 0;
 		switch (this.getPriority()) {
-		case 0: answer = 1; break;
-		case 1: answer = 2.2; break;
-		case 2: answer = 5.1; break;
+		case 0: answer = 1; 
+		case 1: answer = 2.2; 
+		case 2: answer = 5.1; 
 		default: answer = 0.1; 
 		System.out.println("Error, somehow priority is " + this.getPriority() + ". Fix this. Ending program."); 
 		System.exit(-1);
-		break;
 		}
 		return answer;
 	}
@@ -106,5 +105,4 @@ public class Seat {
 	public void setFlight(Flight flight) {
 		this.flight = flight;
 	}
-
 }

@@ -10,6 +10,7 @@ public class Airport {
 	double latitude;
 	private String name;
 	private int group;
+	private double airportMultiplier;
 
 	// pre: nothing
 	// post: instantiates the object
@@ -32,6 +33,7 @@ public class Airport {
 		this.group = group;
 		this.name = name;
 	}
+	
 	// pre: nothing
 	// post: returns arrivalList
 	public ArrayList<Flight> getArrivalList() {
@@ -48,6 +50,22 @@ public class Airport {
 	// post: returns name
 	public String getName() {
 		return this.name;
+	}
+	
+	// pre: nothing
+	// post: returns airportMultiplier;
+	public double getAirportMultiplier() {
+		return this.airportMultiplier;
+	}
+
+	// pre: a double airportMultipler
+	// post: sets the field airportMultiplier to the parameter airportMultiplier if the parameter is not greater than 1.4
+	public void setAirportMultiplier(double airportMultiplier) {
+		if(airportMultiplier  <= 1.4 && airportMultiplier > 0) {
+		this.airportMultiplier = airportMultiplier;
+		} else {
+			System.out.println("Error. AirportMultipler is " + airportMultiplier + ". It should be between 0 and 1.4!");
+		}
 	}
 
 	// pre: a String name

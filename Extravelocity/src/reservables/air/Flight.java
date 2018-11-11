@@ -10,13 +10,13 @@ public class Flight {
 	private Airline airline;
 	private Aircraft aircraft;
 	private double capacity;
-	private Airport arriving; // arriving is an airport
-	private Airport departing; // departing is an airport
+	private Airport arriving; 
+	private Airport departing; 
 	private ArrayList<Seat> seats;
-	private int departureTime; // change this to a time object
-	private Date departureDate;
-	private int arrivalTime; // change this to a time object
-	private Date arrivalDate;
+	private int departureTime; 
+	private java.time.LocalDateTime departureDate;
+	private int arrivalTime; 
+	private java.time.LocalDateTime arrivalDate;
 	private double distance;
 	private double price;
 
@@ -39,8 +39,8 @@ public class Flight {
 	// pre: parameters corresponding
 	// post: sets the fields to the corresponding parameters
 	public Flight(String flightNumber, Airline airline, Aircraft aircraft, double capacity, Airport arriving,
-			Airport departing, ArrayList<Seat> seats, int departureTime, Date departureDate,
-			int arrivalTime, Date arrivalDate, double distance, double price) {
+			Airport departing, ArrayList<Seat> seats, int departureTime, java.time.LocalDateTime departureDate,
+			int arrivalTime, java.time.LocalDateTime arrivalDate, double distance, double price) {
 		this.flightNumber = flightNumber;
 		this.airline = airline;
 		this.aircraft = aircraft;
@@ -57,8 +57,8 @@ public class Flight {
 	}
 	
 	// pre: nothing
-	// post: returns true if the seats size equals or exceeds the capacity, false if it is less than capacity, and prints
-	//	and error seats size exceeds capacity
+	// post: returns true if the seats size equals or exceeds the capacity, false if it is less than capacity, 
+	//	and prints an error if seats size exceeds capacity
 	public boolean isFull() {
 		if(this.seats.size() > capacity) {
 			System.out.println("You made a mistake, seats size is " +  this.seats.size() + 
@@ -135,7 +135,7 @@ public class Flight {
 
 	// pre: nothing
 	// post: returns the departure date
-	public Date getDepartureDate() {
+	public java.time.LocalDateTime getDepartureDate() {
 		return this.departureDate;
 	}
 
@@ -147,7 +147,7 @@ public class Flight {
 
 	// pre: nothing
 	// post: returns the arrival date
-	public Date getArrivalDate() {
+	public java.time.LocalDateTime getArrivalDate() {
 		return this.arrivalDate;
 	}
 
@@ -195,7 +195,7 @@ public class Flight {
 
 	// pre: a Date departureDate
 	// post: sets the field departureDate to the parameter departureDate
-	public void setDepartureDate(Date departureDate) {
+	public void setDepartureDate(java.time.LocalDateTime departureDate) {
 		this.departureDate = departureDate;
 	}
 
@@ -207,7 +207,7 @@ public class Flight {
 
 	// pre: a Date arrivalDate
 	// post: sets the field arrivalDate to the parameter arrivalDate
-	public void setArrivalDate(Date arrivalDate) {
+	public void setArrivalDate(java.time.LocalDateTime arrivalDate) {
 		this.arrivalDate = arrivalDate;
 	}
 
@@ -222,17 +222,46 @@ public class Flight {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	
+	// pre: nothing
+	// post: returns the flight duration
+	public Duration getDuration() {
+		return Duration.between(getDepartureDate(), getArrivalDate());		
+	}
 
+	// pre: nothing
+	// post: returns a double that is based on the distance of the flight,
+	//		which acts as a multiplier in price calculation
+	public double getDistancePrice() {
+		if(this.getDistance() > 0 && this.getDistance() < 4500) {
+			return 0.002 * this.getDistance();
+		} else if (this.getDistance() >= 4500 && this.getDistance() < 8000) {
+			return 0.003 * this.getDistance();
+		} else if(this.getDistance() >= 8000) {
+			return 0.0035 * this.getDistance();
+		} else {
+			System.out.println("Error, distance should be greater than 0 but it is " + this.getDistance());
+			return 0;
+		}
+	}
+	
 	// pre: an Entry entry
 	// post: calculates the price of flight
 	public void calculatePrice(Entry entry) {
 		Random r = new Random();
 		double randomNumber = 20 + (30 - 20) * r.nextDouble();
-		double temp = 1.0 / (entry.getDepartureDate().getDay() - LocalDate.now().getDayOfMonth());
-		double answer = entry.getSeatPriority().getPriority() * temp *
-				(this.getDistance() / (20 + this.getAircraft().getFuelEfficiency()) * 
-				1.2 * this.getAirline().getMultiplier()) + randomNumber; // multiply this by date
-		answer = Math.max(80, answer);
+		
+		Period urgencyFactor = Period.between(entry.getDepartureDate(), LocalDate.now());
+		long duration = this.getDuration().toHours();
+		
+		
+		double sum = this.getAirline().getMultiplier() + randomNumber - (0.7 * duration);
+		double product = (1 + Math.exp(-1.0 * urgencyFactor.getDays())) * this.getArriving().getAirportMultiplier()
+				* this.getDeparting().getAirportMultiplier() * entry.getSeatPriority().getPriority()
+				* this.getDistancePrice();
+		
+		double answer = product * sum;
+		answer = Math.max(50, answer);
 		
 		this.setPrice(answer);
 	}
