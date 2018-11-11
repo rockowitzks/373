@@ -135,7 +135,7 @@ public class Entry {
 	}
 	
 	// pre: a LocalDate checkOutDate
-	// post: sets teh field checkOutDate to the parameter checkOutDate
+	// post: sets the field checkOutDate to the parameter checkOutDate
 	public void setCheckOutDate(java.time.LocalDate checkOutDate) {
 		this.checkOutDate = checkOutDate;
 	}

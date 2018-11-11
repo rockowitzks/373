@@ -12,6 +12,16 @@ public class Route {
 	private int totalTime;
 	private double price;
 
+	
+	public Route() {
+		this.begin = null;
+		this.flights = new ArrayList<Flight>();
+		this.end = null;
+		this.layoverList = new ArrayList<Layover>();
+		this.totalTime = 0;
+		this.price = 0;
+	}
+	
 	public Airport getBegin() {
 		return this.begin;
 	}
@@ -70,10 +80,6 @@ public class Route {
 	}
 
 	public void calcLayover( ) {
-		// TODO should be implemented
-	}
-
-	public  Route() {
 		// TODO should be implemented
 	}
 }

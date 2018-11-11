@@ -10,9 +10,9 @@ public class RentalCarCompany extends Company {
 
 	// pre: nothing
 	// post: instantiates the object
-	public  RentalCarCompany() {
+	public RentalCarCompany() {
 		super();
-		locations = new ArrayList<Location>();
+		this.locations = new ArrayList<Location>();
 	}
 	
 	// pre: an ArrayList of Location locations

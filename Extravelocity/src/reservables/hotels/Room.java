@@ -22,7 +22,11 @@ public class Room {
 	// pre: parameters corresponding to fields
 	// post: instantiates the objects with the parameters
 	public Room (double multiplier, boolean occupied, int number, Hotel hotel, Account guest) {
-		
+		this.multiplier = multiplier;
+		this.occupied = occupied;
+		this.number = number;
+		this.hotel = hotel;
+		this.guest = guest;
 	}
 	
 	// pre: nothing

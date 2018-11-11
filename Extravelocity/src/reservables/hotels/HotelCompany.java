@@ -11,7 +11,7 @@ public class HotelCompany extends Company {
 	// post: instantiates the object
 	public HotelCompany() {
 		super();
-		hotels = new ArrayList<Hotel>();
+		this.hotels = new ArrayList<Hotel>();
 	}
 	
 	// pre: parameters corresponding to fields

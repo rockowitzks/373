@@ -14,6 +14,8 @@ public class Layover {
 		this.next = null;
 	}
 	
+	// pre: parameters corresponding to the fields
+	// post: sets the fields to the given parameters
 	public Layover(Airport airport, Flight previous, Flight next, int time) {
 		this.airport = airport;
 		this.previous = previous;
@@ -39,7 +41,7 @@ public class Layover {
 		return this.time;
 	}
 
-	// pre: an Airport airpot
+	// pre: an Airport airport
 	// post: sets the field airport to the parameter airport
 	public void setAirport(Airport airport) {
 		this.airport = airport;

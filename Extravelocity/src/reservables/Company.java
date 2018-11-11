@@ -7,7 +7,6 @@ public class Company {
 	private double multiplier;
 	private int phoneNumber;
 	private String emailAddress;
-	protected enum comapanies {};
 	
 	// pre: nothing
 	// post: sets the name to empty and rating to 1 
@@ -48,7 +47,6 @@ public class Company {
 		this.name = name;
 	}
 
-	
 	// pre: A double rating
 	// post: if the number is between 0 and 5, sets the field rating to the parameter rating,
 	// 		otherwise prints an error message

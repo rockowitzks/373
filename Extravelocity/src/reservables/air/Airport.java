@@ -6,8 +6,8 @@ public class Airport {
 	private ArrayList<Flight> arrivalList;
 	private ArrayList<Flight> departureList;
 	private ArrayList<Airline> airlineList;
-	double longitude;
-	double latitude;
+	private double longitude;
+	private double latitude;
 	private String name;
 	private int group;
 	private double airportMultiplier;

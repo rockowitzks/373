@@ -43,7 +43,6 @@ public class Airline extends Company {
 	// pre: an Airport airport
 	// post: if airport exists in airports, removes it and returns true, else returns false
 	public boolean removeAirport(Airport airport) {
-		boolean remove = this.airports.remove(airport);
-		return remove;
+		return this.airports.remove(airport);
 	}
 }

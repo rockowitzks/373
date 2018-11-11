@@ -53,7 +53,7 @@ public class Location {
 	}
 
 	// pre: a String city
-	// post: sets the field city to the paramter city
+	// post: sets the field city to the parameter city
 	public void setCity(String city) {
 		this.city = city;
 	}

@@ -46,7 +46,4 @@ public class CarRentalLocation extends Location {
 	public void setCompany(RentalCarCompany company) {
 		this.company = company;
 	}
-
-	
-
 }

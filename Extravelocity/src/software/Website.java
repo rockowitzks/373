@@ -21,58 +21,100 @@ public class Website {
 	private Account currentAccount;
 	private HashMap<String, Account> userData;
 
+	
+	// pre: nothing
+	// post: instantiates the object Website
+	public Website() {
+		companyList = new ArrayList<Company>();
+		airportList = new ArrayList<Airport>();
+		returnRouteList = new ArrayList<Route>();
+		departureRouteList = new ArrayList<Route>();
+		hotelList = new ArrayList<Hotel>();
+		carList = new ArrayList<Car>();
+		currentAccount = new Account();
+		userData = new HashMap<String, Account>();
+	}
+	
+	// pre: nothing
+	// post: returns companyList
 	public ArrayList<Company> getCompanyList() {
 		return this.companyList;
 	}
 
+	// pre: nothing
+	// post: returns airportList
 	public ArrayList<Airport> getAirportList() {
 		return this.airportList;
 	}
 
+	// pre: nothing
+	// post: returns returnRouteList
 	public ArrayList<Route> getReturnRouteList() {
 		return this.returnRouteList;
 	}
 
+	// pre: nothing
+	// post: returns departureRouteList
 	public ArrayList<Route> getDepartureRouteList() {
 		return this.departureRouteList;
 	}
 
+	// pre: nothing
+	// post: returns hotelList
 	public ArrayList<Hotel> getHotelList() {
 		return this.hotelList;
 	}
 
+	// pre: nothing
+	// post: returns carList
 	public ArrayList<Car> getCarList() {
 		return this.carList;
 	}
 
+	// pre: nothing
+	// post: returns currentAccount
 	public Account getCurrentAccount() {
 		return this.currentAccount;
 	}
 
+	// pre: an ArrayList of Company companyList
+	// post: sets the field companyList to the parameter companyList
 	public void setCompanyList(ArrayList<Company> companyList) {
 		this.companyList = companyList;
 	}
 
+	// pre: an ArrayList of Airport airportList
+	// post: sets the field airportList to the parameter airportList
 	public void setAirportList(ArrayList<Airport> airportList) {
 		this.airportList = airportList;
 	}
 
+	// pre: an ArrayList of Route returnRouteList
+	// post: sets the field returnRouteList to the parameter returnRouteList
 	public void setReturnRouteList(ArrayList<Route> returnRouteList) {
 		this.returnRouteList = returnRouteList;
 	}
 
+	// pre: an ArrayList of Route departureRouteList
+	// post: sets the field departureRouteList to the parameter departureRouteList
 	public void setDepartureRouteList(ArrayList<Route> departureRouteList) {
 		this.departureRouteList = departureRouteList;
 	}
 
+	// pre: an ArrayList of Hotel hotelList
+	// post: sets the field hotelList to the parameter hotelList
 	public void setHotelList(ArrayList<Hotel> hotelList) {
 		this.hotelList = hotelList;
 	}
 
+	// pre: an ArrayList of Car carList
+	// post: sets the field carList to the parameter carList
 	public void setCarList(ArrayList<Car> carList) {
 		this.carList = carList;
 	}
 
+	// pre: an Account currentAccount
+	// post: sets the field currentAccount to the parameter currentAccount
 	public void setCurrentAccount(Account currentAccount) {
 		this.currentAccount = currentAccount;
 	}
@@ -90,6 +132,8 @@ public class Website {
 	    			System.out.println("Username already exists, please choose another");
 	    			continue;
 	    		}
+	    		
+	    		
 	    		System.out.print("Please enter your name: ");
 	    		String name = input.next();
 	    		System.out.print("Please enter your email address: ");
@@ -100,37 +144,41 @@ public class Website {
 	    		Account a1 = new Account(name, email, accountName, password);
 	    		userData.put(accountName, a1);
 	    		BufferedWriter out = null;
+	    		
 	    		try {
-	    		    FileWriter fstream = new FileWriter("userData.txt", true); //true tells to append data.
+	    		    FileWriter fstream = new FileWriter("userData.txt", true); // true tells to append data.
 	    		    out = new BufferedWriter(fstream);
 	    		    out.write(name + " " + email + " " + accountName + " " + password);
 	    		    out.newLine();
-	    		    
 	    		}
 
 	    		catch (IOException e) {
 	    		    System.err.println("Error: " + e.getMessage());
 	    		}
+	    		
 	    		try {
 					out.close();
 				} catch (IOException f) {
 					f.printStackTrace();
 				}
-	    		System.out.println("Account successfully created, Welcome " + name);
+	    		
+	    		System.out.println("Account successfully created. Welcome " + name);
 	    		return;
 	    	}
+	    	
 	    	else if(response.equals("n") || response.equals("N")) {	
 	    		return;
 			}
 	    	else {
 	    		System.out.println("Please enter either (y/n): ");
 	    	}
+	    	
 	    	input.close();
     	}
 	
 	}
 
-	public void logIn( ) {
+	public void logIn() {
 		Scanner input = new Scanner(System.in);
     	while(true) {
     		System.out.println("Login Menu");
@@ -184,17 +232,7 @@ public class Website {
 			    	String password = line.nextToken();
 			    	Account a1 = new Account(name, email, accountName, password);
 			    	userData.put(accountName, a1);
-			    }	    	
-	}
-
-	public Website() {
-		companyList = new ArrayList<Company>();
-		airportList = new ArrayList<Airport>();
-		returnRouteList = new ArrayList<Route>();
-		departureRouteList = new ArrayList<Route>();
-		hotelList = new ArrayList<Hotel>();
-		carList = new ArrayList<Car>();
-		currentAccount = new Account();
-		userData = new HashMap<String, Account>();
+			    }
+			    sc.close();
 	}
 }

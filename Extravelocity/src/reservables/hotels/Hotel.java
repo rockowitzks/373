@@ -17,11 +17,11 @@ public class Hotel {
 	// pre: nothing
 	// post: instantiation of Hotel class, all fields set by default.
 	public  Hotel() {
-		rooms = new ArrayList<Room>();
-		guests = new ArrayList<Account>();
-		stars = 0;
-		amenities = 0;
-		company = new HotelCompany();
+		this.rooms = new ArrayList<Room>();
+		this.guests = new ArrayList<Account>();
+		this.stars = 0;
+		this.amenities = 0;
+		this.company = null;
 	}
 	
 	// pre: parameters that correspond to fields

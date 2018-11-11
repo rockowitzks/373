@@ -63,8 +63,9 @@ public class Flight {
 		if(this.seats.size() > capacity) {
 			System.out.println("You made a mistake, seats size is " +  this.seats.size() + 
 					" and capacity is " + this.capacity + ". Dumb mistake.");
+			return true;
 		}
-		return !(this.seats.size() < capacity);
+		return (this.seats.size() == capacity);
 	}
 	
 	// pre: nothing
@@ -82,7 +83,7 @@ public class Flight {
 	// pre: nothing
 	// post: returns distance
 	public double getDistance() {
-		return distance;
+		return this.distance;
 	}
 
 	// pre: a double distance
