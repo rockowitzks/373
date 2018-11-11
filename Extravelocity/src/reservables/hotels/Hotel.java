@@ -14,6 +14,16 @@ public class Hotel {
 	private int amenities;
 	private HotelCompany company;
 	
+	// pre: nothing
+	// post: instantiation of Hotel class, all fields set by default.
+	public  Hotel() {
+		rooms = new ArrayList<Room>();
+		guests = new ArrayList<Account>();
+		stars = 0;
+		amenities = 0;
+		company = new HotelCompany();
+	}
+	
 	// pre: parameters that correspond to fields
 	// post: sets the fields to the parameters
 	public  Hotel(ArrayList<Room> rooms, ArrayList<Account> guests, int stars, int amenities, HotelCompany company) {
@@ -83,16 +93,6 @@ public class Hotel {
 	// post: sets the integer number of services to the provided integer
 	public void setAmenities(int numServices) {
 		this.amenities = numServices;
-	}
-	
-	// pre: nothing
-	// post: instantiation of Hotel class, all fields set by default.
-	public  Hotel() {
-		rooms = new ArrayList<Room>();
-		guests = new ArrayList<Account>();
-		stars = 0;
-		amenities = 0;
-		company = new HotelCompany();
 	}
 	
 	// pre: type Entry, parameter provided

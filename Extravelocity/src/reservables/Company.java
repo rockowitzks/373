@@ -21,7 +21,7 @@ public class Company {
 	
 	// pre: the parameters that correspond to field lists
 	// post sets the fields to the corresponding parameters
-	public Company(String name, double rating, double multiplier, double price, int phoneNumber,
+	public Company(String name, double rating, double multiplier, int phoneNumber,
 			String emailAddress) {
 		this.name = name;
 		this.setRating(rating);

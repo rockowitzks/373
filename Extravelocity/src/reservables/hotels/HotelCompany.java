@@ -5,24 +5,32 @@ import java.util.*;
 import reservables.*;
 
 public class HotelCompany extends Company {
-	public ArrayList<Hotel> hotels;
+	private ArrayList<Hotel> hotels;
 
+	// pre: nothing
+	// post: instantiates the object
+	public HotelCompany() {
+		super();
+		hotels = new ArrayList<Hotel>();
+	}
+	
+	// pre: parameters corresponding to fields
+	// post: instantiates the object with the given parameters
+	public HotelCompany(String name, double rating, double multiplier, int phoneNumber,
+			String emailAddress, ArrayList<Hotel> hotels) {
+		super(name, rating, multiplier, phoneNumber, emailAddress);
+		this.hotels = hotels;
+	}
+	
+	// pre: nothing
+	// post: returns hotels
 	public ArrayList<Hotel> getHotels() {
 		return this.hotels;
 	}
 
+	// pre: an ArrayList of Hotel hotels
+	// post: sets the field hotel to the parameter hotel
 	public void setHotels(ArrayList<Hotel> hotels) {
 		this.hotels = hotels;
-	}
-
-	public HotelCompany(String name, double rating, double multiplier, ArrayList<Hotel> hotels) {
-		this.setName(name);
-		this.setRating(rating);
-		this.setMultiplier(multiplier);
-		this.hotels = hotels;
-	}
-	public HotelCompany() {
-		hotels = new ArrayList<Hotel>();
-	}
-
+	}	
 }

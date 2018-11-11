@@ -52,83 +52,122 @@ public class Car {
 		this.carRentalLocation = location;
 	}	
 		
+	// pre: nothing
+	// post: returns make
 	public String getMake() {
 		return this.make;
 	}
 
+	// pre: nothing
+	// post: returns model
 	public String getModel() {
 		return this.model;
 	}
 
+	// pre: nothing
+	// post: returns licensePlate
 	public String getLicensePlate() {
 		return this.licensePlate;
 	}
 
+	// pre: nothing
+	// post: returns isAvailable
 	public boolean getIsAvailable() {
 		return this.isAvailable;
 	}
 
+	// pre: nothing
+	// post: returns carClass
 	public int getCarClass() {
 		return this.carClass;
 	}
 
+	// pre: nothing
+	// post: returns renter
 	public Account getRenter() {
 		return this.renter;
 	}
 
+	// pre: nothing
+	// post: returns mpg
 	public double getMpg() {
 		return this.mpg;
 	}
 
+	// pre: nothing
+	// post: returns stars
 	public double getStars() {
 		return this.stars;
 	}
 
+	// pre: nothing
+	// post: returns miles
 	public double getMiles() {
 		return this.miles;
 	}
 
+	// pre: nothing
+	// post: returns carRentalLocation
 	public CarRentalLocation getCarRentalLocation() {
 		return this.carRentalLocation;
 	}
 
+	// pre: a String make
+	// post: sets the field make to the parameter make
 	public void setMake(String make) {
 		this.make = make;
 	}
 
+	// pre: a String model
+	// post: sets the field model to the parameter
 	public void setModel(String model) {
 		this.model = model;
 	}
 
+	// pre: a String licensePlate
+	// post: sets the field licensePlate to the parameter licensePlate
 	public void setLicensePlate(String licensePlate) {
 		this.licensePlate = licensePlate;
 	}
 
+	// pre: a boolean isAvailable
+	// post: sets the field isAvailable to the parameter isAvailable
 	public void setIsAvailable(boolean isAvailable) {
 		this.isAvailable = isAvailable;
 	}
 
+	// pre: an int carClass
+	// post: sets the field carClass to the parameter carClass
 	public void setCarClass(int carClass) {
 		this.carClass = carClass;
 	}
 
+	// pre: an Account renter
+	// post: sets the field renter to the account renter
 	public void setRenter(Account renter) {
 		this.renter = renter;
 	}
 
-
+	// pre: a double mpg
+	// post: sets the field mpg to the parameter mpg
 	public void setMpg(double mpg) {
 		this.mpg = mpg;
 	}
 
+	// pre: a double stars
+	// post: sets the field stars to the double stars
 	public void setStars(double stars) {
 		this.stars = stars;
 	}
 
+	// pre: a double miles
+	// post: sets the field miles to the parameter
 	public void setMiles(double miles) {
 		this.miles = miles;
 	}
 
+	// pre: a CarRentalLocation carRentalLocation
+	// post: sets the field carRentalLocation to the parameter carRentalLocation
 	public void setCarRentalLocation(CarRentalLocation carRentalLocation) {
 		this.carRentalLocation = carRentalLocation;
 	}

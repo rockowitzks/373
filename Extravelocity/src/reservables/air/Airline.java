@@ -10,12 +10,15 @@ public class Airline extends Company {
 	// pre: nothing
 	// post: sets airports to a new ArrayList of Airport 
 	public Airline() {
+		super();
 		this.airports = new ArrayList<Airport>();
 	}
 	
 	// pre: an ArrayList of Airport airports
 	// post: sets the field airport to the parameter airport and instantiates the object
-	public Airline(ArrayList<Airport> airports) {
+	public Airline(String name, double rating, double multiplier, int phoneNumber,
+			String emailAddress, ArrayList<Airport> airports) {
+		super(name, rating, multiplier, phoneNumber, emailAddress);
 		this.airports = airports;
 	}
 	
