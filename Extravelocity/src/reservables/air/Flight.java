@@ -1,16 +1,11 @@
 package reservables.air;
 
 import java.util.*;
-import java.io.Serializable;
 import java.time.*;
 
 import software.*;
 
-public class Flight implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 495014402600898777L;
+public class Flight {
 	private String flightNumber;
 	private Airline airline;
 	private Aircraft aircraft;
@@ -62,15 +57,27 @@ public class Flight implements Serializable{
 	}
 	
 	// pre: nothing
-	// post: returns true if the seats size equals or exceeds the capacity, false if it is less than capacity, 
-	//	and prints an error if seats size exceeds capacity
+	// post: returns true if seat size equals capacity, exits if seat size is greater than capacity, false otherwise
 	public boolean isFull() {
 		if(this.seats.size() > capacity) {
 			System.out.println("You made a mistake, seats size is " +  this.seats.size() + 
 					" and capacity is " + this.capacity + ". Dumb mistake.");
+			System.exit(-1);
 			return true;
 		}
 		return (this.seats.size() == capacity);
+	}
+	
+	// pre: an int people and an int seatClass
+	// post: returns true if there are enough seats to accommodate the amount people in the given seatClass
+	public boolean hasEnoughSeats(int people, int seatClass) {
+		int available = 0;
+		for(Seat seat: this.getSeats()) {
+			if(seat.getAvailable() && seat.getPriority() == seatClass) {
+				available++;
+			}
+		}
+		return (available >= people);
 	}
 	
 	// pre: nothing
@@ -253,7 +260,7 @@ public class Flight implements Serializable{
 	
 	// pre: an Entry entry
 	// post: calculates the price of flight
-	public void calculatePrice(Entry entry) {
+	public double calculatePrice(Entry entry) {
 		Random r = new Random();
 		double randomNumber = 20 + (30 - 20) * r.nextDouble();
 		
@@ -270,6 +277,7 @@ public class Flight implements Serializable{
 		answer = Math.max(50, answer);
 		
 		this.setPrice(answer);
+		return this.getPrice();
 	}
 	
 	// pre: a Seat seat
@@ -280,5 +288,14 @@ public class Flight implements Serializable{
 		} else {
 			System.out.println("Cannot add seat, capacity is full.");
 		}
+	}
+	
+	// pre: nothing
+	// post: converts the flight's information to a String 
+	public String toString() {
+		String answer = "";
+		answer.concat(this.getFlightNumber() + "  " + this.getAirline().getName());
+		answer.concat(" ");
+		return answer;
 	}
 }
