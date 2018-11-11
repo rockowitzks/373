@@ -51,7 +51,7 @@ public class Airport_Creator {
 	int j = 0;
 	while (sc.hasNext()) {
 		lineVector =  sc.nextLine().split(",");
-		for (i = 0; i <  airports.size()-1; i++) {
+		for (i = 0; i <  airports.size(); i++) {
 			if (Integer.parseInt(lineVector[i+1]) != 0) {
 				cn = new Connection(airports.get(i), Integer.parseInt(lineVector[i+1]));
 				airports.get(j).addConnection(cn);

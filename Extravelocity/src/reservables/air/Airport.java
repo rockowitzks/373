@@ -18,7 +18,6 @@ public class Airport implements Serializable {
 	private ArrayList<Connection> connections;
 	private String longitude;
 	private String latitude;
-//>>>>>>> Stashed changes
 	private String name;
 	private int group;
 	private String city;
