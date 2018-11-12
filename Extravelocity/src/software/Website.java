@@ -2,7 +2,8 @@ package software;
 
 import java.util.*;
 import java.io.*;
-
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 import reservables.Company;
 import reservables.air.Airport;
@@ -216,8 +217,98 @@ public class Website {
 		// TODO should be implemented
 	}
 
-	public void calculateRoutes(Airport destination, Airport departing) {
-		// TODO should be implemented
+	//pre: airports and flights generated, user gives return date and departure dates, return and departure airports.
+	//post: generates list of viable routes for passenger to take
+	public void calculateRoutes(Entry data) {
+		HashMap<String, Airport> routed = new HashMap<String,Airport>();
+		double minDirectPrice = 300000000;
+		double minPrice = 1000000000;
+		LocalDateTime t1 = LocalDateTime.now();
+		//Duration minDuration;
+		ArrayList<Route> possibleRoutes = new ArrayList<Route>();
+		routed.put(data.getDepartureAirport().getName(), data.getDepartureAirport());
+		ArrayList<Route> routes = new ArrayList<Route>();
+		for (int i = 0; i < data.getDepartureAirport().getDepartureList().size(); i++) {
+			//makes sure flight is in the right day and not already goners
+			if(data.getDepartureAirport().getDepartureList().get(i).getDepartureDate().isAfter(t1) && data.getDepartureAirport().getDepartureList().get(i).getDepartureDate().isAfter(data.getDepartureDate().atStartOfDay()) && data.getDepartureAirport().getDepartureList().get(i).getDepartureDate().isBefore(data.getDepartureDate().plusDays(1).atStartOfDay())) {
+			//if direct flight has available seats always shown, checks pricing to find minimum price.
+			if (data.getDepartureAirport().getDepartureList().get(i).getArriving().getName() == data.getReturnAirport().getName() 
+			&& !data.getDepartureAirport().getDepartureList().get(i).hasEnoughSeats(data.getPassengers(), data.getSeatPriority())) {
+				routes.add(new Route(data.getDepartureAirport().getDepartureList().get(i)));
+			//	if (data.getDepartureAirport().getDepartureList().get(i).calculatePrice(data) < minDirectPrice) {
+				//	minDirectPrice = data.getDepartureAirport().getDepartureList().get(i).calculatePrice(data);
+				//}
+				if (data.getDepartureAirport().getDepartureList().get(i).calculatePrice(data) < minPrice) {
+					minPrice = data.getDepartureAirport().getDepartureList().get(i).calculatePrice(data);
+				}
+			} //if route through airport not already started being built start building, only if price less than default flight.
+			else if (!routed.containsKey(data.getDepartureAirport().getDepartureList().get(i).getArriving().getName()) && data.getDepartureAirport().getDepartureList().get(i).hasEnoughSeats(data.getPassengers(), data.getSeatPriority())) {
+				if (data.getDepartureAirport().getDepartureList().get(i).calculatePrice(data) < minPrice) {
+					possibleRoutes.add(new Route(data.getDepartureAirport().getDepartureList().get(i)));
+					routed.put(data.getDepartureAirport().getDepartureList().get(i).getArriving().getName(), data.getDepartureAirport().getDepartureList().get(i).getArriving());
+				}
+			}
+			}
+		}
+		//Airport a; //literally do not even ask
+		for (int j = 0; j < possibleRoutes.size(); j++) {
+			//loops through possible routes looking for acceptable connections
+			//checks if price is low enough, connection is available if so adds to connection.
+			for (int i = 0; i < possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().size(); i++) {
+				if (possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i).getDepartureDate().isAfter(possibleRoutes.get(j).getFlights().get(0).getArrivalDate()) 
+/*makes sure is cheap*/ && possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i).calculatePrice(data) + possibleRoutes.get(j).getFlights().get(0).calculatePrice(data) < minPrice
+						&& possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i).getArriving().getName().equals(data.getDestinationCity())) {
+					possibleRoutes.get(j).addFlight(possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i));
+					routes.add(possibleRoutes.get(j));
+					break;
+				}
+			}
+		}
+		this.setDepartureRouteList(routes);
+		Airport a = data.getReturnAirport();
+		Airport b = data.getDepartureAirport();
+		possibleRoutes = new ArrayList<Route>();
+		routes = new ArrayList<Route>();
+		routed = new HashMap<String,Airport>();
+		//minDirectPrice = 300000000;
+		minPrice = 1000000000;
+		routed.put(a.getName(), a);
+		for (int i = 0; i < a.getDepartureList().size(); i++) { //now do the same thing but the other direction
+			if(data.getDepartureAirport().getDepartureList().get(i).getDepartureDate().isAfter(data.getReturnDate().atStartOfDay())
+				&& a.getDepartureList().get(i).hasEnoughSeats(data.getPassengers(), data.getSeatPriority())
+				&& a.getDepartureList().get(i).getDepartureDate().isBefore(data.getReturnDate().plusDays(1).atStartOfDay())) {
+				if (a.getDepartureList().get(i).getArriving().getName().equals(b.getName())) {
+					routes.add(new Route(a.getDepartureList().get(i)));
+					if (a.getDepartureList().get(i).calculatePrice(data) < minPrice)
+						minPrice = a.getDepartureList().get(i).calculatePrice(data);	
+				}
+				else if (!routed.containsKey(a.getDepartureList().get(i).getArriving().getName())) {
+					if (data.getDepartureAirport().getDepartureList().get(i).calculatePrice(data) < minPrice) {
+						possibleRoutes.add(new Route(data.getDepartureAirport().getDepartureList().get(i)));
+						routed.put(a.getDepartureList().get(i).getArriving().getName(), a.getDepartureList().get(i).getArriving());
+					}
+				}
+			}
+		}
+		for (int j = 0; j < possibleRoutes.size(); j++) {
+			//loops through possible routes looking for acceptable connections
+			//checks if price is low enough, connection is available if so adds to connection.
+			for (int i = 0; i < possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().size(); i++) {
+				if (possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i).getDepartureDate().isAfter(possibleRoutes.get(j).getFlights().get(0).getArrivalDate()) 
+/*makes sure is cheap*/ && possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i).calculatePrice(data) + possibleRoutes.get(j).getFlights().get(0).calculatePrice(data) < minPrice
+						&& possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i).getArriving().getName().equals(b.getName())) {
+					possibleRoutes.get(j).addFlight(possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i));
+					routes.add(possibleRoutes.get(j));
+					break;
+				}
+			}
+		}
+		this.setReturnRouteList(routes);
+	}
+	
+	
+	public void generateFlights(LocalDateTime aDate) {
+		
 	}
 	
 	public void fetchUserData() throws FileNotFoundException {
@@ -236,6 +327,9 @@ public class Website {
 			    }
 			    sc.close();
 	}
+	
+	//pre: files exist to be read from, generate called from driver
+	//post: airportList generated airports have cities, lat and long, connections, and names
 	public void generateAirports( ) throws IOException {
 		int i = 0;
 		String name;
@@ -243,16 +337,10 @@ public class Website {
 		String lat;
 		String line;
 		String ln;
-		double multiplier;
-		//Double mult;
-		
+		double multiplier;		
 		Airport na; 
-		//ArrayList<Airport> airports = new ArrayList<Airport>();
-		//String[] airportNames;// = ("PHX","JFK","LAX","WDC","SEA","POR","DEN","HOU","AUS","SYD","LON",TUC,SDG,SFC,PAR,REY,BER,MOS,STP,CHI,CHA,ATL,MIA,NAS,PHI,BEI,HOK,SAT,BOS,BOI,PRE,KWC,RIY,DFW,JOH,ADB,"CAI","ATH")
-		FileInputStream in = null;
-		FileOutputStream out = null;
-		in = new FileInputStream("Airport_data.txt");
-		out = new FileOutputStream("airport.ser");
+		FileInputStream in = new FileInputStream("Airport_data.txt");
+		FileOutputStream out = new FileOutputStream("airport.ser");
 		Scanner sc = new Scanner(in);
 		while (sc.hasNext()) {
 			name = sc.nextLine();
