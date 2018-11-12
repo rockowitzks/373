@@ -16,8 +16,10 @@ public class Car {
 	private Account renter;
 	private double mpg;
 	private double stars;
+	private double price;
 	private double miles;
 	private CarRentalLocation carRentalLocation;
+	private RentalCarCompany rentalCarCompany;
 
 	
 	// pre: uninstantiated
@@ -33,23 +35,27 @@ public class Car {
 		this.stars = 0;
 		this.miles = 0;
 		this.carRentalLocation = new CarRentalLocation();
+		this.price = 0;
+		this.rentalCarCompany = null;
 		}
 	
 	// pre: parameters that correspond to the fields
 	// post: sets the fields to the corresponding parameters
-	public Car(String make, String model, String lic, boolean isAvail, int carClass,
-			Account renter, int price, double mpg, double stars, double miles,
-			CarRentalLocation location) {
+	public Car(String make, String model, String license, RentalCarCompany rentalCarCompany,
+			boolean isAvailable, int carClass, Account renter, double mpg, double stars, double miles,
+			CarRentalLocation location, double price) {
 		this.make = make;
 		this.model = model;
-		this.licensePlate = lic;
-		this.isAvailable = isAvail;
+		this.licensePlate = license;
+		this.isAvailable = isAvailable;
 		this.carClass = carClass;
 		this.renter = renter;
 		this.mpg = mpg;
 		this.stars = stars;
 		this.miles = miles;
 		this.carRentalLocation = location;
+		this.price = price;
+		this.rentalCarCompany = rentalCarCompany;
 	}	
 		
 	// pre: nothing
@@ -68,6 +74,24 @@ public class Car {
 	// post: returns licensePlate
 	public String getLicensePlate() {
 		return this.licensePlate;
+	}
+	
+	// pre: nothing
+	// post:returns price
+	public double getPrice() {
+		return this.price;
+	}
+
+	// pre: a double price
+	// post: sets the field price to the parameter price
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	// pre: a boolean isAvailable
+	// post: sets the field isAvailable to the parameter isAvailable
+	public void setAvailable(boolean isAvailable) {
+		this.isAvailable = isAvailable;
 	}
 
 	// pre: nothing
@@ -104,6 +128,18 @@ public class Car {
 	// post: returns miles
 	public double getMiles() {
 		return this.miles;
+	}
+
+	// pre: nothing
+	// post: returns rentalCarCompany
+	public RentalCarCompany getRentalCarCompany() {
+		return this.rentalCarCompany;
+	}
+
+	// pre: a RentalCarCompany rentalCarCompany
+	// post: sets the field rentalCarCompany to the parameter rentalCarCompany
+	public void setRentalCarCompany(RentalCarCompany rentalCarCompany) {
+		this.rentalCarCompany = rentalCarCompany;
 	}
 
 	// pre: nothing
@@ -172,6 +208,22 @@ public class Car {
 		this.carRentalLocation = carRentalLocation;
 	}
 	
+	// pre: nothing
+	// post: returns a string based on the car class
+	public String getCarClassString() {
+		switch(this.getCarClass()) {
+		case(1):
+			return "Economy";
+		case(2):
+			return "Standard";
+		case(3):
+			return "Luxury";
+		default:
+			System.exit(-10);
+			return ("Error, car class is " + this.getCarClass() + "when it should be 1-3.");
+		}
+	}
+	
 	// pre: type Entry, parameter provided
 	// post: calculates the price of the rental car using factors, returns as double
 	public double calculateCarPrice(Entry entry) {
@@ -196,6 +248,13 @@ public class Car {
 		rentalDuration.getDays() * (1 + (5.0 * Math.exp( -1.0 * (double)urgencyFactor.getDays())));
 		return price;
 		
+	}
+	
+	// pre: nothing
+	// post: prints the 
+	public String toString() {
+		return (this.getRentalCarCompany().getName() + "	" + this.getCarClassString() + " $" +
+				this.getPrice());
 	}
 
 }

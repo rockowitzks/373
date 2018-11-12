@@ -92,8 +92,15 @@ public class Reservation {
 	}
 	
 	// pre: nothing
-	// post: prints the reservation's fields
+	// post: prints the reservation's fields and total cost
 	public void printReservation() {
-		// FIXME
+		System.out.println(this.getAccount());
+		System.out.println(this.getDepartingRoute());
+		System.out.println(this.getReturningRoute());
+		System.out.println(this.getHotel());
+		System.out.println(this.getCar());
+		double totalCost = this.getCar().getPrice() + this.getHotel().getPrice() + this.getDepartingRoute().getPrice()
+				+ this.getReturningRoute().getPrice();
+		System.out.printf("The total cost is $ %.2f.", totalCost);
 	}
 }

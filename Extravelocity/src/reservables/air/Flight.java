@@ -263,14 +263,13 @@ public class Flight {
 	public double calculatePrice(Entry entry) {
 		Random r = new Random();
 		double randomNumber = 20 + (30 - 20) * r.nextDouble();
-		
-		Period urgencyFactor = Period.between(entry.getDepartureDate(), LocalDate.now());
+		Period urgencyFactor = Period.between(this.getDepartureDate().toLocalDate(), LocalDate.now());
 		long duration = this.getDuration().toHours();
 		
 		
 		double sum = this.getAirline().getMultiplier() + randomNumber - (0.7 * duration);
 		double product = (1 + Math.exp(-1.0 * urgencyFactor.getDays())) * this.getArriving().getAirportMultiplier()
-				* this.getDeparting().getAirportMultiplier() * entry.getSeatPriority().getPriority()
+				* this.getDeparting().getAirportMultiplier() * entry.getSeatPriority()
 				* this.getDistancePrice();
 		
 		double answer = product * sum;
@@ -294,8 +293,11 @@ public class Flight {
 	// post: converts the flight's information to a String 
 	public String toString() {
 		String answer = "";
-		answer.concat(this.getFlightNumber() + "  " + this.getAirline().getName());
-		answer.concat(" ");
+		answer.concat(this.getDeparting().getName() + "  " + 
+		this.getFlightNumber() + "  " + this.getAirline().getName());
+		
+		answer.concat(" Departure Date: " + this.getDepartureDate().toString() + 
+				" Time: " + this.getDuration().toString() + " $" + this.getPrice() + ".\n");
 		return answer;
 	}
 }

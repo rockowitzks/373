@@ -125,22 +125,15 @@ public class Account {
 		this.website = website;
 	}
 
-	// pre: 
-	// post:
-	public void createReservation() {
-		
-	}
-
-	// pre: nothing
+	// pre: a Scanner input
 	// post: returns the Hotel that the user selects
-	public Hotel selectHotel() {
+	public Hotel selectHotel(Scanner input) {
 		if(this.getWebsite().getHotelList().isEmpty()) {
 			System.out.println("Error: hotel list is empty");
 			System.exit(-1);
 			return null;
 		}
 		
-		Scanner input = new Scanner(System.in);
 		while(true) {
 			System.out.println("Which hotel would you like to select? (Write in the number)");
 			int index = input.nextInt();
@@ -149,21 +142,19 @@ public class Account {
 						+ "last index of the hotel list " + (this.website.getHotelList().size() - 1) + ".");
 				continue;
 			}
-			input.close();
 			return this.getWebsite().getHotelList().get(index);
 		}
 	}
 
-	// pre: nothing
+	// pre: a Scanner input
 	// post: returns the Car that the user selects
-	public Car selectCar() {
+	public Car selectCar(Scanner input) {
 		if(this.getWebsite().getCarList().isEmpty()) {
 			System.out.println("Error: car list is empty");
 			System.exit(-1);
 			return null;
 		}
 		
-		Scanner input = new Scanner(System.in);
 		while(true) {
 			System.out.println("Which car would you like to select? (Write in the number)");
 			int index = input.nextInt();
@@ -172,21 +163,19 @@ public class Account {
 						+ "last index of the car list " + (this.website.getCarList().size() - 1) + ".");
 				continue;
 			}
-			input.close();
 			return this.getWebsite().getCarList().get(index);
 		}
 	}
 
-	// pre: nothing
+	// pre: a Scanner input
 	// post: asks the user to select the departing route 
-	public Route selectDepartingRoute() {
+	public Route selectDepartingRoute(Scanner input) {
 		if(this.getWebsite().getDepartureRouteList().isEmpty()) {
 			System.out.println("Error: departure route list list is empty");
 			System.exit(-1);
 			return null;
 		}
 		
-		Scanner input = new Scanner(System.in);
 		while(true) {
 			System.out.println("Which departing route would you like to select? (Write in the number)");
 			int index = input.nextInt();
@@ -196,21 +185,19 @@ public class Account {
 						(this.website.getDepartureRouteList().size() - 1) + ".");
 				continue;
 			}
-			input.close();
 			return this.getWebsite().getDepartureRouteList().get(index);
 		}
 	}
 
-	// pre: nothing
+	// pre: a Scanner input
 	// post: asks the user to select the departing route
-	public Route selectReturningRoute() {
+	public Route selectReturningRoute(Scanner input) {
 		if(this.getWebsite().getReturnRouteList().isEmpty()) {
 			System.out.println("Error: return route list list is empty");
 			System.exit(-1);
 			return null;
 		}
 		
-		Scanner input = new Scanner(System.in);
 		while(true) {
 			System.out.println("Which return route would you like to select? (Write in the number)");
 			int index = input.nextInt();
@@ -220,21 +207,19 @@ public class Account {
 						(this.website.getReturnRouteList().size() - 1) + ".");
 				continue;
 			}
-			input.close();
 			return this.getWebsite().getReturnRouteList().get(index);
 		}
 	}
 
-	// pre: nothing
+	// pre: a Reservation reservation and a Scanner input
 	// post: prints the parameters of reservation, and asks the user to confirm if that is what they desire
 	// if they answer yes, adds it to reservation list and returns true, otherwise returns false
-	public boolean confirmReservation(Reservation reservation) {
+	public boolean confirmReservation(Reservation reservation, Scanner input) {
 		reservation.printReservation();
 		System.out.println("Is this reservation satisfactory? (Type y or n)");
-		Scanner input = new Scanner(System.in);
-		input.close();
 		String answer = input.nextLine().trim();
 		if(answer.equalsIgnoreCase("y") || answer.equalsIgnoreCase("yes")) {
+			// ProcessPayment
 			System.out.println("Alright, reservation added");
 			this.AddRerservation(reservation);
 			return true;
@@ -242,6 +227,11 @@ public class Account {
 		
 		System.out.println("Reservation not added. Returning to main menu");
 		return false;
-		
+	}
+	
+	// pre: nothing
+	// post: returns the email and name of the object
+	public String toString() {
+		return (this.getEmail() + "    " + this.getName() + "\n");
 	}
 }
