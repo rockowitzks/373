@@ -5,6 +5,7 @@ import java.io.*;
 import java.time.LocalDateTime;
 
 import reservables.Company;
+import reservables.Location;
 import reservables.air.Aircraft;
 import reservables.air.Airline;
 import reservables.air.Airport;
@@ -166,7 +167,7 @@ public class Website {
 
 	    		System.out.print("Please enter a password: ");
 	    		String password = input.nextLine();
-	    		Account a1 = new Account(name, email, accountName, password);
+	    		Account a1 = new Account(name, email, accountName, password, this);
 	    		userData.put(accountName, a1);
 	    		BufferedWriter out = null;
 	    		
@@ -367,10 +368,10 @@ public class Website {
 			    	String email = line.nextToken();
 			    	String accountName = line.nextToken();
 			    	String password = line.nextToken();
-			    	Account account = new Account(name, email, accountName, password);
+			    	Account account = new Account(name, email, accountName, password, this);
 			    	userData.put(accountName, account);
 			    }
-			    scanner.close();
+			    scanner.close();	
 	}
 	
 	//pre: files exist to be read from, generate called from driver
