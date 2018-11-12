@@ -62,10 +62,16 @@ public class Entry {
 			if(airport.getCity().equals(this.departingCity)) {
 				this.departureAirport = airport;
 			}
+			else {
+				System.out.println("Unable to find airport. Departing city : " + this.departingCity);
+			}
 		}
 		for(Airport airport: web.getAirportList()) {
 			if(airport.getCity().equals(this.destinationCity)) {
 				this.returnAirport = airport;
+			}
+			else {
+				System.out.println("Unable to find airport. Departing city : " + this.destinationCity);
 			}
 		}
 	}
