@@ -47,7 +47,7 @@ public class Airport implements Serializable {
 	}
 	
 	//pre: parameters correspond to fields found in file
-	//post: sets fields to parametrs
+	//post: sets fields to parameters
 	public Airport(String name, String city, String lat, String ln, double multiplier) {
 		arrivalList = new ArrayList<Flight>();
 		departureList = new ArrayList<Flight>();
@@ -190,8 +190,11 @@ public class Airport implements Serializable {
 		System.out.println("Error: airline " + airline.getName() + " already exists in " + this.getName() 
 		+ ".");
 	}
-	public void addConnection(Connection cn) {
-		this.connections.add(cn);
+	
+	// pre: a Connection connection
+	// post:
+	public void addConnection(Connection connection) {
+		this.connections.add(connection);
 	}
 	
 	public void airportOut(FileOutputStream out) throws IOException {
