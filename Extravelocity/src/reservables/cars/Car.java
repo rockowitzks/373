@@ -269,7 +269,7 @@ public class Car {
 	// pre: nothing
 	// post: prints the car 
 	public String toString() {
-		double price = (Math.round(this.getPrice() * 100)) / 100 ;
+		double price = (Math.round(this.getPrice() * 100.0)) / 100.0 ;
 		return (this.getRentalCarCompany().getName() + "	" + this.getCarClassString() + " $" + price);
 	}
 }

@@ -97,19 +97,6 @@ public class Website {
 		}
 		
 	}
-		
-	//pre generate cars run
-	//carlist has list of available cars in city
-	public void populateCarList(Entry data) {
-		CarRentalLocation crl;
-		for (int i = 0; i < this.getCarCompanyList().size(); i++) {
-			crl =this.getCarCompanyList().get(i).getLocations().get(data.getDestinationCity());
-			for (int j = 0; j < crl.getCars().size(); j++) {
-				if (crl.getCars().get(j).getCarClass() == data.getCarClass())
-					carList.add(crl.getCars().get(j));
-			}
-		}
-	}
 	// pre: nothing
 	// post: returns currentAccount
 	public Account getCurrentAccount() {
@@ -244,6 +231,8 @@ public class Website {
 	    			continue;
 	    		}
 	    		System.out.println("Login Successful. Welcome back " + userData.get(accountName).getName());
+	    		this.setCurrentAccount(new Account(userData.get(accountName).getName(),
+	    				userData.get(accountName).getEmail(), accountName, password, this));
 	    		return;
 	    	}
 	    	else if(response.equals("n") || response.equals("N")) {	
