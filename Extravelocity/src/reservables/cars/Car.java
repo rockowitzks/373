@@ -261,15 +261,15 @@ public class Car {
 		}
 		double price =  classMultiplier * carRentalLocation.getCompany().getMultiplier() * 
 		rentalDuration.getDays() * (1 + (5.0 * Math.exp( -1.0 * (double)urgencyFactor.getDays())));
+		this.setPrice(price);
 		return price;
 		
 	}
 	
 	// pre: nothing
-	// post: prints the 
+	// post: prints the car 
 	public String toString() {
-		return (this.getRentalCarCompany().getName() + "	" + this.getCarClassString() + " $" +
-				this.getPrice());
+		double price = (Math.round(this.getPrice() * 100)) / 100 ;
+		return (this.getRentalCarCompany().getName() + "	" + this.getCarClassString() + " $" + price);
 	}
-
 }

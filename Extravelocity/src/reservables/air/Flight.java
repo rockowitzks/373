@@ -362,10 +362,9 @@ public class Flight {
 				* this.getDeparting().getAirportMultiplier() * entry.getSeatPriority()
 				* this.getDistancePrice();
 		
-		double answer = product * sum;
-		answer = Math.max(50, answer);
+		double price = Math.max(50, product * sum);
 		
-		this.setPrice(answer);
+		this.setPrice(price);
 		return this.getPrice();
 	}
 	

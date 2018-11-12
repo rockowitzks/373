@@ -120,14 +120,16 @@ public class Route {
 			return false;
 		}
 	}
+	
 	// pre: an Entry entry
 	// post: calculates the price of the route
 	public double calculatePrice(Entry entry) {
-		double answer = 0;
+		double price = 0;
 		for(Flight flight : flights) {
-			answer += flight.calculatePrice(entry);
+			price += flight.calculatePrice(entry);
 		}
-		return answer;
+		this.setPrice(price);
+		return price;
 	}
 
 	// pre: nothing
@@ -156,7 +158,7 @@ public class Route {
 			layover.setAirport(this.flights.get(i).getArriving());
 			layover.setPrevious(this.flights.get(i));
 			layover.setNext(this.flights.get(i + 1));
-			
+			layover.calculateLayover();
 		}
 	}
 	
@@ -167,7 +169,8 @@ public class Route {
 		for(Flight flight : flights) {
 			answer.concat(flight.toString());
 		}
-		answer.concat("		$" + this.getPrice() + "\n");
+		double price = (Math.round(this.getPrice() * 100)) / 100 ;
+		answer.concat("		$" + price + "\n");
 		return answer;
 	} 
 }
