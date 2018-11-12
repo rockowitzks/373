@@ -323,7 +323,7 @@ public class Website {
 					for (int l = 0; l < todo.get(j).getConnections().get(k).getFlightsPerDay(); l++) {
 						new Flight(todo.get(j), todo.get(j).getConnections().get(k).getDestination(), 
 								todo.get(j).getAirlineList().get((int)Math.random() * todo.get(j).getAirlineList().size()), craft, 
-								aDate.plusHours((long) (Math.random() * 24)));
+								aDate.plusHours((long) (Math.random() * 24)), "111", 300, 0);
 						
 					}
 					

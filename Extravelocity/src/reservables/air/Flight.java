@@ -38,19 +38,26 @@ public class Flight {
 	
 	// pre: parameters corresponding to fields
 	// post: sets the fields to the parameters and initializes the objects
-	public Flight(Airport departing, Airport arriving, Airline line, Aircraft plane, LocalDateTime departureDate) {
+	public Flight(Airport departing, Airport arriving, Airline airline, Aircraft aircraft, LocalDateTime departureDate,
+			String flightNumber, double capacity, double price) {
 		this.setDeparting(departing);
 		this.setArriving(arriving);
-		this.setAirline(line);
-		this.setAircraft(plane);
+		this.setAirline(airline);
+		this.setAircraft(aircraft);
 		this.setDepartureDate(departureDate);
 		this.calculateDistance();
 		this.calculateArrivalDate();
+		this.flightNumber = flightNumber;
+		this.capacity = capacity;
+		this.price = price;
 		
+		for(int i = 0; i < 10; i++) {
+			this.addSeat(new Seat(i, false, true, 0,this));
+		}
 	}
 	
 	// pre: nothing
-	// post: calculates the arrival date based on departure date adn speed and distance
+	// post: calculates the arrival date based on departure date and speed and distance
 	private void calculateArrivalDate() {
 		this.setArrivalDate(this.getDepartureDate().plusHours((long) (this.getDistance()/this.getAircraft().getAirspeed())));	
 	}
