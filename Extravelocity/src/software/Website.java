@@ -74,7 +74,27 @@ public class Website {
 	public ArrayList<Car> getCarList() {
 		return this.carList;
 	}
-
+	//pre: user says where he wants to find cars
+		//post: list of cars generated with is available and the company you can rent it from
+//		public void generateCars(String city) {
+//			ArrayList<RentalCarCompany> badersWheels = new ArrayList<RentalCarCompany>();
+//			badersWheels.add(new RentalCarCompany("Enterprise", 2.7, 1.1, 7777777,
+//				"enterprise@enterprise", new ArrayList<CarRentalLocation>()));
+//			badersWheels.add(new RentalCarCompany("Avis", 3.2, 1.3, 2137777,
+//					"customersupport@Avis", new ArrayList<CarRentalLocation>()));
+//			badersWheels.add(new RentalCarCompany("Hertz", 1.2, .7, 8913333,
+//					"trashbin@Hertz", new ArrayList<CarRentalLocation>()));
+//			badersWheels.add(new RentalCarCompany("Budget", 5, 1.8, 1234567,
+//					"wecare@Budget", new ArrayList<CarRentalLocation>()));
+//			Location asdf = new Location();
+//			asdf.setCity(city);
+//			asdf.setStreetAddress(city.concat(" Airport"));
+//			new car
+//			for (int i = 0; i < badersWheels.size(); i++) {
+//				badersWheels.get(i).getLocations().add(new CarRentalLocation(asdf));
+//				
+//			}
+//		}
 	// pre: nothing
 	// post: returns currentAccount
 	public Account getCurrentAccount() {
@@ -231,7 +251,7 @@ public class Website {
 			if(data.getDepartureAirport().getDepartureList().get(i).getDepartureDate().isAfter(t1) && data.getDepartureAirport().getDepartureList().get(i).getDepartureDate().isAfter(data.getDepartureDate().atStartOfDay()) && data.getDepartureAirport().getDepartureList().get(i).getDepartureDate().isBefore(data.getDepartureDate().plusDays(1).atStartOfDay())) {
 			//if direct flight has available seats always shown, checks pricing to find minimum price.
 			if (data.getDepartureAirport().getDepartureList().get(i).getArriving().getName() == data.getReturnAirport().getName() 
-			&& !data.getDepartureAirport().getDepartureList().get(i).hasEnoughSeats(data.getPassengers(), data.getSeatPriority())) {
+			&& data.getDepartureAirport().getDepartureList().get(i).hasEnoughSeats(data.getPassengers(), data.getSeatPriority())) {
 				routes.add(new Route(data.getDepartureAirport().getDepartureList().get(i)));
 			//	if (data.getDepartureAirport().getDepartureList().get(i).calculatePrice(data) < minDirectPrice) {
 				//	minDirectPrice = data.getDepartureAirport().getDepartureList().get(i).calculatePrice(data);
@@ -272,7 +292,7 @@ public class Website {
 		minPrice = 1000000000;
 		routed.put(a.getName(), a);
 		for (int i = 0; i < a.getDepartureList().size(); i++) { //now do the same thing but the other direction
-			if(data.getDepartureAirport().getDepartureList().get(i).getDepartureDate().isAfter(data.getReturnDate().atStartOfDay())
+			if(a.getDepartureList().get(i).getDepartureDate().isAfter(data.getReturnDate().atStartOfDay())
 				&& a.getDepartureList().get(i).hasEnoughSeats(data.getPassengers(), data.getSeatPriority())
 				&& a.getDepartureList().get(i).getDepartureDate().isBefore(data.getReturnDate().plusDays(1).atStartOfDay())) {
 				if (a.getDepartureList().get(i).getArriving().getName().equals(b.getName())) {
@@ -281,8 +301,8 @@ public class Website {
 						minPrice = a.getDepartureList().get(i).calculatePrice(data);	
 				}
 				else if (!routed.containsKey(a.getDepartureList().get(i).getArriving().getName())) {
-					if (data.getDepartureAirport().getDepartureList().get(i).calculatePrice(data) < minPrice) {
-						possibleRoutes.add(new Route(data.getDepartureAirport().getDepartureList().get(i)));
+					if (a.getDepartureList().get(i).calculatePrice(data) < minPrice) {
+						possibleRoutes.add(new Route(a.getDepartureList().get(i)));
 						routed.put(a.getDepartureList().get(i).getArriving().getName(), a.getDepartureList().get(i).getArriving());
 					}
 				}
