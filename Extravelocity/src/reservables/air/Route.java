@@ -167,10 +167,11 @@ public class Route {
 	public String toString() {
 		String answer = "";
 		for(Flight flight : flights) {
-			answer.concat(flight.toString());
+			answer = answer + (flight.toString());
 		}
-		double price = (Math.round(this.getPrice() * 100)) / 100 ;
-		answer.concat("		$" + price + "\n");
+		
+		double price = (Math.round(this.getPrice() * 100)) / 100.0;
+		answer = answer + ("		$" + price + "\n");
 		return answer;
 	} 
 }

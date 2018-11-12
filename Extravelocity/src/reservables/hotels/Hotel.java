@@ -157,7 +157,7 @@ public class Hotel {
 	// pre: nothing
 	// post: returns a String consisting of company, amenities, and cost
 	public String toString() {
-		double price = (Math.round(this.getPrice() * 100)) / 100 ;
+		double price = (Math.round(this.getPrice() * 100.0)) / 100.0;
 		return (this.getCompany().getName() + " " + this.getAmenityString() + " $" + price);
 	}
 	

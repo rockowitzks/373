@@ -382,10 +382,10 @@ public class Flight {
 	// post: converts the flight's information to a String 
 	public String toString() {
 		String answer = "";
-		answer.concat(this.getDeparting().getName() + "  " + 
+		answer = answer + (this.getDeparting().getName() + "  " + 
 		this.getFlightNumber() + "  " + this.getAirline().getName());
 		
-		answer.concat(" Departure Date: " + this.getDepartureDate().toString() + 
+		answer = answer + (" Departure Date: " + this.getDepartureDate().toString() + 
 				" Time: " + this.getDuration().toString() + "\n");
 		return answer;
 	}
