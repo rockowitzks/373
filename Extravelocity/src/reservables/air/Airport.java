@@ -161,6 +161,14 @@ public class Airport implements Serializable {
 		this.group = group;
 	}
 
+	public ArrayList<Connection> getConnections() {
+		return connections;
+	}
+
+	public void setConnections(ArrayList<Connection> connections) {
+		this.connections = connections;
+	}
+
 	public String getCity() {
 		return city;
 	}
