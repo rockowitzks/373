@@ -71,6 +71,7 @@ public class Driver {
 			e1.askFlightReturnDate(input);
 			e1.askDepartCity(input);
 			e1.askDestinationCity(input);
+			e1.askSeatPriority(input);
 			e1.findAirportFromCity(w1);//find airport function that adds airport to entry.
 			//dis
 		}

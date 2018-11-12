@@ -191,16 +191,16 @@ public class Entry {
 		System.out.print("Would you like First Class, Business, or Economy seating?: ");
 		String response = input.nextLine();
 		if(response.toLowerCase().equals("First Class")) {
-			this.seatPriority = 2;
+			this.seatPriority = 5;
 		}
 		else if(response.toLowerCase().equals("Business")) {
-			this.seatPriority = 1;
+			this.seatPriority = 2;
 		}
 		else if(response.toLowerCase().equals("Economy")) {
-			this.seatPriority = 0;
+			this.seatPriority = 1;
 		}
 		else {
-			this.seatPriority = 0;
+			this.seatPriority = 1;
 		}
 		// needs to validate
 
