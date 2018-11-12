@@ -57,16 +57,26 @@ public class Entry {
 		this.destinationCity = null;
 	}
 	
-	public void findAirportFromCity(Website web) {
-		for(Airport airport: web.getAirportList()) {
+	// pre: a Website web
+	// post: takes the user input for departure and returning city, then adds the airport to the user entry class
+	public void findAirportFromCity(Website website) {
+		for (Airport airport: website.getAirportList()) {
 			if(airport.getCity().equals(this.departingCity)) {
 				this.departureAirport = airport;
 			}
 		}
-		for(Airport airport: web.getAirportList()) {
+		for (Airport airport: website.getAirportList()) {
 			if(airport.getCity().equals(this.destinationCity)) {
 				this.returnAirport = airport;
 			}
+		}
+		
+		if(this.departureAirport == null) {
+			System.out.println("Could not locate departing airport");
+		}
+		
+		if(this.returnAirport == null) {
+			System.out.println("Could not locate destination airport");
 		}
 	}
 	
@@ -196,6 +206,8 @@ public class Entry {
 
 	}
 	
+	// pre: a scanner input
+	// post: asks the user for how many passengers they want to reserve
 	public void askPassengers(Scanner input) {
 		System.out.print("How many passengers will be flying? : ");
 		String response = input.nextLine();
