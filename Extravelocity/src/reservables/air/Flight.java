@@ -50,6 +50,7 @@ public class Flight {
 		this.flightNumber = flightNumber;
 		this.capacity = capacity;
 		this.price = price;
+		this.seats = new ArrayList<Seat>();
 		
 		for(int i = 0; i < 10; i++) {
 			this.addSeat(new Seat(i, false, true, 0,this));
