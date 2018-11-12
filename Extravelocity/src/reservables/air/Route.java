@@ -131,14 +131,33 @@ public class Route {
 	}
 
 	// pre: nothing
-	// post: I don't know
+	// post: returns true if the route's flight actually connect
 	public boolean checkValidity() {
-		return false;
+		for(int i = 0; i < flights.size() - 1; i++) {
+			if(flights.get(i).getArriving() != flights.get(i + 1).getDeparting()) {
+				System.out.println("Arriving of flights (" + i + ") is " + this.flights.get(i).getArriving()
+						+ " Departing of flights (" + (i + 1) + ") is " + this.flights.get(i + 1).getDeparting());
+				return false;
+			}
+		}
+		return true;
 	}
 
 	// pre: nothing
 	// post: returns the total time spent in layovers
 	public void calcLayover() {
+		Layover layover;
+		if(!checkValidity()) {
+			System.exit(-7);
+		}
+		
+		for(int i = 0; i < this.flights.size() - 1; i++) {
+			layover = new Layover();
+			layover.setAirport(this.flights.get(i).getArriving());
+			layover.setPrevious(this.flights.get(i));
+			layover.setNext(this.flights.get(i + 1));
+			
+		}
 	}
 	
 	// pre: nothing

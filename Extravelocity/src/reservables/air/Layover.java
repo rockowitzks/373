@@ -1,22 +1,24 @@
 package reservables.air;
+
+import java.time.*;
 public class Layover {
 	private Airport airport;
 	private Flight previous;
 	private Flight next;
-	private int time;
+	private Duration time;
 
 	// pre: nothing
 	// post: initializes object
 	public Layover() {
 		this.airport = null;
-		this.time = 0;
+		this.time = null;
 		this.previous = null;
 		this.next = null;
 	}
 	
 	// pre: parameters corresponding to the fields
 	// post: sets the fields to the given parameters
-	public Layover(Airport airport, Flight previous, Flight next, int time) {
+	public Layover(Airport airport, Flight previous, Flight next, Duration time) {
 		this.airport = airport;
 		this.previous = previous;
 		this.next = next;
@@ -26,7 +28,7 @@ public class Layover {
 	// pre: nothing
 	// post: returns the time (in minutes) over the layover
 	public void calculateLayover() {
-		time = previous.getArrivalTime() - next.getDepartureTime();
+		this.time = Duration.between(this.previous.getArrivalDate(), this.next.getDepartureDate());
 	}
 	
 	// pre: nothing
@@ -37,7 +39,7 @@ public class Layover {
 
 	// pre: nothing
 	// post: returns 
-	public int getTime() {
+	public Duration getTime() {
 		return this.time;
 	}
 
@@ -73,7 +75,7 @@ public class Layover {
 
 	// pre: an int time
 	// post: sets the field time to the parameter time
-	public void setTime(int time) {
+	public void setTime(Duration time) {
 		this.time = time;
 	}
 

@@ -1,21 +1,48 @@
 package users;
 
 import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.*;
 
+import reservables.air.*;
 import software.*;
+
 
 
 
 public class Driver {
 
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws IOException {
 		Scanner input = new Scanner(System.in);
 		
 		Website w1 = new Website();
+		ArrayList<Airline> airlines = new ArrayList<Airline>();
+		Airline united = new Airline();
+		united.setName("United");
+		united.setMultiplier(80);
+		
+		Airline emirates = new Airline();
+		emirates.setName("Emirates");
+		emirates.setMultiplier(100);
+		
+		Airline american = new Airline();
+		american.setName("American");
+		american.setMultiplier(90);
+		
+		Airline ryanAir = new Airline();
+		ryanAir.setName("RyanAir");
+		ryanAir.setMultiplier(20);
+		
+		airlines.add(united);
+		airlines.add(emirates);
+		airlines.add(american);
+		airlines.add(ryanAir);
+		
+		w1.generateAirports(airlines);
 		w1.fetchUserData();
-		w1.createAccount();
-		w1.logIn();
+		w1.createAccount(input);
+		w1.logIn(input);
 		
 		Entry e1 = new Entry();
 		Reservation r1 = new Reservation();
@@ -30,6 +57,8 @@ public class Driver {
 			e1.askFlightReturnDate(input);
 			e1.askDepartCity(input);
 			e1.askDestinationCity(input);
+			e1.findAirportFromCity(w1);//find airport function that adds airport to entry.
+			//dis
 		}
 		
 		if(e1.getHotel()) {
@@ -46,19 +75,35 @@ public class Driver {
 			e1.askCarClass(input);
 		}
 		
-		w1.findReservation();
-		//finish this so that the arraylists are populated
+		//generate the departing flights
+		w1.generateFlights(e1.getDepartureDate().atStartOfDay(), e1.getDepartureAirport());
+		//* breaks here **
+		w1.calculateRoutes(e1);
+		// post: prints out departing flights in standard form with index
+		for(int i = 0; i < w1.getDepartureRouteList().size(); i++) {
+			w1.getDepartureRouteList().get(i).calculatePrice(e1);
+			System.out.print(i + " " + w1.getDepartureRouteList());
+		}
+
+		// post: user selects the route, is added to reseveration object
+		r1.setDepartingRoute(w1.getCurrentAccount().selectDepartingRoute(input));
+		
+		//generate the departing flights
+		w1.generateFlights(e1.getReturnDate().atStartOfDay(), e1.getReturnAirport());
+		// post: prints out returning flights in standard form with index
+		for(int i = 0; i < w1.getReturnRouteList().size(); i++) {
+			w1.getReturnRouteList().get(i).calculatePrice(e1);
+			System.out.print(i + " " + w1.getReturnRouteList());
+		}
+		
+		// post: user selects the rout, is added to reservation object
+		r1.setReturningRoute(w1.getCurrentAccount().selectReturningRoute(input));
 		
 		//write and call print flight from website
 		
 		
-
-		//display departing flights/routes
-		r1.setDepartingRoute(w1.getCurrentAccount().selectDepartingRoute(input));
-		//display returning flights/routes
-		r1.setReturningRoute(w1.getCurrentAccount().selectReturningRoute(input));
-		r1.setHotel(w1.getCurrentAccount().selectHotel(input));
-		r1.setCar(w1.getCurrentAccount().selectCar(input));
+		//r1.setHotel(w1.getCurrentAccount().selectHotel(input));
+		//r1.setCar(w1.getCurrentAccount().selectCar(input));
 		input.close();
 	}
 

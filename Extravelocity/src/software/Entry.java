@@ -57,6 +57,19 @@ public class Entry {
 		this.destinationCity = null;
 	}
 	
+	public void findAirportFromCity(Website web) {
+		for(Airport airport: web.getAirportList()) {
+			if(airport.getCity().equals(this.departingCity)) {
+				this.departureAirport = airport;
+			}
+		}
+		for(Airport airport: web.getAirportList()) {
+			if(airport.getCity().equals(this.destinationCity)) {
+				this.returnAirport = airport;
+			}
+		}
+	}
+	
 	public void askFlight(Scanner input) {
 		while(true) {
 			System.out.print("Would you like to search flights? (y/n): ");

@@ -9,8 +9,6 @@ import java.util.*;
 
 public class Airport implements Serializable {
 	
-	  
-	 
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Flight> arrivalList;
 	private ArrayList<Flight> departureList;
@@ -210,9 +208,17 @@ public class Airport implements Serializable {
 		this.connections.add(connection);
 	}
 	
+	// pre: a FileOutPutStream out
+	// post: writes Object
 	public void airportOut(FileOutputStream out) throws IOException {
 		ObjectOutputStream objOut = new ObjectOutputStream(out);
 		objOut.writeObject(this);
+	}
+	
+	// pre: nothing
+	// post: returns the name of the airport
+	public String toString() {
+		return this.getName();
 	}
 
 }
