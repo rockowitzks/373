@@ -73,6 +73,7 @@ public class Driver {
 			e1.askDestinationCity(input);
 			e1.askSeatPriority(input);
 			e1.findAirportFromCity(w1);//find airport function that adds airport to entry.
+			e1.askSeatPriority(input);
 			//dis
 		}
 		
@@ -88,6 +89,8 @@ public class Driver {
 			e1.askCarRentalDate(input);
 			e1.askCarReturnDate(input);
 			e1.askCarClass(input);
+			w1.generateCars(e1.getDestinationCity());
+			w1.populateCarList(e1);
 		}
 		
 		//generate the departing flights
@@ -96,6 +99,7 @@ public class Driver {
 		//* breaks here **
 		w1.calculateRoutes(e1);
 		// post: prints out departing flights in standard form with index
+		if (e1.getFlight()) {
 		for(int i = 0; i < w1.getDepartureRouteList().size(); i++) {
 			w1.getDepartureRouteList().get(i).calculatePrice(e1);
 			System.out.print(i + " " + w1.getDepartureRouteList().get(i));
@@ -105,16 +109,24 @@ public class Driver {
 		r1.setDepartingRoute(w1.getCurrentAccount().selectDepartingRoute(input));
 		
 		//generate the departing flights
-		w1.generateFlights(e1.getReturnDate().atStartOfDay(), e1.getReturnAirport());
+		//w1.generateFlights(e1.getReturnDate().atStartOfDay(), e1.getReturnAirport());
 		// post: prints out returning flights in standard form with index
 	//	w1.printDepartureRoutes();
 		
 		// post: user selects the rout, is added to reservation object
+		for(int i = 0; i < w1.getDepartureRouteList().size(); i++) {
+			w1.getReturnRouteList().get(i).calculatePrice(e1);
+			System.out.print(i + " " + w1.getReturnRouteList().get(i));
+			}
 		r1.setReturningRoute(w1.getCurrentAccount().selectReturningRoute(input));
-		
+		}
 		//write and call print flight from website
-		
-		
+		if (e1.getCar()) {
+			System.out.println("Cars available in" + e1.getDestinationCity());
+			for (int i = 0; i < w1.getCarList().size(); i++) {
+				System.out.println(w1.getCarList().get(i));
+			}
+		}	
 		//r1.setHotel(w1.getCurrentAccount().selectHotel(input));
 		//r1.setCar(w1.getCurrentAccount().selectCar(input));
 		input.close();
