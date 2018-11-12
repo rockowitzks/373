@@ -18,7 +18,10 @@ public class Driver {
 	public static void main(String[] args) throws IOException {
 		Scanner input = new Scanner(System.in);
 		
+
 		Website w1 = new Website();
+		Account guest = new Account("Guest", "No Email", "Guest Name", "No Password", w1);
+		w1.setCurrentAccount(guest);
 		ArrayList<Airline> airlines = new ArrayList<Airline>();
 		Airline united = new Airline();
 		united.setName("United");
@@ -105,10 +108,7 @@ public class Driver {
 		//generate the departing flights
 		w1.generateFlights(e1.getReturnDate().atStartOfDay(), e1.getReturnAirport());
 		// post: prints out returning flights in standard form with index
-		for(int i = 0; i < w1.getReturnRouteList().size(); i++) {
-			w1.getReturnRouteList().get(i).calculatePrice(e1);
-			System.out.print(i + " " + w1.getReturnRouteList());
-		}
+		w1.printDepartureRoutes();
 		
 		// post: user selects the rout, is added to reservation object
 		r1.setReturningRoute(w1.getCurrentAccount().selectReturningRoute(input));

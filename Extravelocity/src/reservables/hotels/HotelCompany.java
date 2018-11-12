@@ -36,7 +36,7 @@ public class HotelCompany extends Company {
 	
 	// pre: a Hotel hotel
 	// post: returns true if it added, false otherwise
-	public boolean AddHotel(Hotel hotel) {
+	public boolean addHotel(Hotel hotel) {
 		return this.hotels.add(hotel);
 	}
 }
