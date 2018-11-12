@@ -92,7 +92,7 @@ public class Website {
 		Location asdf = new Location();
 		asdf.setCity(city);
 		asdf.setStreetAddress(city.concat(" Airport"));
-		new car
+		new Car();
 		for (int i = 0; i < badersWheels.size(); i++) {
 			badersWheels.get(i).getLocations().add(new CarRentalLocation(asdf));
 			
@@ -146,6 +146,8 @@ public class Website {
 		this.currentAccount = currentAccount;
 	}
 
+	// pre: a Scanner input
+	// post: asks the user to create an account or if they refuse, ask to login, and continue if they refuse too
 	public void createAccount(Scanner input) {
     	while(true) {
     		System.out.println("Account Creation Menu");
@@ -167,7 +169,7 @@ public class Website {
 
 	    		System.out.print("Please enter a password: ");
 	    		String password = input.nextLine();
-	    		Account a1 = new Account(name, email, accountName, password);
+	    		Account a1 = new Account(name, email, accountName, password, this);
 	    		userData.put(accountName, a1);
 	    		BufferedWriter out = null;
 	    		
@@ -204,6 +206,8 @@ public class Website {
 	
 	}
 
+	// pre: a Scanner input
+	// post: asks the user to login with username and password
 	public void logIn(Scanner input) {
     	while(true) {
     		System.out.println("Login Menu");
@@ -250,7 +254,7 @@ public class Website {
 		routed.put(data.getDepartureAirport().getName(), data.getDepartureAirport());
 		ArrayList<Route> routes = new ArrayList<Route>();
 		for (int i = 0; i < data.getDepartureAirport().getDepartureList().size(); i++) {
-			//makes sure flight is in the right day and not already goners
+			// makes sure flight is in the right day and not already goners
 			if(data.getDepartureAirport().getDepartureList().get(i).getDepartureDate().isAfter(t1) && data.getDepartureAirport().getDepartureList().get(i).getDepartureDate().isAfter(data.getDepartureDate().atStartOfDay()) && data.getDepartureAirport().getDepartureList().get(i).getDepartureDate().isBefore(data.getDepartureDate().plusDays(1).atStartOfDay())) {
 			//if direct flight has available seats always shown, checks pricing to find minimum price.
 			if (data.getDepartureAirport().getDepartureList().get(i).getArriving().getName() == data.getReturnAirport().getName() 
@@ -346,8 +350,7 @@ public class Website {
 					for (int l = 0; l < todo.get(j).getConnections().get(k).getFlightsPerDay(); l++) {
 						new Flight(todo.get(j), todo.get(j).getConnections().get(k).getDestination(), 
 								todo.get(j).getAirlineList().get((int)Math.random() * todo.get(j).getAirlineList().size()), craft, 
-								aDate.plusHours((long) (Math.random() * 24)), "111", 300, 0);
-						
+								aDate.plusHours((long) (Math.random() * 24)), "111", 300, 0);	
 					}
 					
 				}
@@ -355,80 +358,7 @@ public class Website {
 			aDate.equals(aDate.plusDays(1));
 		}
 	}
+}	
 	
 	// pre: Kris writes stupid functions
 	// post: who the fuck knows.
-	public void fetchUserData() throws FileNotFoundException {
-		File file = new File("UserData.txt"); 
-		
-			    Scanner sc = new Scanner(file); 
-			    
-			    while (sc.hasNextLine()) {
-			    	StringTokenizer line = new StringTokenizer(sc.nextLine(), " ");
-			    	String name = line.nextToken();
-			    	String email = line.nextToken();
-			    	String accountName = line.nextToken();
-			    	String password = line.nextToken();
-			    	Account a1 = new Account(name, email, accountName, password);
-			    	userData.put(accountName, a1);
-			    }
-			    sc.close();
-	}
-	
-	//pre: files exist to be read from, generate called from driver
-	//post: airportList generated airports have cities, lat and long, connections, and names
-	public void generateAirports(ArrayList<Airline> airLineList) throws IOException {
-		int i = 0;
-		String name;
-		String city;
-		String lat;
-		String line;
-		String ln;
-		double multiplier;		
-		Airport na; 
-		FileInputStream in = new FileInputStream("Airport_data.txt");
-		//FileOutputStream out = new FileOutputStream("airport.ser");
-		Scanner sc = new Scanner(in);
-		while (sc.hasNext()) {
-			name = sc.nextLine();
-			city = sc.nextLine();
-			lat = sc.nextLine();
-			ln = sc.nextLine();
-			//sc.nextLine();
-			line = sc.nextLine();
-			line.replaceAll("[^\\d.]", "");
-			multiplier = Double.parseDouble(line);
-			//sc.next();
-			na = new Airport(name, city, lat, ln, multiplier);
-			
-			na.setAirlineList(airLineList);
-			this.airportList.add(na);
-		}
-		sc.close();
-		Connection cn;
-		in.close();
-		in = new FileInputStream("acm.csv");
-		sc = new Scanner(in);
-		//String line;
-		String[] lineVector;
-		//line = sc.nextLine();
-		sc.nextLine();
-		int j = 0;
-		while (sc.hasNext()) {
-			lineVector =  sc.nextLine().split(",");
-			for (i = 0; i <  this.airportList.size() - 1; i++) {
-				if (Integer.parseInt(lineVector[i+1]) != 0) {
-					cn = new Connection(this.airportList.get(i), Integer.parseInt(lineVector[i+1]));
-					this.airportList.get(j).addConnection(cn);
-				}
-				
-			}
-			j++;
-			
-		}
-	sc.close();
-	in.close();
-	//out.close();
-	}
-}
-
