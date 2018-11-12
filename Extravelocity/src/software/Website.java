@@ -6,10 +6,13 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 import reservables.Company;
+import reservables.air.Aircraft;
+import reservables.air.Airline;
 import reservables.air.Airport;
 import reservables.air.Connection;
 import reservables.air.Flight;
 import reservables.air.Route;
+import reservables.air.Seat;
 import reservables.cars.Car;
 import reservables.hotels.Hotel;
 import users.Account;
@@ -310,6 +313,10 @@ public class Website {
 		ArrayList<Airport> todo = new ArrayList<Airport>();
 		todo.add(nexus);
 		Flight f;
+		Aircraft craft = new Aircraft();
+		craft.setAirspeed(987.84);
+		craft.setModel("Boeing 747");
+		//Random rand = new Random();
 		for (int i = 0; i < nexus.getConnections().size(); i++) {
 			todo.add(nexus.getConnections().get(i).getDestination());
 		} //quadruple nested loop runs 3 times for 3 days through every todo and creates l flgihts for every connection
@@ -317,14 +324,19 @@ public class Website {
 			for ( int j= 0; j < todo.size(); j++) {
 				for (int k = 0; k < todo.get(j).getConnections().size(); k++) {
 					for (int l = 0; l < todo.get(j).getConnections().get(k).getFlightsPerDay(); l++) {
+						f = new Flight(todo.get(j), todo.get(j).getConnections().get(k).getDestination(), 
+								todo.get(j).getAirlineList().get((int)Math.random() * todo.get(j).getAirlineList().size()), craft, 
+								aDate.plusHours((long) (Math.random() * 24)));
 						
 					}
 					
 				}
 			}
+			aDate.equals(aDate.plusDays(1));
 		}
 	}
-	
+	//pre Kris writes stupid functions
+	//post: who the fuck knows.
 	public void fetchUserData() throws FileNotFoundException {
 		File file = new File("UserData.txt"); 
 		
@@ -354,7 +366,7 @@ public class Website {
 		double multiplier;		
 		Airport na; 
 		FileInputStream in = new FileInputStream("Airport_data.txt");
-		FileOutputStream out = new FileOutputStream("airport.ser");
+		//FileOutputStream out = new FileOutputStream("airport.ser");
 		Scanner sc = new Scanner(in);
 		while (sc.hasNext()) {
 			name = sc.nextLine();
@@ -393,7 +405,7 @@ public class Website {
 		}
 	sc.close();
 	in.close();
-	out.close();
+	//out.close();
 	}
 }
 
