@@ -333,67 +333,62 @@ public class Website {
 		}
 	}
 	
-	// pre: Kris writes stupid functions
-	// post: who the fuck knows.
+	// pre: nothing
+	// post: retrieves the user account data
 	public void fetchUserData() throws FileNotFoundException {
 		File file = new File("UserData.txt"); 
 		
-			    Scanner sc = new Scanner(file); 
+			    Scanner scanner = new Scanner(file); 
 			    
-			    while (sc.hasNextLine()) {
-			    	StringTokenizer line = new StringTokenizer(sc.nextLine(), " ");
+			    while (scanner.hasNextLine()) {
+			    	StringTokenizer line = new StringTokenizer(scanner.nextLine(), " ");
 			    	String name = line.nextToken();
 			    	String email = line.nextToken();
 			    	String accountName = line.nextToken();
 			    	String password = line.nextToken();
-			    	Account a1 = new Account(name, email, accountName, password);
-			    	userData.put(accountName, a1);
+			    	Account account = new Account(name, email, accountName, password);
+			    	userData.put(accountName, account);
 			    }
-			    sc.close();
+			    scanner.close();
 	}
 	
 	//pre: files exist to be read from, generate called from driver
-	//post: airportList generated airports have cities, lat and long, connections, and names
+	//post: airportList generated airports have cities, latitude and longitude, connections, and names
 	public void generateAirports(ArrayList<Airline> airLineList) throws IOException {
-		int i = 0;
-		String name;
-		String city;
-		String lat;
-		String line;
-		String ln;
-		double multiplier;		
-		Airport na; 
+		String name = "", city = "", latitude = "", longitude = "", line = "";
+		double multiplier = 0;		
+		Airport airport = null; // maybe change this if there is a bug
 		FileInputStream in = new FileInputStream("Airport_data.txt");
-		//FileOutputStream out = new FileOutputStream("airport.ser");
-		Scanner sc = new Scanner(in);
-		while (sc.hasNext()) {
-			name = sc.nextLine();
-			city = sc.nextLine();
-			lat = sc.nextLine();
-			ln = sc.nextLine();
+		// FileOutputStream out = new FileOutputStream("airport.ser");
+		Scanner scanner = new Scanner(in);
+		while (scanner.hasNext()) {
+			name = scanner.nextLine();
+			city = scanner.nextLine();
+			latitude = scanner.nextLine();
+			longitude = scanner.nextLine();
 			//sc.nextLine();
-			line = sc.nextLine();
+			line = scanner.nextLine();
 			line.replaceAll("[^\\d.]", "");
 			multiplier = Double.parseDouble(line);
 			//sc.next();
-			na = new Airport(name, city, lat, ln, multiplier);
+			airport = new Airport(name, city, latitude, longitude, multiplier);
 			
-			na.setAirlineList(airLineList);
-			this.airportList.add(na);
+			airport.setAirlineList(airLineList);
+			this.airportList.add(airport);
 		}
-		sc.close();
+		scanner.close();
 		Connection cn;
 		in.close();
 		in = new FileInputStream("acm.csv");
-		sc = new Scanner(in);
+		scanner = new Scanner(in);
 		//String line;
 		String[] lineVector;
 		//line = sc.nextLine();
-		sc.nextLine();
+		scanner.nextLine(); // Skips list of airport names
 		int j = 0;
-		while (sc.hasNext()) {
-			lineVector =  sc.nextLine().split(",");
-			for (i = 0; i <  this.airportList.size() - 1; i++) {
+		while (scanner.hasNext()) {
+			lineVector =  scanner.nextLine().split(",");
+			for (int i = 0; i <  this.airportList.size() - 1; i++) {
 				if (Integer.parseInt(lineVector[i+1]) != 0) {
 					cn = new Connection(this.airportList.get(i), Integer.parseInt(lineVector[i+1]));
 					this.airportList.get(j).addConnection(cn);
@@ -403,7 +398,7 @@ public class Website {
 			j++;
 			
 		}
-	sc.close();
+	scanner.close();
 	in.close();
 	//out.close();
 	}

@@ -126,28 +126,28 @@ public class Flight {
 	public void calculateDistance() {
 		Scanner scanner = new Scanner(this.departing.getLatitude());
 		double latitude1 = scanner.nextDouble();
-		String hemisphere1 = scanner.next();
+		String hemisphere1 = scanner.next().trim();
 		scanner.close();
 		
 		scanner = new Scanner(this.departing.getLongitude());
 		double longitude1 = scanner.nextDouble();
-		String eastWestHemisphere1 = scanner.next();
+		String eastWestHemisphere1 = scanner.next().trim();
 		scanner.close();
 		
 		scanner = new Scanner(this.arriving.getLatitude());
 		double latitude2 = scanner.nextDouble();
-		String hemisphere2 = scanner.next();
+		String hemisphere2 = scanner.next().trim();
 		scanner.close();
 		
 		scanner = new Scanner(this.arriving.getLongitude());
 		double longitude2 = scanner.nextDouble();
-		String eastWestHemisphere2 = scanner.next();
+		String eastWestHemisphere2 = scanner.next().trim();
 		
 		
-		hemisphere1.trim();
-		eastWestHemisphere1.trim();
-		hemisphere2.trim();
-		eastWestHemisphere2.trim();
+//		hemisphere1.trim();
+//		eastWestHemisphere1.trim();
+//		hemisphere2.trim();
+//		eastWestHemisphere2.trim();
 		
 		if (hemisphere1.equals("S")) {
 			latitude1 = -latitude1;
