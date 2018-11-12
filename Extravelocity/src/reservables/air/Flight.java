@@ -35,7 +35,22 @@ public class Flight {
 		this.arrivalTime = 0;
 		this.arrivalDate = null;
 	}
+	public Flight(Airport departing, Airport arriving, Airline line, Aircraft plane, LocalDateTime departureDate) {
+		this.setDeparting(departing);
+		this.setArriving(arriving);
+		this.setAirline(line);
+		this.setAircraft(plane);
+		this.setDepartureDate(departureDate);
+		this.calculateDistance();
+		this.calculateArrivalDate();
+		
+	}
 	
+	private void calculateArrivalDate() {
+		
+		this.setArrivalDate(this.getDepartureDate().plusHours((long) (this.getDistance()/this.getAircraft().getAirspeed())));
+		
+	}
 	// pre: parameters corresponding
 	// post: sets the fields to the corresponding parameters
 	public Flight(String flightNumber, Airline airline, Aircraft aircraft, double capacity, Airport arriving,
@@ -91,7 +106,44 @@ public class Flight {
 	public Aircraft getAircraft() {
 		return this.aircraft;
 	}
+	//pre: needs arrival, needs departure airports
+	//post fills out distance field in kilometers
+	public void calculateDistance() {
+		Scanner s1 = new Scanner(this.departing.getLatitude());
+		double lat1 = s1.nextDouble();
+		String hem1 = s1.next();
+		s1 = new Scanner(this.departing.getLongitude());
+		double lon1 = s1.nextDouble();
+		String nsh1 = s1.next();
+		s1 = new Scanner(this.arriving.getLatitude());
+		double lat2 = s1.nextDouble();
+		String hem2 = s1.next();
+		s1 = new Scanner(this.arriving.getLongitude());
+		double lon2 = s1.nextDouble();
+		String nsh2 = s1.next();
+		//safetydebug
+		System.out.println(hem1);
+		hem1.trim();
+		nsh1.trim();
+		hem2.trim();
+		nsh2.trim();
+		if (hem1.equals("S"))
+			lat1 = lat1 *-1;
+		if (hem2.equals("S"))
+			lat2 = lat2*-1;
+		if (nsh1.equals("W"))
+			lon1 = lon1 *-1;
+		if (nsh2.equals("W"))
+			lon2 = lon2*-1;
+		double theta = lon1 - lon2;
+		double dist = Math.sin(Math.toRadians(lat1)) * Math.sin(Math.toRadians(lat2)) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.cos(Math.toRadians(theta));
+		dist = Math.acos(dist);
+		dist = Math.toDegrees(dist);
+		dist = dist * 60 * 1.1515;
+		dist = dist * 1.609344;
+		this.setDistance(dist);
 
+	}
 	// pre: nothing
 	// post: returns distance
 	public double getDistance() {
