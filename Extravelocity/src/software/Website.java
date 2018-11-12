@@ -12,14 +12,15 @@ import reservables.air.Airport;
 import reservables.air.Connection;
 import reservables.air.Flight;
 import reservables.air.Route;
-import reservables.cars.Car;
-import reservables.cars.CarRentalLocation;
-import reservables.cars.RentalCarCompany;
+//import reservables.cars.Car;
+//import reservables.cars.CarRentalLocation;
+import reservables.cars.*;
 import reservables.hotels.Hotel;
 import users.Account;
 
 public class Website {
 	private ArrayList<Company> companyList;
+	private ArrayList<RentalCarCompany> carCompanyList;
 	private ArrayList<Airport> airportList;
 	private ArrayList<Route> returnRouteList;
 	private ArrayList<Route> departureRouteList;
@@ -80,28 +81,30 @@ public class Website {
 	//pre: user says where he wants to find cars
 	//post: list of cars generated with is available and the company you can rent it from
 		public void generateCars(String city) {
-		ArrayList<RentalCarCompany> badersWheels = new ArrayList<RentalCarCompany>();
-		badersWheels.add(new RentalCarCompany("Enterprise", 2.7, 1.1, 7777777,
-			"enterprise@enterprise", new ArrayList<CarRentalLocation>()));
-		badersWheels.add(new RentalCarCompany("Avis", 3.2, 1.3, 2137777,
-				"customersupport@Avis", new ArrayList<CarRentalLocation>()));
-		badersWheels.add(new RentalCarCompany("Hertz", 1.2, .7, 8913333,
-				"trashbin@Hertz", new ArrayList<CarRentalLocation>()));
-		badersWheels.add(new RentalCarCompany("Budget", 5, 1.8, 1234567,
-				"wecare@Budget", new ArrayList<CarRentalLocation>()));
 		Location asdf = new Location();
 		asdf.setCity(city);
 		asdf.setStreetAddress(city.concat(" Airport"));
-		new car
-		for (int i = 0; i < badersWheels.size(); i++) {
-			badersWheels.get(i).getLocations().add(new CarRentalLocation(asdf));
-			
+		CarRentalLocation crl;
+		for (int i = 0; i < this.getCarCompanyList().size(); i++) {
+			if (!this.getCarCompanyList().get(i).getLocations().containsKey(city)) {
+				this.getCarCompanyList().get(i).addLocation(new CarRentalLocation(asdf));
+			}
+			//badersWheels.get(i).getLocations().put(.getCity());
 		}
+		
 	}
 	// pre: nothing
 	// post: returns currentAccount
 	public Account getCurrentAccount() {
 		return this.currentAccount;
+	}
+
+	public ArrayList<RentalCarCompany> getCarCompanyList() {
+		return carCompanyList;
+	}
+
+	public void setCarCompanyList(ArrayList<RentalCarCompany> carCompanyList) {
+		this.carCompanyList = carCompanyList;
 	}
 
 	// pre: an ArrayList of Company companyList
