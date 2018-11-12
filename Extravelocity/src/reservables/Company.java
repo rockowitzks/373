@@ -11,7 +11,7 @@ public class Company {
 	// pre: nothing
 	// post: sets the name to empty and rating to 1 
 	public Company() {
-		this.name = "";
+		this.name = null;
 		this.phoneNumber = 0;
 		this.emailAddress = null;
 		this.rating = 0;
@@ -53,8 +53,10 @@ public class Company {
 	public void setRating(double rating) {
 		if(rating <= 5 && rating > 0) {
 		this.rating = rating;
+		} else {
+			System.out.println("Rating is not a valid number: " + rating);
+			System.exit(-3);
 		}
-		System.out.println("Not a valid number");
 	}
 	
 	// pre: nothing
