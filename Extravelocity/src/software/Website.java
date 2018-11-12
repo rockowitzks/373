@@ -2,7 +2,6 @@ package software;
 
 import java.util.*;
 import java.io.*;
-import java.time.Duration;
 import java.time.LocalDateTime;
 
 import reservables.Company;
@@ -12,7 +11,6 @@ import reservables.air.Airport;
 import reservables.air.Connection;
 import reservables.air.Flight;
 import reservables.air.Route;
-import reservables.air.Seat;
 import reservables.cars.Car;
 import reservables.hotels.Hotel;
 import users.Account;
@@ -129,10 +127,10 @@ public class Website {
     	while(true) {
     		System.out.println("Account Creation Menu");
 	    	System.out.print("Create a new account? (y/n): ");
-	    	String response = input.next();
+	    	String response = input.nextLine();
 	    	if(response.equals("y") || response.equals("Y")) {
 	    		System.out.print("Please enter an account name: ");
-	    		String accountName = input.next();
+	    		String accountName = input.nextLine();
 	    		if (userData.get(accountName) != null){
 	    			System.out.println("Username already exists, please choose another");
 	    			continue;
@@ -140,12 +138,12 @@ public class Website {
 	    		
 	    		
 	    		System.out.print("Please enter your name: ");
-	    		String name = input.next();
+	    		String name = input.nextLine();
 	    		System.out.print("Please enter your email address: ");
-	    		String email = input.next();
+	    		String email = input.nextLine();
 
 	    		System.out.print("Please enter a password: ");
-	    		String password = input.next();
+	    		String password = input.nextLine();
 	    		Account a1 = new Account(name, email, accountName, password);
 	    		userData.put(accountName, a1);
 	    		BufferedWriter out = null;
@@ -187,16 +185,16 @@ public class Website {
     	while(true) {
     		System.out.println("Login Menu");
     		System.out.print("Would you like to login? (y/n): ");
-	    	String response = input.next();
+	    	String response = input.nextLine();
 	    	if(response.equals("y") || response.equals("Y")) {
 	    		System.out.println("Enter Username");
-	    		String accountName = input.next();
+	    		String accountName = input.nextLine();
 	    		if (userData.get(accountName) == null){
 	    			System.out.println("Username does not exist");
 	    			continue;
 	    		}
 	    		System.out.println("Enter Password");
-	    		String password = input.next();
+	    		String password = input.nextLine();
 	    		
 	    		if(!userData.get(accountName).getPassword().equals(password)) {
 	    			System.out.println("Incorrect Password");
@@ -222,7 +220,6 @@ public class Website {
 	//post: generates list of viable routes for passenger to take
 	public void calculateRoutes(Entry data) {
 		HashMap<String, Airport> routed = new HashMap<String,Airport>();
-		double minDirectPrice = 300000000;
 		double minPrice = 1000000000;
 		LocalDateTime t1 = LocalDateTime.now();
 		//Duration minDuration;
@@ -312,7 +309,7 @@ public class Website {
 	public void generateFlights(LocalDateTime aDate, Airport nexus) {
 		ArrayList<Airport> todo = new ArrayList<Airport>();
 		todo.add(nexus);
-		Flight f;
+		//Flight f = null;
 		Aircraft craft = new Aircraft();
 		craft.setAirspeed(987.84);
 		craft.setModel("Boeing 747");
@@ -324,7 +321,7 @@ public class Website {
 			for ( int j= 0; j < todo.size(); j++) {
 				for (int k = 0; k < todo.get(j).getConnections().size(); k++) {
 					for (int l = 0; l < todo.get(j).getConnections().get(k).getFlightsPerDay(); l++) {
-						f = new Flight(todo.get(j), todo.get(j).getConnections().get(k).getDestination(), 
+						new Flight(todo.get(j), todo.get(j).getConnections().get(k).getDestination(), 
 								todo.get(j).getAirlineList().get((int)Math.random() * todo.get(j).getAirlineList().size()), craft, 
 								aDate.plusHours((long) (Math.random() * 24)));
 						
@@ -335,8 +332,9 @@ public class Website {
 			aDate.equals(aDate.plusDays(1));
 		}
 	}
-	//pre Kris writes stupid functions
-	//post: who the fuck knows.
+	
+	// pre: Kris writes stupid functions
+	// post: who the fuck knows.
 	public void fetchUserData() throws FileNotFoundException {
 		File file = new File("UserData.txt"); 
 		
