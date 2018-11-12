@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import reservables.Company;
 import reservables.air.Airport;
 import reservables.air.Connection;
+import reservables.air.Flight;
 import reservables.air.Route;
 import reservables.cars.Car;
 import reservables.hotels.Hotel;
@@ -306,9 +307,25 @@ public class Website {
 		this.setReturnRouteList(routes);
 	}
 	
-	
-	public void generateFlights(LocalDateTime aDate) {
-		
+	//pre: airport list generated, date and base airport given
+	//post: 3 days of flights generated at nexus and connecting airports.
+	public void generateFlights(LocalDateTime aDate, Airport nexus) {
+		ArrayList<Airport> todo = new ArrayList<Airport>();
+		todo.add(nexus);
+		Flight f;
+		for (int i = 0; i < nexus.getConnections().size(); i++) {
+			todo.add(nexus.getConnections().get(i).getDestination());
+		} //quadruple nested loop runs 3 times for 3 days through every todo and creates l flgihts for every connection
+		for (int i = 0; i <3; i++) {
+			for ( int j= 0; j < todo.size(); j++) {
+				for (int k = 0; k < todo.get(j).getConnections().size(); k++) {
+					for (int l = 0; l < todo.get(j).getConnections().get(k).getFlightsPerDay(); l++) {
+						
+					}
+					
+				}
+			}
+		}
 	}
 	
 	public void fetchUserData() throws FileNotFoundException {
