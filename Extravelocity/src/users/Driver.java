@@ -18,7 +18,10 @@ public class Driver {
 	public static void main(String[] args) throws IOException {
 		Scanner input = new Scanner(System.in);
 		
+
 		Website w1 = new Website();
+		Account guest = new Account("Guest", "No Email", "Guest Name", "No Password", w1);
+		w1.setCurrentAccount(guest);
 		ArrayList<Airline> airlines = new ArrayList<Airline>();
 		Airline united = new Airline();
 		united.setName("United");
