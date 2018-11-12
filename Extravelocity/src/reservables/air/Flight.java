@@ -38,8 +38,8 @@ public class Flight {
 	
 	// pre: parameters corresponding to fields
 	// post: sets the fields to the parameters and initializes the objects
-	public Flight(Airport departing, Airport arriving, Airline airline, Aircraft aircraft, LocalDateTime departureDate,
-			String flightNumber, double capacity, double price) {
+	public Flight(Airport departing, Airport arriving, Airline airline, Aircraft aircraft, 
+			LocalDateTime departureDate, String flightNumber, double capacity, double price) {
 		this.setDeparting(departing);
 		this.setArriving(arriving);
 		this.setAirline(airline);
@@ -60,7 +60,8 @@ public class Flight {
 	// pre: nothing
 	// post: calculates the arrival date based on departure date and speed and distance
 	private void calculateArrivalDate() {
-		this.setArrivalDate(this.getDepartureDate().plusHours((long) (this.getDistance()/this.getAircraft().getAirspeed())));	
+		this.setArrivalDate(this.getDepartureDate().plusHours((long)
+				(this.getDistance()/this.getAircraft().getAirspeed())));	
 	}
 	
 	// pre: parameters corresponding
@@ -84,7 +85,8 @@ public class Flight {
 	}
 	
 	// pre: nothing
-	// post: returns true if seat size equals capacity, exits if seat size is greater than capacity, false otherwise
+	// post: returns true if seat size equals capacity, exits if seat size is greater than capacity,
+	//		false otherwise
 	public boolean isFull() {
 		if(this.seats.size() > capacity) {
 			System.out.println("You made a mistake, seats size is " +  this.seats.size() + 
@@ -124,28 +126,28 @@ public class Flight {
 	public void calculateDistance() {
 		Scanner scanner = new Scanner(this.departing.getLatitude());
 		double latitude1 = scanner.nextDouble();
-		String hemisphere1 = scanner.next();
+		String hemisphere1 = scanner.next().trim();
 		scanner.close();
 		
 		scanner = new Scanner(this.departing.getLongitude());
 		double longitude1 = scanner.nextDouble();
-		String eastWestHemisphere1 = scanner.next();
+		String eastWestHemisphere1 = scanner.next().trim();
 		scanner.close();
 		
 		scanner = new Scanner(this.arriving.getLatitude());
 		double latitude2 = scanner.nextDouble();
-		String hemisphere2 = scanner.next();
+		String hemisphere2 = scanner.next().trim();
 		scanner.close();
 		
 		scanner = new Scanner(this.arriving.getLongitude());
 		double longitude2 = scanner.nextDouble();
-		String eastWestHemisphere2 = scanner.next();
+		String eastWestHemisphere2 = scanner.next().trim();
 		
 		
-		hemisphere1.trim();
-		eastWestHemisphere1.trim();
-		hemisphere2.trim();
-		eastWestHemisphere2.trim();
+//		hemisphere1.trim();
+//		eastWestHemisphere1.trim();
+//		hemisphere2.trim();
+//		eastWestHemisphere2.trim();
 		
 		if (hemisphere1.equals("S")) {
 			latitude1 = -latitude1;
@@ -165,14 +167,15 @@ public class Flight {
 		
 		double theta = longitude1 - longitude2;
 		double distance = Math.sin(Math.toRadians(latitude1)) * Math.sin(Math.toRadians(latitude2)) + 
-						Math.cos(Math.toRadians(latitude1)) * Math.cos(Math.toRadians(latitude2)) * Math.cos(Math.toRadians(theta));
+			Math.cos(Math.toRadians(latitude1)) * Math.cos(Math.toRadians(latitude2)) * 
+			Math.cos(Math.toRadians(theta));
 		
-		distance = Math.acos(distance);
-		distance = Math.toDegrees(distance);
-		distance = distance * 60 * 1.1515;
-		distance = distance * 1.609344;
+//		distance = Math.acos(distance);
+//		distance = Math.toDegrees(distance);
+//		distance = distance * 60 * 1.1515;
+//		distance = distance * 1.609344;
 		
-		// distance = 1.609344 * 60 * 1.1515 * Math.toDegrees(Math.acos(distance));
+		distance = 119.019 * Math.toDegrees(Math.acos(distance));
 		this.setDistance(distance);
 		scanner.close();
 	}

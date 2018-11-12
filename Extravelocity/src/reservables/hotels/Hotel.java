@@ -134,7 +134,7 @@ public class Hotel {
 		LocalDate now = LocalDate.now();
 		Period stayDuration = Period.between(entry.getCheckOutDate(), entry.getCheckInDate());
 		Period urgencyFactor = Period.between(entry.getCheckInDate(), now);
-		double price = company.getMultiplier() * entry.getRoomType().getMultiplier() * 
+		double price = company.getMultiplier() * entry.getRoomType() * 
 				stayDuration.getDays() * (1 + (5.0 * Math.exp( -1.0 * (double)urgencyFactor.getDays())));
 		this.setPrice(price);
 		return price;
@@ -143,7 +143,7 @@ public class Hotel {
 	// pre: nothing
 	// post: returns a String consisting of company, amenities, and cost
 	public String toString() {
-		return (this.getCompany().getName() + " " + this.getAmenityString() + " $" + (this.getPrice()));
+		return (this.getCompany().getName() + " " + this.getAmenityString() + " $" + (this.getPrice()) + ".");
 	}
 	
 }
