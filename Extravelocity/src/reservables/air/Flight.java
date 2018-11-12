@@ -1,8 +1,6 @@
 package reservables.air;
 
 import java.util.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
@@ -384,13 +382,13 @@ public class Flight {
 	// pre: nothing
 	// post: converts the flight's information to a String 
 	public String toString() {
-		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String answer = "";
 		answer = answer + (this.getDeparting().getName() + "  " + 
 		this.getFlightNumber() + "  " + this.getAirline().getName());
 		
-		answer = answer + (" Departure Date: " + this.getDepartureDate().format(df) + 
-				" Arrival date: " + this.getArrivalDate().format(df));
+		answer = answer + (" Departure Date: " + this.getDepartureDate().format(dateFormatter) + 
+				", Arrival date: " + this.getArrivalDate().format(dateFormatter));
 		return answer;
 	}
 }

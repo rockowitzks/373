@@ -7,8 +7,6 @@ import reservables.Company;
 
 public class Airline extends Company implements Serializable {
 	
-	  
-	 
 	private static final long serialVersionUID = 7382333856064426484L;
 	private ArrayList<Airport> airports;
 	
