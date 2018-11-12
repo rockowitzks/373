@@ -344,7 +344,8 @@ public class Flight {
 		} else if(this.getDistance() >= 8000) {
 			return 0.0035 * this.getDistance();
 		} else {
-			System.out.println("Error, distance should be greater than 0 but it is " + this.getDistance());
+			System.out.println("Error, flight " + this.getFlightNumber() + 
+					" distance should be greater than 0 but it is " + this.getDistance());
 			return 0;
 		}
 	}
@@ -359,7 +360,7 @@ public class Flight {
 		
 		
 		double sum = this.getAirline().getMultiplier() + randomNumber - (0.7 * duration);
-		double product = (1 + Math.exp(-1.0 * urgencyFactor.getDays())) * this.getArriving().getAirportMultiplier()
+		double product = (1 + Math.exp(urgencyFactor.getDays())) * this.getArriving().getAirportMultiplier()
 				* this.getDeparting().getAirportMultiplier() * entry.getSeatPriority()
 				* this.getDistancePrice();
 		

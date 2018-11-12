@@ -69,9 +69,10 @@ public class Location {
 	public void setZipCode(int zipCode) {
 		if(countDigits(zipCode) >= 5) {
 		this.zipCode = zipCode;
-		} else {
-			System.out.println("Error, the inputed zipCode, " + zipCode + ", is less than five digits.");
-		}
+		} 
+//		else {
+//			System.out.println("Error, the inputed zipCode, " + zipCode + ", is less than five digits.");
+//		}
 	}
 
 	// pre: a String country

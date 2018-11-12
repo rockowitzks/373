@@ -116,7 +116,7 @@ public class Account {
 	
 	// pre: a Reservation reservation 
 	// post: adds the reservation to the account's reservation list and set's the reservation's account to this
-	public void AddRerservation(Reservation reservation) {
+	public void addRerservation(Reservation reservation) {
 		this.getReservations().add(reservation);
 		reservation.setAccount(this);
 	}
@@ -223,7 +223,7 @@ public class Account {
 		if(answer.equalsIgnoreCase("y") || answer.equalsIgnoreCase("yes")) {
 			// ProcessPayment
 			System.out.println("Alright, reservation added");
-			this.AddRerservation(reservation);
+			this.addRerservation(reservation);
 			return true;
 		}
 		

@@ -95,12 +95,42 @@ public class Reservation {
 	// post: prints the reservation's fields and total cost
 	public void printReservation() {
 		System.out.println(this.getAccount());
-		System.out.println(this.getDepartingRoute());
-		System.out.println(this.getReturningRoute());
-		System.out.println(this.getHotel());
-		System.out.println(this.getCar());
-		double totalCost = this.getCar().getPrice() + this.getHotel().getPrice() + this.getDepartingRoute().getPrice()
-				+ this.getReturningRoute().getPrice();
+		if(this.getDepartingRoute() != null) {
+			System.out.println(this.getDepartingRoute());
+		}
+		
+		if(this.getReturningRoute() != null) {
+			System.out.println(this.getReturningRoute());
+		}
+		
+		if(this.getHotel() != null) {
+			System.out.println(this.getHotel());
+		}
+		if(this.getCar() != null) {
+			System.out.println(this.getCar());
+		}
+		
+		double carPrice = 0;
+		double hotelPrice = 0;
+		double departingRoutePrice = 0;
+		double returningRoutePrice = 0;
+		
+		if(this.getCar() != null) {
+			carPrice = this.getCar().getPrice();
+		} 
+		if(this.getHotel() != null) {
+			hotelPrice = this.getHotel().getPrice();
+		}
+		
+		if(this.getDepartingRoute() != null) {
+			departingRoutePrice = this.getDepartingRoute().getPrice(); 
+		}
+		
+		if(this.getReturningRoute() != null) {
+			returningRoutePrice = this.getReturningRoute().getPrice();
+		}
+		
+		double totalCost = carPrice + hotelPrice + departingRoutePrice + returningRoutePrice;
 		System.out.printf("The total cost is $ %.2f.", totalCost);
 	}
 }

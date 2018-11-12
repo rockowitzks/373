@@ -4,7 +4,6 @@ import java.util.*;
 import java.io.*;
 import java.time.LocalDateTime;
 
-import reservables.Company;
 import reservables.Location;
 import reservables.air.Aircraft;
 import reservables.air.Airline;
@@ -487,7 +486,7 @@ public class Website {
 			this.airportList.add(airport);
 		}
 		scanner.close();
-		Connection cn;
+		Connection connection;
 		in.close();
 		in = new FileInputStream("acm.csv");
 		scanner = new Scanner(in);
@@ -500,8 +499,8 @@ public class Website {
 			lineVector =  scanner.nextLine().split(",");
 			for (int i = 0; i <  this.airportList.size() - 1; i++) {
 				if (Integer.parseInt(lineVector[i+1]) != 0) {
-					cn = new Connection(this.airportList.get(i), Integer.parseInt(lineVector[i+1]));
-					this.airportList.get(j).addConnection(cn);
+					connection = new Connection(this.airportList.get(i), Integer.parseInt(lineVector[i+1]));
+					this.airportList.get(j).addConnection(connection);
 				}
 				
 			}
