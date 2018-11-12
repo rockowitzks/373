@@ -25,14 +25,16 @@ public class Account {
 		password = null;
 		reservations = new ArrayList<Reservation>();
 	}
+	
 	// pre: parameters corresponding the fields
 	// post: sets the fields to the parameters and instantiates the object
-	public Account(String name, String email, String accountName, String password) {
+	public Account(String name, String email, String accountName, String password, Website website) {
 		this.name = name;
 		this.email = email;
 		this.accountName = accountName;
 		this.password = password;
 		this.reservations = new ArrayList<Reservation>();
+		this.website = website;
 	}
 	
 	// pre: nothing
@@ -171,7 +173,7 @@ public class Account {
 	// post: asks the user to select the departing route 
 	public Route selectDepartingRoute(Scanner input) {
 		if(this.getWebsite().getDepartureRouteList().isEmpty()) {
-			System.out.println("Error: departure route list list is empty");
+			System.out.println("Error: departure route list is empty");
 			System.exit(-1);
 			return null;
 		}
