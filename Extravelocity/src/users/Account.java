@@ -136,7 +136,7 @@ public class Account {
 		
 		while(true) {
 			System.out.println("Which hotel would you like to select? (Write in the number)");
-			int index = input.nextInt();
+			int index = Integer.parseInt(input.nextLine());
 			if(index < 0 || index >= this.getWebsite().getHotelList().size()) {
 				System.out.println(index + " is not a valid number because it is negative or greater than the "
 						+ "last index of the hotel list " + (this.website.getHotelList().size() - 1) + ".");
@@ -157,7 +157,7 @@ public class Account {
 		
 		while(true) {
 			System.out.println("Which car would you like to select? (Write in the number)");
-			int index = input.nextInt();
+			int index = Integer.parseInt(input.nextLine());
 			if(index < 0 || index >= this.getWebsite().getCarList().size()) {
 				System.out.println(index + " is not a valid number because it is negative or greater than the "
 						+ "last index of the car list " + (this.website.getCarList().size() - 1) + ".");
@@ -178,7 +178,7 @@ public class Account {
 		
 		while(true) {
 			System.out.println("Which departing route would you like to select? (Write in the number)");
-			int index = input.nextInt();
+			int index = Integer.parseInt(input.nextLine());
 			if(index < 0 || index >= this.getWebsite().getDepartureRouteList().size()) {
 				System.out.println(index + " is not a valid number because it is negative or greater than the "
 						+ "last index of the departing route list " + 
@@ -200,7 +200,7 @@ public class Account {
 		
 		while(true) {
 			System.out.println("Which return route would you like to select? (Write in the number)");
-			int index = input.nextInt();
+			int index = Integer.parseInt(input.nextLine());
 			if(index < 0 || index >= this.getWebsite().getReturnRouteList().size()) {
 				System.out.println(index + " is not a valid number because it is negative or greater than the "
 						+ "last index of the returning route list " + 
