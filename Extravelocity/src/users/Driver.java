@@ -99,7 +99,7 @@ public class Driver {
 		// post: prints out departing flights in standard form with index
 		for(int i = 0; i < w1.getDepartureRouteList().size(); i++) {
 			w1.getDepartureRouteList().get(i).calculatePrice(e1);
-			System.out.print(i + " " + w1.getDepartureRouteList());
+			System.out.print(i + " " + w1.getDepartureRouteList().get(i));
 		}
 
 		// post: user selects the route, is added to reseveration object
@@ -108,7 +108,7 @@ public class Driver {
 		//generate the departing flights
 		w1.generateFlights(e1.getReturnDate().atStartOfDay(), e1.getReturnAirport());
 		// post: prints out returning flights in standard form with index
-		w1.printDepartureRoutes();
+	//	w1.printDepartureRoutes();
 		
 		// post: user selects the rout, is added to reservation object
 		r1.setReturningRoute(w1.getCurrentAccount().selectReturningRoute(input));
