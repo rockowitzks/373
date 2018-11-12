@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import reservables.air.*;
+import reservables.cars.CarRentalLocation;
+import reservables.cars.RentalCarCompany;
 import software.*;
 
 
@@ -38,6 +40,17 @@ public class Driver {
 		airlines.add(emirates);
 		airlines.add(american);
 		airlines.add(ryanAir);
+		
+		ArrayList<RentalCarCompany> badersWheels = new ArrayList<RentalCarCompany>();
+		badersWheels.add(new RentalCarCompany("Enterprise", 2.7, 1.1, 7777777,
+			"enterprise@enterprise", new HashMap<String, CarRentalLocation>()));
+		badersWheels.add(new RentalCarCompany("Avis", 3.2, 1.3, 2137777,
+				"customersupport@Avis", new HashMap<String, CarRentalLocation>()));
+		badersWheels.add(new RentalCarCompany("Hertz", 1.2, .7, 8913333,
+				"trashbin@Hertz", new HashMap<String, CarRentalLocation>()));
+		badersWheels.add(new RentalCarCompany("Budget", 5, 1.8, 1234567,
+				"wecare@Budget", new HashMap<String, CarRentalLocation>()));
+		w1.setCarCompanyList(badersWheels);
 		
 		w1.generateAirports(airlines);
 		w1.fetchUserData();
@@ -77,6 +90,7 @@ public class Driver {
 		
 		//generate the departing flights
 		w1.generateFlights(e1.getDepartureDate().atStartOfDay(), e1.getDepartureAirport());
+		w1.generateFlights(e1.getReturnDate().atStartOfDay(), e1.getReturnAirport());
 		//* breaks here **
 		w1.calculateRoutes(e1);
 		// post: prints out departing flights in standard form with index

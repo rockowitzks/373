@@ -58,6 +58,21 @@ public class Car {
 		this.rentalCarCompany = rentalCarCompany;
 	}	
 		
+	public Car(int i) {
+		this.make = null;
+		this.model = null;
+		this.licensePlate = null;
+		this.isAvailable = true;
+		this.carClass = i;
+		this.renter = new Account();
+		this.mpg = 0;
+		this.stars = 0;
+		this.miles = 0;
+		this.carRentalLocation = new CarRentalLocation();
+		this.price = 0;
+		this.rentalCarCompany = null;
+	}
+
 	// pre: nothing
 	// post: returns make
 	public String getMake() {

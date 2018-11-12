@@ -22,7 +22,16 @@ public class CarRentalLocation extends Location {
 		this.cars = cars;
 		this.company = company;
 	}
-	
+
+	public CarRentalLocation(Location asdf) {
+		this.cars = new ArrayList<Car>();
+		this.setCountry(asdf.getCountry());
+		this.setCity(asdf.getCity());
+		this.setState(asdf.getState());
+		this.setStreetAddress(asdf.getStreetAddress());
+		this.setZipCode(asdf.getZipCode());
+	}
+
 	// pre: nothing
 	// post: returns cars
 	public ArrayList<Car> getCars() {
@@ -45,5 +54,10 @@ public class CarRentalLocation extends Location {
 	// post: sets the field company to the parameter company
 	public void setCompany(RentalCarCompany company) {
 		this.company = company;
+	}
+	//pre: car list created
+	//post adds car
+	public void addCar(Car car) {
+		this.cars.add(car);
 	}
 }

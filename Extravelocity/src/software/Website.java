@@ -87,7 +87,11 @@ public class Website {
 		CarRentalLocation crl;
 		for (int i = 0; i < this.getCarCompanyList().size(); i++) {
 			if (!this.getCarCompanyList().get(i).getLocations().containsKey(city)) {
-				this.getCarCompanyList().get(i).addLocation(new CarRentalLocation(asdf));
+				crl = new CarRentalLocation(asdf);
+				crl.addCar(new Car(1));
+				crl.addCar(new Car(2));
+				crl.addCar(new Car(3));
+				this.getCarCompanyList().get(i).addLocation(crl);
 			}
 			//badersWheels.get(i).getLocations().put(.getCity());
 		}
