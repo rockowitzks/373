@@ -5,6 +5,7 @@ import java.io.*;
 import java.time.LocalDateTime;
 
 import reservables.Company;
+import reservables.Location;
 import reservables.air.Aircraft;
 import reservables.air.Airline;
 import reservables.air.Airport;
@@ -12,6 +13,8 @@ import reservables.air.Connection;
 import reservables.air.Flight;
 import reservables.air.Route;
 import reservables.cars.Car;
+import reservables.cars.CarRentalLocation;
+import reservables.cars.RentalCarCompany;
 import reservables.hotels.Hotel;
 import users.Account;
 
@@ -75,26 +78,26 @@ public class Website {
 		return this.carList;
 	}
 	//pre: user says where he wants to find cars
-		//post: list of cars generated with is available and the company you can rent it from
-//		public void generateCars(String city) {
-//			ArrayList<RentalCarCompany> badersWheels = new ArrayList<RentalCarCompany>();
-//			badersWheels.add(new RentalCarCompany("Enterprise", 2.7, 1.1, 7777777,
-//				"enterprise@enterprise", new ArrayList<CarRentalLocation>()));
-//			badersWheels.add(new RentalCarCompany("Avis", 3.2, 1.3, 2137777,
-//					"customersupport@Avis", new ArrayList<CarRentalLocation>()));
-//			badersWheels.add(new RentalCarCompany("Hertz", 1.2, .7, 8913333,
-//					"trashbin@Hertz", new ArrayList<CarRentalLocation>()));
-//			badersWheels.add(new RentalCarCompany("Budget", 5, 1.8, 1234567,
-//					"wecare@Budget", new ArrayList<CarRentalLocation>()));
-//			Location asdf = new Location();
-//			asdf.setCity(city);
-//			asdf.setStreetAddress(city.concat(" Airport"));
-//			new car
-//			for (int i = 0; i < badersWheels.size(); i++) {
-//				badersWheels.get(i).getLocations().add(new CarRentalLocation(asdf));
-//				
-//			}
-//		}
+	//post: list of cars generated with is available and the company you can rent it from
+		public void generateCars(String city) {
+		ArrayList<RentalCarCompany> badersWheels = new ArrayList<RentalCarCompany>();
+		badersWheels.add(new RentalCarCompany("Enterprise", 2.7, 1.1, 7777777,
+			"enterprise@enterprise", new ArrayList<CarRentalLocation>()));
+		badersWheels.add(new RentalCarCompany("Avis", 3.2, 1.3, 2137777,
+				"customersupport@Avis", new ArrayList<CarRentalLocation>()));
+		badersWheels.add(new RentalCarCompany("Hertz", 1.2, .7, 8913333,
+				"trashbin@Hertz", new ArrayList<CarRentalLocation>()));
+		badersWheels.add(new RentalCarCompany("Budget", 5, 1.8, 1234567,
+				"wecare@Budget", new ArrayList<CarRentalLocation>()));
+		Location asdf = new Location();
+		asdf.setCity(city);
+		asdf.setStreetAddress(city.concat(" Airport"));
+		new car
+		for (int i = 0; i < badersWheels.size(); i++) {
+			badersWheels.get(i).getLocations().add(new CarRentalLocation(asdf));
+			
+		}
+	}
 	// pre: nothing
 	// post: returns currentAccount
 	public Account getCurrentAccount() {
@@ -353,62 +356,67 @@ public class Website {
 		}
 	}
 	
-	// pre: nothing
-	// post: retrieves the user account data
+	// pre: Kris writes stupid functions
+	// post: who the fuck knows.
 	public void fetchUserData() throws FileNotFoundException {
 		File file = new File("UserData.txt"); 
 		
-			    Scanner scanner = new Scanner(file); 
+			    Scanner sc = new Scanner(file); 
 			    
-			    while (scanner.hasNextLine()) {
-			    	StringTokenizer line = new StringTokenizer(scanner.nextLine(), " ");
+			    while (sc.hasNextLine()) {
+			    	StringTokenizer line = new StringTokenizer(sc.nextLine(), " ");
 			    	String name = line.nextToken();
 			    	String email = line.nextToken();
 			    	String accountName = line.nextToken();
 			    	String password = line.nextToken();
-			    	Account account = new Account(name, email, accountName, password);
-			    	userData.put(accountName, account);
+			    	Account a1 = new Account(name, email, accountName, password);
+			    	userData.put(accountName, a1);
 			    }
-			    scanner.close();
+			    sc.close();
 	}
 	
 	//pre: files exist to be read from, generate called from driver
-	//post: airportList generated airports have cities, latitude and longitude, connections, and names
+	//post: airportList generated airports have cities, lat and long, connections, and names
 	public void generateAirports(ArrayList<Airline> airLineList) throws IOException {
-		String name = "", city = "", latitude = "", longitude = "", line = "";
-		double multiplier = 0;		
-		Airport airport = null; // maybe change this if there is a bug
+		int i = 0;
+		String name;
+		String city;
+		String lat;
+		String line;
+		String ln;
+		double multiplier;		
+		Airport na; 
 		FileInputStream in = new FileInputStream("Airport_data.txt");
-		// FileOutputStream out = new FileOutputStream("airport.ser");
-		Scanner scanner = new Scanner(in);
-		while (scanner.hasNext()) {
-			name = scanner.nextLine();
-			city = scanner.nextLine();
-			latitude = scanner.nextLine();
-			longitude = scanner.nextLine();
+		//FileOutputStream out = new FileOutputStream("airport.ser");
+		Scanner sc = new Scanner(in);
+		while (sc.hasNext()) {
+			name = sc.nextLine();
+			city = sc.nextLine();
+			lat = sc.nextLine();
+			ln = sc.nextLine();
 			//sc.nextLine();
-			line = scanner.nextLine();
+			line = sc.nextLine();
 			line.replaceAll("[^\\d.]", "");
 			multiplier = Double.parseDouble(line);
 			//sc.next();
-			airport = new Airport(name, city, latitude, longitude, multiplier);
+			na = new Airport(name, city, lat, ln, multiplier);
 			
-			airport.setAirlineList(airLineList);
-			this.airportList.add(airport);
+			na.setAirlineList(airLineList);
+			this.airportList.add(na);
 		}
-		scanner.close();
+		sc.close();
 		Connection cn;
 		in.close();
 		in = new FileInputStream("acm.csv");
-		scanner = new Scanner(in);
+		sc = new Scanner(in);
 		//String line;
 		String[] lineVector;
 		//line = sc.nextLine();
-		scanner.nextLine(); // Skips list of airport names
+		sc.nextLine();
 		int j = 0;
-		while (scanner.hasNext()) {
-			lineVector =  scanner.nextLine().split(",");
-			for (int i = 0; i <  this.airportList.size() - 1; i++) {
+		while (sc.hasNext()) {
+			lineVector =  sc.nextLine().split(",");
+			for (i = 0; i <  this.airportList.size() - 1; i++) {
 				if (Integer.parseInt(lineVector[i+1]) != 0) {
 					cn = new Connection(this.airportList.get(i), Integer.parseInt(lineVector[i+1]));
 					this.airportList.get(j).addConnection(cn);
@@ -418,7 +426,7 @@ public class Website {
 			j++;
 			
 		}
-	scanner.close();
+	sc.close();
 	in.close();
 	//out.close();
 	}
