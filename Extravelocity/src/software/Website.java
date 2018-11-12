@@ -16,10 +16,12 @@ import reservables.air.Route;
 //import reservables.cars.CarRentalLocation;
 import reservables.cars.*;
 import reservables.hotels.Hotel;
+import reservables.hotels.HotelCompany;
+import reservables.hotels.Room;
 import users.Account;
 
 public class Website {
-	private ArrayList<Company> companyList;
+	private ArrayList<HotelCompany> hotelCompanyList;
 	private ArrayList<RentalCarCompany> carCompanyList;
 	private ArrayList<Airport> airportList;
 	private ArrayList<Route> returnRouteList;
@@ -33,7 +35,7 @@ public class Website {
 	// pre: nothing
 	// post: instantiates the object Website
 	public Website() {
-		companyList = new ArrayList<Company>();
+		hotelCompanyList = new ArrayList<HotelCompany>();
 		airportList = new ArrayList<Airport>();
 		returnRouteList = new ArrayList<Route>();
 		departureRouteList = new ArrayList<Route>();
@@ -45,8 +47,8 @@ public class Website {
 	
 	// pre: nothing
 	// post: returns companyList
-	public ArrayList<Company> getCompanyList() {
-		return this.companyList;
+	public ArrayList<HotelCompany> getHotelCompanyList() {
+		return this.hotelCompanyList;
 	}
 
 	// pre: nothing
@@ -78,6 +80,71 @@ public class Website {
 	public ArrayList<Car> getCarList() {
 		return this.carList;
 	}
+	public void generateHotels() {
+		// will be replaced by hotel database in final code
+		Random random = new Random(); 
+		ArrayList<Room> randomRooms = new ArrayList<Room>();
+		int randomInt = random.nextInt(100);
+	    
+	    // gen rooms with random room numbers
+		randomInt = random.nextInt(100);
+	    Room r1 = new Room(1.0, false, randomInt, null, null);
+	    randomInt = random.nextInt(100) + 100;
+	    Room r2 = new Room(2.0, false, randomInt, null, null);
+	    randomInt = random.nextInt(100) + 200;
+	    Room r3 = new Room(3.0, false, randomInt, null, null);
+	    
+	    randomRooms.add(r1);
+	    randomRooms.add(r2);
+	    randomRooms.add(r3);
+	    
+	    HotelCompany hilton = new HotelCompany("Hilton", 5.0, 3.0, 0,
+	    		"service@hilton.com", null);
+	    HotelCompany bestWestern = new HotelCompany("Best Western", 3.0, 2.0, 0,
+	    		"service@bestwestern.com", null);
+	    HotelCompany travelLodge = new HotelCompany("Travel Lodge", 2.5, 1.75, 0,
+	    		"service@travellodge.com", null);
+	    HotelCompany motel6 = new HotelCompany("motel6", 2.0, 1.25, 0,
+	    		"service@motel6.com", null);
+	    HotelCompany windham = new HotelCompany("Windham", 3.0, 2.5, 0,
+	    		"service@windham.com", null);
+	    HotelCompany howardJohnson = new HotelCompany("Howard Johnson", 5.0, 3.2, 0,
+	    		"service@howardjohnson.com", null);
+	    
+		Hotel h1 = new Hotel(randomRooms, null, 5, 3, hilton, 100, null);
+		Hotel h2 = new Hotel(randomRooms, null, 3, 2, bestWestern, 60, null);
+		Hotel h3 = new Hotel(randomRooms, null, 2, 2, travelLodge, 50, null);
+		Hotel h4 = new Hotel(randomRooms, null, 1, 1, motel6, 40, null);
+		Hotel h5 = new Hotel(randomRooms, null, 3, 3, windham, 70, null);
+		Hotel h6 = new Hotel(randomRooms, null, 5, 3, howardJohnson, 95, null);
+		
+		hilton.addHotel(h1);
+		bestWestern.addHotel(h2);
+		travelLodge.addHotel(h3);
+		motel6.addHotel(h4);
+		windham.addHotel(h5);
+		howardJohnson.addHotel(h6);
+		
+		this.hotelCompanyList.add(hilton);
+		this.hotelCompanyList.add(bestWestern);
+		this.hotelCompanyList.add(travelLodge);
+		this.hotelCompanyList.add(motel6);
+		this.hotelCompanyList.add(windham);
+		this.hotelCompanyList.add(howardJohnson);
+			
+	}
+	
+	public void setCarPrices(Entry e) {
+		for(Car c: carList) {
+			c.calculateCarPrice(e);
+		}
+	}
+	
+	public void setHotelPrices(Entry e) {
+		for(Hotel h: hotelList) {
+			h.calculateHotelPrice(e);
+		}
+	}
 	//pre: user says where he wants to find cars
 	//post: list of cars generated with is available and the company you can rent it from
 		public void generateCars(String city) {
@@ -97,6 +164,19 @@ public class Website {
 		}
 		
 	}
+		
+	//pre generate cars run
+	//carlist has list of available cars in city
+	public void populateCarList(Entry data) {
+		CarRentalLocation crl;
+		for (int i = 0; i < this.getCarCompanyList().size(); i++) {
+			crl =this.getCarCompanyList().get(i).getLocations().get(data.getDestinationCity());
+			for (int j = 0; j < crl.getCars().size(); j++) {
+				if (crl.getCars().get(j).getCarClass() == data.getCarClass())
+					carList.add(crl.getCars().get(j));
+			}
+		}
+	}
 	// pre: nothing
 	// post: returns currentAccount
 	public Account getCurrentAccount() {
@@ -113,8 +193,8 @@ public class Website {
 
 	// pre: an ArrayList of Company companyList
 	// post: sets the field companyList to the parameter companyList
-	public void setCompanyList(ArrayList<Company> companyList) {
-		this.companyList = companyList;
+	public void setHotelCompanyList(ArrayList<HotelCompany> hotelCompanyList) {
+		this.hotelCompanyList = hotelCompanyList;
 	}
 
 	// pre: an ArrayList of Airport airportList
@@ -196,6 +276,7 @@ public class Website {
 				}
 	    		
 	    		System.out.println("Account successfully created. Welcome " + name);
+	    		this.currentAccount = new Account(userData.get(accountName).getName(), userData.get(accountName).getEmail(), accountName, password, this);
 	    		return;
 	    	}
 	    	
@@ -231,8 +312,6 @@ public class Website {
 	    			continue;
 	    		}
 	    		System.out.println("Login Successful. Welcome back " + userData.get(accountName).getName());
-	    		this.setCurrentAccount(new Account(userData.get(accountName).getName(),
-	    				userData.get(accountName).getEmail(), accountName, password, this));
 	    		return;
 	    	}
 	    	else if(response.equals("n") || response.equals("N")) {	
