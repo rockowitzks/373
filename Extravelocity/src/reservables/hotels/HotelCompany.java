@@ -33,4 +33,10 @@ public class HotelCompany extends Company {
 	public void setHotels(ArrayList<Hotel> hotels) {
 		this.hotels = hotels;
 	}	
+	
+	// pre: a Hotel hotel
+	// post: returns true if it added, false otherwise
+	public boolean AddHotel(Hotel hotel) {
+		return this.hotels.add(hotel);
+	}
 }

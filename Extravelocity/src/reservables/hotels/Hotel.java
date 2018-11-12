@@ -3,6 +3,7 @@ import java.time.*;
 
 import java.util.*;
 import software.*;
+import reservables.Location;
 
 import users.*;
 
@@ -13,7 +14,7 @@ public class Hotel {
 	private int amenities;
 	private double price;
 	private HotelCompany company;
-	
+	private Location location;
 	// pre: nothing
 	// post: instantiation of Hotel class, all fields set by default.
 	public  Hotel() {
@@ -28,13 +29,14 @@ public class Hotel {
 	// pre: parameters that correspond to fields
 	// post: sets the fields to the parameters
 	public  Hotel(ArrayList<Room> rooms, ArrayList<Account> guests, int stars, int amenities, HotelCompany company,
-			double price) {
+			double price, Location location) {
 		this.rooms = rooms;
 		this.guests = guests;
 		this.stars = stars;
 		this.amenities = amenities;
 		this.company = company;
 		this.price = price;
+		this.location = location;
 	}
 		
 	// pre: nothing
@@ -103,6 +105,18 @@ public class Hotel {
 		}
 		return answer;
 	}
+	
+	// pre: nothing
+	// post: returns location
+	public Location getLocation() {
+		return this.location;
+	}
+
+	// pre: a Location location
+	// post: sets the field location to the parameter location
+	public void setLocation(Location location) {
+		this.location = location;
+	}
 
 	// pre: List of rooms, type Room, parameter provided
 	// post: sets the list rooms to the provided list
@@ -128,7 +142,7 @@ public class Hotel {
 		this.amenities = amenities;
 	}
 	
-	// pre: type Entry, parameter provided
+	// pre: an Entry entry
 	// post: returns the price of the hotel, type double, as a product of factors calculated.
 	public double calculateHotelPrice(Entry entry) {
 		LocalDate now = LocalDate.now();
