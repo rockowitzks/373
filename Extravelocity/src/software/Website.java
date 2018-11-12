@@ -97,6 +97,19 @@ public class Website {
 		}
 		
 	}
+		
+	//pre generate cars run
+	//carlist has list of available cars in city
+	public void populateCarList(Entry data) {
+		CarRentalLocation crl;
+		for (int i = 0; i < this.getCarCompanyList().size(); i++) {
+			crl =this.getCarCompanyList().get(i).getLocations().get(data.getDestinationCity());
+			for (int j = 0; j < crl.getCars().size(); j++) {
+				if (crl.getCars().get(j).getCarClass() == data.getCarClass())
+					carList.add(crl.getCars().get(j));
+			}
+		}
+	}
 	// pre: nothing
 	// post: returns currentAccount
 	public Account getCurrentAccount() {
