@@ -356,7 +356,7 @@ public class Website {
 	
 	//pre: files exist to be read from, generate called from driver
 	//post: airportList generated airports have cities, lat and long, connections, and names
-	public void generateAirports( ) throws IOException {
+	public void generateAirports(ArrayList<Airline> airLineList) throws IOException {
 		int i = 0;
 		String name;
 		String city;
@@ -379,6 +379,8 @@ public class Website {
 			multiplier = Double.parseDouble(line);
 			//sc.next();
 			na = new Airport(name, city, lat, ln, multiplier);
+			
+			na.setAirlineList(airLineList);
 			this.airportList.add(na);
 		}
 		sc.close();
