@@ -80,15 +80,13 @@ public class Entry {
 		while(true) {
 			System.out.print("Would you like to search flights? (y/n): ");
 			String response = "";
-			response = input.next();
+			response = input.nextLine();
 	    	if(response.equalsIgnoreCase("y")) {
 	    		this.flight = true;
-	    		input.nextLine();
 	    		return;
 	    	}
 	    	else if(response.equalsIgnoreCase("n")) {
 	    		this.flight = false;
-	    		input.nextLine();
 	    		return;
 	    	}
 	    	else {
@@ -104,15 +102,13 @@ public class Entry {
 		while(true) {
 			System.out.print("Would you like to search hotels? (y/n): ");
 			String response = "";
-			response = input.next();
+			response = input.nextLine();
 			if(response.equalsIgnoreCase("y")) {
 	    		this.hotel = true;
-	    		input.nextLine();
 	    		return;
 	    	}
 	    	else if(response.equalsIgnoreCase("n")) {
 	    		this.hotel = false;
-	    		input.nextLine();
 	    		return;
 	    	}
 	    	else {
@@ -126,15 +122,13 @@ public class Entry {
 	public void askCar(Scanner input) {
 		while(true) {
 			System.out.print("Would you like to search cars? (y/n): ");
-			String response = input.next();
+			String response = input.nextLine();
 			if(response.equalsIgnoreCase("y")) {
 	    		this.car = true;
-	    		input.nextLine();
 	    		return;
 	    	}
 	    	else if(response.equalsIgnoreCase("n")) {
 	    		this.car = false;
-	    		input.nextLine();
 	    		return;
 	    	}
 	    	else {
@@ -175,25 +169,23 @@ public class Entry {
 	
 	public void askDepartCity(Scanner input) {
 		System.out.print("Please enter the city from which you are leaving: ");
-		String response = input.next();
+		String response = input.nextLine();
 		this.departingCity = response;
-		input.nextLine();
 		// needs to validate
 
 	}
 
 	public void askDestinationCity(Scanner input) {
 		System.out.print("Please enter your destination: ");
-		String response = input.next();
+		String response = input.nextLine();
 		this.destinationCity = response;
-		input.nextLine();
 		// needs to validate
 
 	}
 	
 	public void askSeatPriority(Scanner input) {
 		System.out.print("Would you like First Class, Business, or Economy seating?: ");
-		String response = input.next();
+		String response = input.nextLine();
 		if(response.toLowerCase().equals("First Class")) {
 			this.seatPriority = 2;
 		}
@@ -206,16 +198,14 @@ public class Entry {
 		else {
 			this.seatPriority = 0;
 		}
-		input.nextLine();
 		// needs to validate
 
 	}
 	
 	public void askPassengers(Scanner input) {
 		System.out.print("How many passengers will be flying? : ");
-		String response = input.next();
+		String response = input.nextLine();
 		this.passengers = Integer.parseInt(response);
-		input.nextLine();
 	}
 	
 	public void askHotelCheckInDate(Scanner input) {
@@ -243,7 +233,7 @@ public class Entry {
 	
 	public void askRoomType(Scanner input) {
 		System.out.print("What room type would you like (Luxury, Standard, Economy): ");
-		String response = input.next();
+		String response = input.nextLine();
 		int type = 0;
 		if(response.equals("Luxury")) {
 			type = 3;
@@ -258,7 +248,6 @@ public class Entry {
 			type = 1;
 		}
 		this.roomType = type;
-		input.nextLine();
 	}
 	
 	public void askCarRentalDate(Scanner input) {
@@ -285,7 +274,7 @@ public class Entry {
 	
 	public void askCarClass(Scanner input) {
 		System.out.print("What room type would you like (Luxury, Standard, Economy): ");
-		String response = input.next();
+		String response = input.nextLine();
 		int type = 0;
 		if(response.equals("Luxury")) {
 			type = 3;
@@ -300,7 +289,6 @@ public class Entry {
 			type = 1;
 		}
 		this.carClass = type;
-		input.nextLine();
 	}
 	
 	// pre: nothing
@@ -465,7 +453,7 @@ public class Entry {
 	}
 
 	public String getDepartingCity() {
-		return departingCity;
+		return this.departingCity;
 	}
 
 	public void setDepartingCity(String departingCity) {
