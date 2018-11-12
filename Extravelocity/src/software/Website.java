@@ -122,8 +122,7 @@ public class Website {
 		this.currentAccount = currentAccount;
 	}
 
-	public void createAccount() {
-    	Scanner input = new Scanner(System.in);
+	public void createAccount(Scanner input) {
     	while(true) {
     		System.out.println("Account Creation Menu");
 	    	System.out.print("Create a new account? (y/n): ");
@@ -181,8 +180,7 @@ public class Website {
 	
 	}
 
-	public void logIn() {
-		Scanner input = new Scanner(System.in);
+	public void logIn(Scanner input) {
     	while(true) {
     		System.out.println("Login Menu");
     		System.out.print("Would you like to login? (y/n): ");
@@ -210,7 +208,6 @@ public class Website {
 	    	else {
 	    		System.out.println("Please enter either (y/n): ");
 	    	}
-	    	input.close();
     	}
 	}
 
