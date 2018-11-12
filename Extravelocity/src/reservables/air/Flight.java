@@ -35,6 +35,9 @@ public class Flight {
 		this.arrivalTime = 0;
 		this.arrivalDate = null;
 	}
+	
+	// pre: parameters corresponding to fields
+	// post: sets the fields to the parameters and initializes the objects
 	public Flight(Airport departing, Airport arriving, Airline line, Aircraft plane, LocalDateTime departureDate) {
 		this.setDeparting(departing);
 		this.setArriving(arriving);
@@ -46,11 +49,12 @@ public class Flight {
 		
 	}
 	
+	// pre: nothing
+	// post: calculates the arrival date based on departure date adn speed and distance
 	private void calculateArrivalDate() {
-		
-		this.setArrivalDate(this.getDepartureDate().plusHours((long) (this.getDistance()/this.getAircraft().getAirspeed())));
-		
+		this.setArrivalDate(this.getDepartureDate().plusHours((long) (this.getDistance()/this.getAircraft().getAirspeed())));	
 	}
+	
 	// pre: parameters corresponding
 	// post: sets the fields to the corresponding parameters
 	public Flight(String flightNumber, Airline airline, Aircraft aircraft, double capacity, Airport arriving,
@@ -106,48 +110,65 @@ public class Flight {
 	public Aircraft getAircraft() {
 		return this.aircraft;
 	}
-	//pre: needs arrival, needs departure airports
-	//post fills out distance field in kilometers
+	
+	// pre: needs arrival, needs departure airports ----->>> this is scary 
+	// post fills out distance field in kilometers
 	public void calculateDistance() {
-		Scanner s1 = new Scanner(this.departing.getLatitude());
-		double lat1 = s1.nextDouble();
-		String hem1 = s1.next();
-		s1.close();
-		s1 = new Scanner(this.departing.getLongitude());
-		double lon1 = s1.nextDouble();
-		String nsh1 = s1.next();
-		s1.close();
-		s1 = new Scanner(this.arriving.getLatitude());
-		double lat2 = s1.nextDouble();
-		String hem2 = s1.next();
-		s1.close();
-		s1 = new Scanner(this.arriving.getLongitude());
-		double lon2 = s1.nextDouble();
-		String nsh2 = s1.next();
-		//safetydebug
-		System.out.println(hem1);
-		hem1.trim();
-		nsh1.trim();
-		hem2.trim();
-		nsh2.trim();
-		if (hem1.equals("S"))
-			lat1 = lat1 *-1;
-		if (hem2.equals("S"))
-			lat2 = lat2*-1;
-		if (nsh1.equals("W"))
-			lon1 = lon1 *-1;
-		if (nsh2.equals("W"))
-			lon2 = lon2*-1;
-		double theta = lon1 - lon2;
-		double dist = Math.sin(Math.toRadians(lat1)) * Math.sin(Math.toRadians(lat2)) + 
-				Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.cos(Math.toRadians(theta));
-		dist = Math.acos(dist);
-		dist = Math.toDegrees(dist);
-		dist = dist * 60 * 1.1515;
-		dist = dist * 1.609344;
-		this.setDistance(dist);
-			s1.close();
+		Scanner scanner = new Scanner(this.departing.getLatitude());
+		double latitude1 = scanner.nextDouble();
+		String hemisphere1 = scanner.next();
+		scanner.close();
+		
+		scanner = new Scanner(this.departing.getLongitude());
+		double longitude1 = scanner.nextDouble();
+		String eastWestHemisphere1 = scanner.next();
+		scanner.close();
+		
+		scanner = new Scanner(this.arriving.getLatitude());
+		double latitude2 = scanner.nextDouble();
+		String hemisphere2 = scanner.next();
+		scanner.close();
+		
+		scanner = new Scanner(this.arriving.getLongitude());
+		double longitude2 = scanner.nextDouble();
+		String eastWestHemisphere2 = scanner.next();
+		
+		
+		hemisphere1.trim();
+		eastWestHemisphere1.trim();
+		hemisphere2.trim();
+		eastWestHemisphere2.trim();
+		
+		if (hemisphere1.equals("S")) {
+			latitude1 = -latitude1;
+		}
+		
+		if (hemisphere2.equals("S")) {
+			latitude2 = -latitude2;
+		}
+		
+		if (eastWestHemisphere1.equals("W")) {
+			longitude1 = -longitude1;
+		}
+		
+		if (eastWestHemisphere2.equals("W")) {
+			longitude2 = -longitude2;
+		}
+		
+		double theta = longitude1 - longitude2;
+		double distance = Math.sin(Math.toRadians(latitude1)) * Math.sin(Math.toRadians(latitude2)) + 
+						Math.cos(Math.toRadians(latitude1)) * Math.cos(Math.toRadians(latitude2)) * Math.cos(Math.toRadians(theta));
+		
+		distance = Math.acos(distance);
+		distance = Math.toDegrees(distance);
+		distance = distance * 60 * 1.1515;
+		distance = distance * 1.609344;
+		
+		// distance = 1.609344 * 60 * 1.1515 * Math.toDegrees(Math.acos(distance));
+		this.setDistance(distance);
+		scanner.close();
 	}
+	
 	// pre: nothing
 	// post: returns distance
 	public double getDistance() {
@@ -239,15 +260,17 @@ public class Flight {
 	}
 
 	// pre: an Airport arriving
-	// post: sets the field arriving to the parameter arriving
+	// post: sets the field arriving to the parameter arriving and adds this to arriving
 	public void setArriving(Airport arriving) {
 		this.arriving = arriving;
+		arriving.addArrival(this);
 	}
 
 	// pre: an Airport departing
-	// post: sets the field departing to the parameter departing
+	// post: sets the field departing to the parameter departing and adds this to departing
 	public void setDeparting(Airport departing) {
 		this.departing = departing;
+		departing.addDeparture(this);
 	}
 
 	// pre: an ArrayList of Seat seats
