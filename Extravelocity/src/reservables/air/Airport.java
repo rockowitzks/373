@@ -149,6 +149,19 @@ public class Airport implements Serializable {
 		this.departureList = departureList;
 	}
 
+	
+	// pre: nothing
+	// post: returns connections
+	public ArrayList<Connection> getConnections() {
+		return this.connections;
+	}
+
+	// pre: an ArrayList of Connection connections
+	// post: sets the field connections to the parameter connections
+	public void setConnections(ArrayList<Connection> connections) {
+		this.connections = connections;
+	}
+
 	// pre: an ArrayList of Airline called airlineList
 	// post: sets the field airlineList to the parameter airlineList
 	public void setAirlineList(ArrayList<Airline> airlineList) {
@@ -159,14 +172,6 @@ public class Airport implements Serializable {
 	// post:sets the field group to the parameter group
 	public void setGroup(int group) {
 		this.group = group;
-	}
-
-	public ArrayList<Connection> getConnections() {
-		return connections;
-	}
-
-	public void setConnections(ArrayList<Connection> connections) {
-		this.connections = connections;
 	}
 
 	public String getCity() {
@@ -200,7 +205,7 @@ public class Airport implements Serializable {
 	}
 	
 	// pre: a Connection connection
-	// post:
+	// post: adds connection to connections
 	public void addConnection(Connection connection) {
 		this.connections.add(connection);
 	}
