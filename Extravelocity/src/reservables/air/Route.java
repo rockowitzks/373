@@ -154,6 +154,9 @@ public class Route {
 		for(int i = 0; i < this.flights.size() - 1; i++) {
 			layover = new Layover();
 			layover.setAirport(this.flights.get(i).getArriving());
+			layover.setPrevious(this.flights.get(i));
+			layover.setNext(this.flights.get(i + 1));
+			
 		}
 	}
 	
