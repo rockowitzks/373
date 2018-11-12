@@ -38,8 +38,8 @@ public class Flight {
 	
 	// pre: parameters corresponding to fields
 	// post: sets the fields to the parameters and initializes the objects
-	public Flight(Airport departing, Airport arriving, Airline airline, Aircraft aircraft, LocalDateTime departureDate,
-			String flightNumber, double capacity, double price) {
+	public Flight(Airport departing, Airport arriving, Airline airline, Aircraft aircraft, 
+			LocalDateTime departureDate, String flightNumber, double capacity, double price) {
 		this.setDeparting(departing);
 		this.setArriving(arriving);
 		this.setAirline(airline);
@@ -50,6 +50,7 @@ public class Flight {
 		this.flightNumber = flightNumber;
 		this.capacity = capacity;
 		this.price = price;
+		this.seats = new ArrayList<Seat>();
 		
 		for(int i = 0; i < 10; i++) {
 			this.addSeat(new Seat(i, false, true, 0,this));
@@ -59,7 +60,8 @@ public class Flight {
 	// pre: nothing
 	// post: calculates the arrival date based on departure date and speed and distance
 	private void calculateArrivalDate() {
-		this.setArrivalDate(this.getDepartureDate().plusHours((long) (this.getDistance()/this.getAircraft().getAirspeed())));	
+		this.setArrivalDate(this.getDepartureDate().plusHours((long)
+				(this.getDistance()/this.getAircraft().getAirspeed())));	
 	}
 	
 	// pre: parameters corresponding
@@ -83,7 +85,8 @@ public class Flight {
 	}
 	
 	// pre: nothing
-	// post: returns true if seat size equals capacity, exits if seat size is greater than capacity, false otherwise
+	// post: returns true if seat size equals capacity, exits if seat size is greater than capacity,
+	//		false otherwise
 	public boolean isFull() {
 		if(this.seats.size() > capacity) {
 			System.out.println("You made a mistake, seats size is " +  this.seats.size() + 
@@ -164,14 +167,15 @@ public class Flight {
 		
 		double theta = longitude1 - longitude2;
 		double distance = Math.sin(Math.toRadians(latitude1)) * Math.sin(Math.toRadians(latitude2)) + 
-						Math.cos(Math.toRadians(latitude1)) * Math.cos(Math.toRadians(latitude2)) * Math.cos(Math.toRadians(theta));
+			Math.cos(Math.toRadians(latitude1)) * Math.cos(Math.toRadians(latitude2)) * 
+			Math.cos(Math.toRadians(theta));
 		
-		distance = Math.acos(distance);
-		distance = Math.toDegrees(distance);
-		distance = distance * 60 * 1.1515;
-		distance = distance * 1.609344;
+//		distance = Math.acos(distance);
+//		distance = Math.toDegrees(distance);
+//		distance = distance * 60 * 1.1515;
+//		distance = distance * 1.609344;
 		
-		// distance = 1.609344 * 60 * 1.1515 * Math.toDegrees(Math.acos(distance));
+		distance = 119.019 * Math.toDegrees(Math.acos(distance));
 		this.setDistance(distance);
 		scanner.close();
 	}
