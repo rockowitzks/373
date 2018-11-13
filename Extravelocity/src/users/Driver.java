@@ -20,11 +20,12 @@ public class Driver {
 		Website w1 = new Website();
 		Account guest = new Account("Guest", "No Email", "Guest Name", "No Password", w1);
 		w1.setCurrentAccount(guest);
+		w1.generateHotels();
 		ArrayList<Airline> airlines = new ArrayList<Airline>();
 		Airline united = new Airline();
 		united.setName("United");
 		united.setMultiplier(80);
-		
+	
 		Airline emirates = new Airline();
 		emirates.setName("Emirates");
 		emirates.setMultiplier(100);
@@ -90,33 +91,40 @@ public class Driver {
 			e1.askCarClass(input);
 		}
 		
+		w1.generateCars(e1.getDestinationCity());
+		
 		//generate the departing flights
 		w1.generateFlights(e1.getDepartureDate().atStartOfDay(), e1.getDepartureAirport());
 		w1.generateFlights(e1.getReturnDate().atStartOfDay(), e1.getReturnAirport());
-		//* breaks here **
+		/// calculates the routes
 		w1.calculateRoutes(e1);
-		// post: prints out departing flights in standard form with index
+		// this calculates price and prints the departing routes
 		for(int i = 0; i < w1.getDepartureRouteList().size(); i++) {
 			w1.getDepartureRouteList().get(i).calculatePrice(e1);
 			System.out.print(i + " " + w1.getDepartureRouteList().get(i));
 		}
-
-		// post: user selects the route, is added to reseveration object
+		// this selects the departing routes
 		r1.setDepartingRoute(w1.getCurrentAccount().selectDepartingRoute(input));
-		
-		//generate the departing flights
-		w1.generateFlights(e1.getReturnDate().atStartOfDay(), e1.getReturnAirport());
-		// post: prints out returning flights in standard form with index
-	//	w1.printDepartureRoutes();
-		
-		// post: user selects the rout, is added to reservation object
+		// this calculates price and prints the returning routes
+		for(int i = 0; i < w1.getReturnRouteList().size(); i++) {
+			w1.getReturnRouteList().get(i).calculatePrice(e1);
+			System.out.print(i + " " + w1.getReturnRouteList().get(i));
+		}
+	
+		// this selects the returning routes
 		r1.setReturningRoute(w1.getCurrentAccount().selectReturningRoute(input));
+		// start hotels
+			for(int i = 0; i < w1.getHotelList().size(); i++) {
+				w1.getHotelList().get(i).calculateHotelPrice(e1);
+				System.out.println(i + " " + w1.getHotelList().get(i));
+			}
+			
+		// start cars
 		
-		//write and call print flight from website
-		
-		
-		//r1.setHotel(w1.getCurrentAccount().selectHotel(input));
-		//r1.setCar(w1.getCurrentAccount().selectCar(input));
+		// this confirms the reservation
+		r1.setAccount(w1.getCurrentAccount());
+		 w1.getCurrentAccount().confirmReservation(r1, input);
+
 		input.close();
 	}
 
