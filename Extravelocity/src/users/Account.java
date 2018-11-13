@@ -131,7 +131,7 @@ public class Account {
 	// post: returns the Hotel that the user selects
 	public Hotel selectHotel(Scanner input) {
 		if(this.getWebsite().getHotelList().isEmpty()) {
-			System.out.println("Error: hotel list is empty");
+			System.out.println("Error: hotel list (Account.java selectHotel) is empty");
 			System.exit(-1);
 			return null;
 		}
