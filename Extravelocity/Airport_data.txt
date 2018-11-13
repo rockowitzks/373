@@ -1,18 +1,15 @@
 PHX
 Phoenix
-Arizona
 33.4373 N
 112.0078 W
-JFK
 .97
+JFK
 New York City
-New York
 40.6413 N
 73.7781 W
 .85
 LAX
 Los Angeles
-California
 34.0522 N
 118.2437 W
 .86
@@ -71,11 +68,6 @@ San Francisco
 37.7749 N
 122.4194 W
 1.00
-BOI
-Boise
-43.6150 N
-116.2023 W
-1.18
 PAR
 Paris
 48.8566 N
@@ -141,7 +133,7 @@ Hong Kong
 22.3964 N
 114.1095 E
 .91
-SAN
+SAT
 San Antonio
 29.4241 N
 98.4936 W
