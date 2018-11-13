@@ -230,7 +230,7 @@ public class Car {
 		case(1):
 			return "Economy";
 		case(2):
-			return "Standard";
+			return "Standard"; 
 		case(3):
 			return "Luxury";
 		default:
@@ -244,23 +244,24 @@ public class Car {
 	public double calculateCarPrice(Entry entry) {
 		
 		Period rentalDuration = Period.between(entry.getGiveBackDate(), entry.getTakeDate());
-		Period urgencyFactor = Period.between(entry.getTakeDate(), LocalDate.now());
+		Period urgencyFactor = Period.between(LocalDate.now(), entry.getTakeDate());
 		double classMultiplier;
 		
 		switch(this.getCarClass()) {
 		case(1):
-			classMultiplier = 1.0;
+			classMultiplier = 1.0; break;
 		case(2):
-			classMultiplier = 1.5;
+			classMultiplier = 1.5; break;
 		case(3):
-			classMultiplier = 2.0;
+			classMultiplier = 2.0; break;
 		default:
 			classMultiplier = 0;
 			System.out.println("Error. carClass should be between 1 and 3 but it actually is " +
-			this.getCarClass() + ".");
+			this.getCarClass() + "."); break;
 		}
+		
 		double price =  classMultiplier * carRentalLocation.getCompany().getMultiplier() * 
-		rentalDuration.getDays() * (1 + (5.0 * Math.exp( -1.0 * (double)urgencyFactor.getDays())));
+		rentalDuration.getDays() * (1 + (5.0 * Math.exp((double)urgencyFactor.getDays())));
 		this.setPrice(price);
 		return price;
 		

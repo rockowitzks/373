@@ -117,7 +117,9 @@ public class Website {
 		Hotel h5 = new Hotel(randomRooms, null, 3, 3, windham, 70, null);
 		Hotel h6 = new Hotel(randomRooms, null, 5, 3, howardJohnson, 95, null);
 		
+
 		hilton.addHotel(h1);
+		
 		bestWestern.addHotel(h2);
 		travelLodge.addHotel(h3);
 		motel6.addHotel(h4);
@@ -130,6 +132,14 @@ public class Website {
 		this.hotelCompanyList.add(motel6);
 		this.hotelCompanyList.add(windham);
 		this.hotelCompanyList.add(howardJohnson);
+		
+		this.hotelList.add(h1);
+		this.hotelList.add(h2);
+		this.hotelList.add(h3);
+		this.hotelList.add(h4);
+		this.hotelList.add(h5);
+		this.hotelList.add(h6);
+		
 			
 	}
 	
@@ -149,7 +159,7 @@ public class Website {
 		public void generateCars(String city) {
 		Location asdf = new Location();
 		asdf.setCity(city);
-		asdf.setStreetAddress(city.concat(" Airport"));
+		asdf.setStreetAddress(city + " Airport");
 		CarRentalLocation crl;
 		for (int i = 0; i < this.getCarCompanyList().size(); i++) {
 			if (!this.getCarCompanyList().get(i).getLocations().containsKey(city)) {
@@ -157,6 +167,9 @@ public class Website {
 				crl.addCar(new Car(1));
 				crl.addCar(new Car(2));
 				crl.addCar(new Car(3));
+				crl.getCars().get(0).setRentalCarCompany(this.getCarCompanyList().get(i));
+				crl.getCars().get(1).setRentalCarCompany(this.getCarCompanyList().get(i));
+				crl.getCars().get(2).setRentalCarCompany(this.getCarCompanyList().get(i));
 				this.getCarCompanyList().get(i).addLocation(crl);
 			}
 			//badersWheels.get(i).getLocations().put(.getCity());
@@ -365,7 +378,7 @@ public class Website {
 			for (int i = 0; i < possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().size(); i++) {
 				if (possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i).getDepartureDate().isAfter(possibleRoutes.get(j).getFlights().get(0).getArrivalDate()) 
 /*makes sure is cheap*/ && possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i).calculatePrice(data) + possibleRoutes.get(j).getFlights().get(0).calculatePrice(data) < minPrice
-						&& possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i).getArriving().getCity().equals(data.getDestinationCity())) {
+						&& possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i).getArriving().getName().equals(data.getDestinationCity())) {
 					possibleRoutes.get(j).addFlight(possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i));
 					routes.add(possibleRoutes.get(j));
 					break;

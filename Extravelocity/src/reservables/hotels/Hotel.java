@@ -91,17 +91,17 @@ public class Hotel {
 	// post: returns a String that indicates what amenities you get based on the amenity code
 	public String getAmenityString() {
 		String answer = "";
-		switch (amenities) {
+		switch (this.amenities) {
 		case(0): 
-			answer = "No Amenities.";
+			answer = "No Amenities."; break;
 		case(1):
-			answer = "Cable TV, Parking Included";
+			answer = "Cable TV, Parking Included"; break;
 		case(2):
-			answer = "Cable TV, Parking and Wifi Included";
+			answer = "Cable TV, Parking and Wifi Included"; break;
 		case(3):
-			answer = "Cable TV, Parking, Wifi and Breakfast Included";
+			answer = "Cable TV, Parking, Wifi and Breakfast Included"; break;
 		default:
-			answer = "Error, amenities is supposed to be 0 - 3 but it is " + this.amenities + ".";
+			answer = "Error, amenities is supposed to be 0 - 3 but it is " + this.amenities + "."; break;
 		}
 		return answer;
 	}
@@ -146,10 +146,10 @@ public class Hotel {
 	// post: returns the price of the hotel, type double, as a product of factors calculated.
 	public double calculateHotelPrice(Entry entry) {
 		LocalDate now = LocalDate.now();
-		Period stayDuration = Period.between(entry.getCheckOutDate(), entry.getCheckInDate());
-		Period urgencyFactor = Period.between(entry.getCheckInDate(), now);
+		Period stayDuration = Period.between(entry.getCheckInDate(), entry.getCheckOutDate());
+		Period urgencyFactor = Period.between(now, entry.getCheckInDate());
 		double price = company.getMultiplier() * entry.getRoomType() * 
-				stayDuration.getDays() * (1 + (5.0 * Math.exp( -1.0 * (double)urgencyFactor.getDays())));
+				stayDuration.getDays() * (1 + (5.0 * Math.exp(-1 * (double)urgencyFactor.getDays())));
 		this.setPrice(price);
 		return price;
 	}

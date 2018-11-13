@@ -94,7 +94,9 @@ public class Reservation {
 	// pre: nothing
 	// post: prints the reservation's fields and total cost
 	public void printReservation() {
+		
 		System.out.println(this.getAccount());
+		
 		if(this.getDepartingRoute() != null) {
 			System.out.println(this.getDepartingRoute());
 		}
@@ -131,6 +133,6 @@ public class Reservation {
 		}
 		
 		double totalCost = carPrice + hotelPrice + departingRoutePrice + returningRoutePrice;
-		System.out.printf("The total cost is $ %.2f.", totalCost);
+		System.out.printf("The total cost is $ %.2f.\n", totalCost);
 	}
 }

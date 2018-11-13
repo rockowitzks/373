@@ -173,7 +173,7 @@ public class Entry {
 	
 	public void askDepartCity(Scanner input) {
 		System.out.print("Please enter the city from which you are leaving: ");
-		String response = input.nextLine();
+		String response = input.nextLine().trim();
 		this.departingCity = response;
 		// needs to validate
 
@@ -181,15 +181,15 @@ public class Entry {
 
 	public void askDestinationCity(Scanner input) {
 		System.out.print("Please enter your destination: ");
-		String response = input.nextLine();
+		String response = input.nextLine().trim();
 		this.destinationCity = response;
 		// needs to validate
 
 	}
 	
 	public void askSeatPriority(Scanner input) {
-		System.out.print("Would you like First Class, Business, or Economy seating?: ");
-		String response = input.nextLine();
+		System.out.print("Would you like First Class, Business, or Economy seating? ");
+		String response = input.nextLine().trim();
 		if(response.toLowerCase().equals("First Class")) {
 			this.seatPriority = 5;
 		}
@@ -202,21 +202,19 @@ public class Entry {
 		else {
 			this.seatPriority = 1;
 		}
-		// needs to validate
-
 	}
 	
 	// pre: a scanner input
 	// post: asks the user for how many passengers they want to reserve
 	public void askPassengers(Scanner input) {
 		System.out.print("How many passengers will be flying? : ");
-		String response = input.nextLine();
+		String response = input.nextLine().trim();
 		this.passengers = Integer.parseInt(response);
 	}
 	
 	public void askHotelCheckInDate(Scanner input) {
 		System.out.print("Please enter your Check-In date (YYYY MM DD): ");
-		String token = input.nextLine();
+		String token = input.nextLine().trim();
 		StringTokenizer line = new StringTokenizer(token, " ");
     	int year = Integer.parseInt(line.nextToken());
     	int month = Integer.parseInt(line.nextToken());
@@ -228,7 +226,7 @@ public class Entry {
 	
 	public void askHotelCheckOutDate(Scanner input) {
 		System.out.print("Please enter your Check-Out date (YYYY MM DD): ");
-		String token = input.nextLine();
+		String token = input.nextLine().trim();
 		StringTokenizer line = new StringTokenizer(token, " ");
     	int year = Integer.parseInt(line.nextToken());
     	int month = Integer.parseInt(line.nextToken());
@@ -239,7 +237,7 @@ public class Entry {
 	
 	public void askRoomType(Scanner input) {
 		System.out.print("What room type would you like (Luxury, Standard, Economy): ");
-		String response = input.nextLine();
+		String response = input.nextLine().trim();
 		int type = 0;
 		if(response.equals("Luxury")) {
 			type = 3;
@@ -258,7 +256,7 @@ public class Entry {
 	
 	public void askCarRentalDate(Scanner input) {
 		System.out.print("Please enter your Rental date (YYYY MM DD): ");
-		String token = input.nextLine();
+		String token = input.nextLine().trim();
 		StringTokenizer line = new StringTokenizer(token, " ");
     	int year = Integer.parseInt(line.nextToken());
     	int month = Integer.parseInt(line.nextToken());
@@ -269,7 +267,7 @@ public class Entry {
 	
 	public void askCarReturnDate(Scanner input) {
 		System.out.print("Please enter your Return date (YYYY MM DD): ");
-		String token = input.nextLine();
+		String token = input.nextLine().trim();
 		StringTokenizer line = new StringTokenizer(token, " ");
     	int year = Integer.parseInt(line.nextToken());
     	int month = Integer.parseInt(line.nextToken());
@@ -279,8 +277,8 @@ public class Entry {
 	}
 	
 	public void askCarClass(Scanner input) {
-		System.out.print("What room type would you like (Luxury, Standard, Economy): ");
-		String response = input.nextLine();
+		System.out.print("What car class would you like (Luxury, Standard, Economy): ");
+		String response = input.nextLine().trim();
 		int type = 0;
 		if(response.equals("Luxury")) {
 			type = 3;
