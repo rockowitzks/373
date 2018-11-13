@@ -37,6 +37,9 @@ public class HotelCompany extends Company {
 	// pre: a Hotel hotel
 	// post: returns true if it added, false otherwise
 	public boolean addHotel(Hotel hotel) {
+		if(this.hotels == null) {
+			this.hotels = new ArrayList<Hotel>();
+		}
 		hotel.setCompany(this);
 		return this.hotels.add(hotel);
 
