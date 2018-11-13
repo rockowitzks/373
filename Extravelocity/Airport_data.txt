@@ -142,10 +142,10 @@ Hong Kong
 114.1095 E
 .91
 SAN
-San Francisco
-37.7749 N
-122.4194 W
-.97
+San Antonio
+29.4241 N
+98.4936 W
+.75
 BOS
 Boston
 42.3601 N
