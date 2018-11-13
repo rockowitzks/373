@@ -17,9 +17,9 @@ public class Driver {
 		Scanner input = new Scanner(System.in);
 		
 
-		Website w1 = new Website();
-		Account guest = new Account("Guest", "No Email", "Guest Name", "No Password", w1);
-		w1.setCurrentAccount(guest);
+		Website website = new Website();
+		Account guest = new Account("Guest", "No Email", "Guest Name", "No Password", website);
+		website.setCurrentAccount(guest);
 		ArrayList<Airline> airlines = new ArrayList<Airline>();
 		Airline united = new Airline();
 		united.setName("United");
@@ -51,98 +51,98 @@ public class Driver {
 				"trashbin@Hertz", new HashMap<String, CarRentalLocation>()));
 		badersWheels.add(new RentalCarCompany("Budget", 5, 1.8, 1234567,
 				"wecare@Budget", new HashMap<String, CarRentalLocation>()));
-		w1.setCarCompanyList(badersWheels);
+		website.setCarCompanyList(badersWheels);
 		
-		w1.generateAirports(airlines);
-		w1.fetchUserData();
-		w1.createAccount(input);
-		w1.logIn(input);
+		website.generateAirports(airlines);
+		website.fetchUserData();
+		website.createAccount(input);
+		website.logIn(input);
 		
-		Entry e1 = new Entry();
-		Reservation r1 = new Reservation();
+		Entry entry = new Entry();
+		Reservation reservation = new Reservation();
 		System.out.println("Main Menu");
-		e1.askFlight(input);
-		e1.askHotel(input);
-		e1.askCar(input);
+		entry.askFlight(input);
+		entry.askHotel(input);
+		entry.askCar(input);
 		
-		if(e1.getFlight()) {
+		if(entry.getFlight()) {
 			System.out.println("Flight Selection Menu");
-			e1.askFlightDepartDate(input);
-			e1.askFlightReturnDate(input);
-			e1.askDepartCity(input);
-			e1.askDestinationCity(input);
-			e1.askSeatPriority(input);
-			e1.findAirportFromCity(w1);//find airport function that adds airport to entry.
+			entry.askFlightDepartDate(input);
+			entry.askFlightReturnDate(input);
+			entry.askDepartCity(input);
+			entry.askDestinationCity(input);
+			entry.askSeatPriority(input);
+			entry.findAirportFromCity(website);//find airport function that adds airport to entry.
 			//dis
 		}
 		
-		if(e1.getHotel()) {
+		if(entry.getHotel()) {
 			System.out.println("Hotel Selection Menu");
-			e1.askHotelCheckInDate(input);
-			e1.askHotelCheckOutDate(input);
-			e1.askRoomType(input);
+			entry.askHotelCheckInDate(input);
+			entry.askHotelCheckOutDate(input);
+			entry.askRoomType(input);
 		}
 		
-		if(e1.getCar()) {
+		if(entry.getCar()) {
 			System.out.println("Car Selection Menu");
-			e1.askCarRentalDate(input);
-			e1.askCarReturnDate(input);
-			e1.askCarClass(input);
+			entry.askCarRentalDate(input);
+			entry.askCarReturnDate(input);
+			entry.askCarClass(input);
 		}
 		
 				
 		//generate the departing flights
-		if(e1.getFlight()) { 
-			w1.generateFlights(e1.getDepartureDate().atStartOfDay(), e1.getDepartureAirport());
-			w1.generateFlights(e1.getReturnDate().atStartOfDay(), e1.getReturnAirport());
+		if(entry.getFlight()) { 
+			website.generateFlights(entry.getDepartureDate().atStartOfDay(), entry.getDepartureAirport());
+			website.generateFlights(entry.getReturnDate().atStartOfDay(), entry.getReturnAirport());
 			
 			/// calculates the routes
-			w1.calculateRoutes(e1);
+			website.calculateRoutes(entry);
 			// this calculates price and prints the departing routes
-			for(int i = 0; i < w1.getDepartureRouteList().size(); i++) {
-				w1.getDepartureRouteList().get(i).calculatePrice(e1);
-				System.out.print(i + " " + w1.getDepartureRouteList().get(i));
+			for(int i = 0; i < website.getDepartureRouteList().size(); i++) {
+				website.getDepartureRouteList().get(i).calculatePrice(entry);
+				System.out.print(i + " " + website.getDepartureRouteList().get(i));
 			}
 			// this selects the departing routes
-			r1.setDepartingRoute(w1.getCurrentAccount().selectDepartingRoute(input));
+			reservation.setDepartingRoute(website.getCurrentAccount().selectDepartingRoute(input));
 			// this calculates price and prints the returning routes
-			for(int i = 0; i < w1.getReturnRouteList().size(); i++) {
-				w1.getReturnRouteList().get(i).calculatePrice(e1);
-				System.out.print(i + " " + w1.getReturnRouteList().get(i));
+			for(int i = 0; i < website.getReturnRouteList().size(); i++) {
+				website.getReturnRouteList().get(i).calculatePrice(entry);
+				System.out.print(i + " " + website.getReturnRouteList().get(i));
 			}
 		
 			// this selects the returning routes
-			r1.setReturningRoute(w1.getCurrentAccount().selectReturningRoute(input));
+			reservation.setReturningRoute(website.getCurrentAccount().selectReturningRoute(input));
 		}
 		
 		
 		
 		// start hotels
-		if(e1.getHotel()) {
-			w1.generateHotels();
-			for(int i = 0; i < w1.getHotelList().size(); i++) {
-				w1.getHotelList().get(i).calculateHotelPrice(e1);
-				System.out.println(i + " " + w1.getHotelList().get(i));
+		if(entry.getHotel()) {
+			website.generateHotels();
+			for(int i = 0; i < website.getHotelList().size(); i++) {
+				website.getHotelList().get(i).calculateHotelPrice(entry);
+				System.out.println(i + " " + website.getHotelList().get(i));
 			}
-			r1.setHotel(w1.getCurrentAccount().selectHotel(input));
+			reservation.setHotel(website.getCurrentAccount().selectHotel(input));
 		}
 
 			
 			
 		// start cars
-			if(e1.getCar()) {
-				w1.generateCars(e1.getDestinationCity());
-				w1.populateCarList(e1);
-				for(int i = 0; i < w1.getCarList().size(); i++) {
-					w1.getCarList().get(i).calculateCarPrice(e1);
-					System.out.println(i + " " + w1.getCarList().get(i));
+			if(entry.getCar()) {
+				website.generateCars(entry.getDestinationCity());
+				website.populateCarList(entry);
+				for(int i = 0; i < website.getCarList().size(); i++) {
+					website.getCarList().get(i).calculateCarPrice(entry);
+					System.out.println(i + " " + website.getCarList().get(i));
 				}
-				r1.setCar(w1.getCurrentAccount().selectCar(input));
+				reservation.setCar(website.getCurrentAccount().selectCar(input));
 			}
 
 		// this confirms the reservation
-		r1.setAccount(w1.getCurrentAccount());
-		 w1.getCurrentAccount().confirmReservation(r1, input);
+		reservation.setAccount(website.getCurrentAccount());
+		 website.getCurrentAccount().confirmReservation(reservation, input);
 
 		input.close();
 	}

@@ -144,8 +144,9 @@ public class Entry {
 	}
 	
 	public void askFlightDepartDate(Scanner input) {
+		while(true) {
 		System.out.print("Please enter your departure date (YYYY MM DD): ");
-		String date = input.nextLine();
+		String date = input.nextLine().trim();
 		StringTokenizer line = new StringTokenizer(date, " ");
 		String token = line.nextToken();
     	int year = Integer.parseInt(token);
@@ -154,21 +155,34 @@ public class Entry {
     	token = line.nextToken();
 		int day = Integer.parseInt(token);
 		LocalDate departDate = LocalDate.of(year, month, day);
+		if(departDate.compareTo(LocalDate.now()) < 0) {
+			System.out.println("Please enter a date after today's date");
+			continue;
+		}
 		this.departureDate = departDate;
+		break;
+		}
 	}
 	
 	public void askFlightReturnDate(Scanner input) {
-		System.out.print("Please enter your return date (YYYY MM DD): ");
-		String date = input.nextLine();
-		StringTokenizer line = new StringTokenizer(date, " ");
-		String token = line.nextToken();
-    	int year = Integer.parseInt(token);
-    	token = line.nextToken();
-    	int month = Integer.parseInt(token);
-    	token = line.nextToken();
-		int day = Integer.parseInt(token);
-		LocalDate returnDate = LocalDate.of(year, month, day);
-		this.returnDate = returnDate;
+		while(true) {
+			System.out.print("Please enter your return date (YYYY MM DD): ");
+			String date = input.nextLine().trim();
+			StringTokenizer line = new StringTokenizer(date, " ");
+			String token = line.nextToken();
+	    	int year = Integer.parseInt(token);
+	    	token = line.nextToken();
+	    	int month = Integer.parseInt(token);
+	    	token = line.nextToken();
+			int day = Integer.parseInt(token);
+			LocalDate returnDate = LocalDate.of(year, month, day);
+			if(returnDate.compareTo(LocalDate.now()) < 0) {
+				System.out.println("Please enter a date after today's date");
+				continue;
+			}
+			this.returnDate = returnDate;
+			break;
+		}
 	}
 	
 	public void askDepartCity(Scanner input) {
@@ -188,19 +202,20 @@ public class Entry {
 	}
 	
 	public void askSeatPriority(Scanner input) {
-		System.out.print("Would you like First Class, Business, or Economy seating? ");
-		String response = input.nextLine().trim();
-		if(response.toLowerCase().equals("First Class")) {
-			this.seatPriority = 5;
-		}
-		else if(response.toLowerCase().equals("Business")) {
-			this.seatPriority = 2;
-		}
-		else if(response.toLowerCase().equals("Economy")) {
-			this.seatPriority = 1;
-		}
-		else {
-			this.seatPriority = 1;
+		while(true) {
+			System.out.print("Would you like First Class, Business, or Economy seating? ");
+			String response = input.nextLine().trim();	
+			if(response.toLowerCase().equalsIgnoreCase("First Class")) {
+				this.seatPriority = 5;
+			} else if(response.toLowerCase().equalsIgnoreCase("Business")) {
+				this.seatPriority = 2;
+			} else if(response.toLowerCase().equalsIgnoreCase("Economy")) {
+				this.seatPriority = 1;
+			} else {
+				System.out.println("Please enter First Class, Business, or Economy");
+				continue;
+			}
+			break;
 		}
 	}
 	
@@ -212,87 +227,131 @@ public class Entry {
 		this.passengers = Integer.parseInt(response);
 	}
 	
+	// pre: a Scanner input
+	// post: asks hotel check in date
 	public void askHotelCheckInDate(Scanner input) {
-		System.out.print("Please enter your Check-In date (YYYY MM DD): ");
-		String token = input.nextLine().trim();
-		StringTokenizer line = new StringTokenizer(token, " ");
-    	int year = Integer.parseInt(line.nextToken());
-    	int month = Integer.parseInt(line.nextToken());
-		int day = Integer.parseInt(line.nextToken());
-		LocalDate hotelCheckIn = LocalDate.of(year, month, day);
-		this.checkInDate = hotelCheckIn;
+		while(true) {
+			System.out.print("Please enter your Check-In date (YYYY MM DD): ");
+			String token = input.nextLine().trim();
+			StringTokenizer line = new StringTokenizer(token, " ");
+	    	int year = Integer.parseInt(line.nextToken());
+	    	int month = Integer.parseInt(line.nextToken());
+			int day = Integer.parseInt(line.nextToken());
+			LocalDate hotelCheckIn = LocalDate.of(year, month, day);
+			if(hotelCheckIn.compareTo(LocalDate.now()) < 0) {
+			System.out.println("Please enter a date after today's date");
+			continue;
+			}
+			
+			this.checkInDate = hotelCheckIn;
+			break;
+		}
+		
 
 	}
 	
+	// pre: a Scanner input
+	// post: asks hotel check out date
 	public void askHotelCheckOutDate(Scanner input) {
-		System.out.print("Please enter your Check-Out date (YYYY MM DD): ");
-		String token = input.nextLine().trim();
-		StringTokenizer line = new StringTokenizer(token, " ");
-    	int year = Integer.parseInt(line.nextToken());
-    	int month = Integer.parseInt(line.nextToken());
-		int day = Integer.parseInt(line.nextToken());
-		LocalDate hotelCheckOut = LocalDate.of(year, month, day);
-		this.checkOutDate = hotelCheckOut;
+		while(true) {
+			System.out.print("Please enter your Check-Out date (YYYY MM DD): ");
+			String token = input.nextLine().trim();
+			StringTokenizer line = new StringTokenizer(token, " ");
+	    	int year = Integer.parseInt(line.nextToken());
+	    	int month = Integer.parseInt(line.nextToken());
+			int day = Integer.parseInt(line.nextToken());
+			LocalDate hotelCheckOut = LocalDate.of(year, month, day);
+			if(hotelCheckOut.compareTo(LocalDate.now()) < 0) {
+				System.out.println("Please enter a date after today's date");
+				continue;
+			}
+			this.checkOutDate = hotelCheckOut;
+			break;
+		}
+		
 	}
 	
+	// pre: a Scanner input
+	// post: asks room type
 	public void askRoomType(Scanner input) {
-		System.out.print("What room type would you like (Luxury, Standard, Economy): ");
-		String response = input.nextLine().trim();
-		int type = 0;
-		if(response.equals("Luxury")) {
-			type = 3;
+		while(true) {
+			System.out.print("What room type would you like (Luxury, Standard, Economy): ");
+			String response = input.nextLine().trim();
+			if(response.equalsIgnoreCase("Luxury")) {
+				this.roomType = 3;
+			}
+			else if(response.equalsIgnoreCase("Standard")) {
+				this.roomType = 2;
+			}
+			else if(response.equalsIgnoreCase("Economy")) {
+				this.roomType = 1;
+			}
+			else {
+				System.out.println("Please enter Luxury, Standard, or Economy");
+				continue;
+			}
+			break;
 		}
-		else if(response.equals("Standard")) {
-			type = 2;
-		}
-		else if(response.equals("Economy")) {
-			type = 1;
-		}
-		else {
-			type = 1;
-		}
-		this.roomType = type;
 	}
 	
 	public void askCarRentalDate(Scanner input) {
-		System.out.print("Please enter your Rental date (YYYY MM DD): ");
-		String token = input.nextLine().trim();
-		StringTokenizer line = new StringTokenizer(token, " ");
-    	int year = Integer.parseInt(line.nextToken());
-    	int month = Integer.parseInt(line.nextToken());
-		int day = Integer.parseInt(line.nextToken());
-		LocalDate carRentalDate = LocalDate.of(year, month, day);
-		this.takeDate = carRentalDate;
+		while(true) {
+			System.out.print("Please enter your Rental date (YYYY MM DD): ");
+			String token = input.nextLine().trim();
+			StringTokenizer line = new StringTokenizer(token, " ");
+	    	int year = Integer.parseInt(line.nextToken());
+	    	int month = Integer.parseInt(line.nextToken());
+			int day = Integer.parseInt(line.nextToken());
+			LocalDate carRentalDate = LocalDate.of(year, month, day);
+			if(carRentalDate.compareTo(LocalDate.now()) < 0) {
+				System.out.println("Please enter a date after today's date");
+				continue;
+			}
+			this.takeDate = carRentalDate;
+			break;
+		}
+	
 	}
 	
 	public void askCarReturnDate(Scanner input) {
-		System.out.print("Please enter your Return date (YYYY MM DD): ");
-		String token = input.nextLine().trim();
-		StringTokenizer line = new StringTokenizer(token, " ");
-    	int year = Integer.parseInt(line.nextToken());
-    	int month = Integer.parseInt(line.nextToken());
-		int day = Integer.parseInt(line.nextToken());
-		LocalDate carReturnDate = LocalDate.of(year, month, day);
-		this.giveBackDate = carReturnDate;
+		while(true) {
+			System.out.print("Please enter your Return date (YYYY MM DD): ");
+			String token = input.nextLine().trim();
+			StringTokenizer line = new StringTokenizer(token, " ");
+	    	int year = Integer.parseInt(line.nextToken());
+	    	int month = Integer.parseInt(line.nextToken());
+			int day = Integer.parseInt(line.nextToken());
+			LocalDate carReturnDate = LocalDate.of(year, month, day);
+			if(carReturnDate.compareTo(LocalDate.now()) < 0) {
+				System.out.println("Please enter a daet after today's date");
+				continue;
+			}
+			this.giveBackDate = carReturnDate;
+			break;
+		}
 	}
 	
+	// pre: a Scanner input
+	// post: asks for car class
 	public void askCarClass(Scanner input) {
-		System.out.print("What car class would you like (Luxury, Standard, Economy): ");
-		String response = input.nextLine().trim();
-		int type = 0;
-		if(response.equals("Luxury")) {
-			type = 3;
+		while(true) {
+			System.out.print("What car class would you like (Luxury, Standard, Economy): ");
+			String response = input.nextLine().trim();
+			if(response.equalsIgnoreCase("Luxury")) {
+				this.carClass = 3;
+			}
+			else if(response.equalsIgnoreCase("Standard")) {
+				this.carClass = 2;
+			}
+			else if(response.equalsIgnoreCase("Economy")) {
+				this.carClass = 1;
+			}
+			else {
+				System.out.println("Please enter Luxury, Standard, or Economy");
+				continue;
+			}
+			break;
 		}
-		else if(response.equals("Standard")) {
-			type = 2;
-		}
-		else if(response.equals("Economy")) {
-			type = 1;
-		}
-		else {
-			type = 1;
-		}
-		this.carClass = type;
 	}
 	
 	// pre: nothing
@@ -386,7 +445,7 @@ public class Entry {
 	}
 	
 	// pre: a LocalDate checkOutDate
-	// post: sets teh field checkOutDate to the parameter checkOutDate
+	// post: sets the field checkOutDate to the parameter checkOutDate
 	public void setCheckOutDate(java.time.LocalDate checkOutDate) {
 		this.checkOutDate = checkOutDate;
 	}

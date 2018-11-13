@@ -218,17 +218,21 @@ public class Account {
 	// if they answer yes, adds it to reservation list and returns true, otherwise returns false
 	public boolean confirmReservation(Reservation reservation, Scanner input) {
 		reservation.printReservation();
-		System.out.println("Is this reservation satisfactory? (Type y or n)");
-		String answer = input.nextLine().trim();
-		if(answer.equalsIgnoreCase("y") || answer.equalsIgnoreCase("yes")) {
-			// ProcessPayment
-			System.out.println("Alright, reservation added");
-			this.addRerservation(reservation);
-			return true;
+		while(true) {
+			System.out.println("Is this reservation satisfactory? (Type y or n)");
+			String answer = input.nextLine().trim();
+			if(answer.equalsIgnoreCase("y") || answer.equalsIgnoreCase("yes")) {
+				// ProcessPayment
+				System.out.println("Alright, reservation added");
+				this.addRerservation(reservation);
+				return true;
+			} else if(answer.equalsIgnoreCase("n") || answer.equalsIgnoreCase("no")) {
+				System.out.println("Reservation not added. Returning to main menu");
+				return false;
+			}
+			System.out.println("Please enter y, yes, n, or no. You entered " + answer + ".");
+			continue;
 		}
-		
-		System.out.println("Reservation not added. Returning to main menu");
-		return false;
 	}
 	
 	// pre: nothing

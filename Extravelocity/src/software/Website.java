@@ -11,8 +11,6 @@ import reservables.air.Airport;
 import reservables.air.Connection;
 import reservables.air.Flight;
 import reservables.air.Route;
-//import reservables.cars.Car;
-//import reservables.cars.CarRentalLocation;
 import reservables.cars.*;
 import reservables.hotels.Hotel;
 import reservables.hotels.HotelCompany;
@@ -29,7 +27,6 @@ public class Website {
 	private ArrayList<Car> carList;
 	private Account currentAccount;
 	private HashMap<String, Account> userData;
-	//this java rox
 	
 	// pre: nothing
 	// post: instantiates the object Website
@@ -79,6 +76,9 @@ public class Website {
 	public ArrayList<Car> getCarList() {
 		return this.carList;
 	}
+	
+	// pre: nothing
+	// post: generates hotel
 	public void generateHotels() {
 		// will be replaced by hotel database in final code
 		Random random = new Random(); 
@@ -143,62 +143,71 @@ public class Website {
 			
 	}
 	
-	public void setCarPrices(Entry e) {
-		for(Car c: carList) {
-			c.calculateCarPrice(e);
+	// pre: an Entry entry
+	// post: calculates the car prices
+	public void setCarPrices(Entry entry) {
+		for(Car car: carList) {
+			car.calculateCarPrice(entry);
 		}
 	}
 	
-	public void setHotelPrices(Entry e) {
-		for(Hotel h: hotelList) {
-			h.calculateHotelPrice(e);
+	// pre: an Entry entry
+	// post: calculates the hotel prices
+	public void setHotelPrices(Entry entry) {
+		for(Hotel hotel: hotelList) {
+			hotel.calculateHotelPrice(entry);
 		}
 	}
-	//pre: user says where he wants to find cars
-	//post: list of cars generated with is available and the company you can rent it from
+	
+	// pre: user says where he wants to find cars
+	// post: list of cars generated with is available and the company you can rent it from
 		public void generateCars(String city) {
-		Location asdf = new Location();
-		asdf.setCity(city);
-		asdf.setStreetAddress(city + " Airport");
-		CarRentalLocation crl;
+		Location location = new Location();
+		location.setCity(city);
+		location.setStreetAddress(city + " Airport");
+		CarRentalLocation carRentalLocation;
 		for (int i = 0; i < this.getCarCompanyList().size(); i++) {
 			if (!this.getCarCompanyList().get(i).getLocations().containsKey(city)) {
-				crl = new CarRentalLocation(asdf);
-				crl.addCar(new Car(1));
-				crl.addCar(new Car(2));
-				crl.addCar(new Car(3));
-				crl.getCars().get(0).setRentalCarCompany(this.getCarCompanyList().get(i));
-				crl.getCars().get(1).setRentalCarCompany(this.getCarCompanyList().get(i));
-				crl.getCars().get(2).setRentalCarCompany(this.getCarCompanyList().get(i));
-				this.getCarCompanyList().get(i).addLocation(crl);
+				carRentalLocation = new CarRentalLocation(location);
+				carRentalLocation.addCar(new Car(1));
+				carRentalLocation.addCar(new Car(2));
+				carRentalLocation.addCar(new Car(3));
+				carRentalLocation.getCars().get(0).setRentalCarCompany(this.getCarCompanyList().get(i));
+				carRentalLocation.getCars().get(1).setRentalCarCompany(this.getCarCompanyList().get(i));
+				carRentalLocation.getCars().get(2).setRentalCarCompany(this.getCarCompanyList().get(i));
+				this.getCarCompanyList().get(i).addLocation(carRentalLocation);
 			}
-			//badersWheels.get(i).getLocations().put(.getCity());
 		}
 		
 	}
 		
-	//pre generate cars run
-	//carlist has list of available cars in city
+	// pre: generate cars run, an Entry data
+	// post: a carlist has list of available cars in city
 	public void populateCarList(Entry data) {
-		CarRentalLocation crl;
+		CarRentalLocation carRentalLocation;
 		for (int i = 0; i < this.getCarCompanyList().size(); i++) {
-			crl =this.getCarCompanyList().get(i).getLocations().get(data.getDestinationCity());
-			for (int j = 0; j < crl.getCars().size(); j++) {
-				if (crl.getCars().get(j).getCarClass() == data.getCarClass())
-					carList.add(crl.getCars().get(j));
+			carRentalLocation =this.getCarCompanyList().get(i).getLocations().get(data.getDestinationCity());
+			for (int j = 0; j < carRentalLocation.getCars().size(); j++) {
+				if (carRentalLocation.getCars().get(j).getCarClass() == data.getCarClass())
+					carList.add(carRentalLocation.getCars().get(j));
 			}
 		}
 	}
+	
 	// pre: nothing
 	// post: returns currentAccount
 	public Account getCurrentAccount() {
 		return this.currentAccount;
 	}
 
+	// pre: nothing
+	// post: returns car company list
 	public ArrayList<RentalCarCompany> getCarCompanyList() {
-		return carCompanyList;
+		return this.carCompanyList;
 	}
 
+	// pre: an ArrayList of RentalCarCompany carCompanyList
+	// post: sets the field carCompanyList to the parameter carCompanyList
 	public void setCarCompanyList(ArrayList<RentalCarCompany> carCompanyList) {
 		this.carCompanyList = carCompanyList;
 	}
@@ -245,6 +254,8 @@ public class Website {
 		this.currentAccount = currentAccount;
 	}
 
+	// pre: a scanner input
+	// post: creates the account
 	public void createAccount(Scanner input) {
     	while(true) {
     		System.out.println("Account Creation Menu");
@@ -253,7 +264,7 @@ public class Website {
 	    	if(response.equals("y") || response.equals("Y")) {
 	    		System.out.print("Please enter an account name: ");
 	    		String accountName = input.nextLine();
-	    		if (userData.get(accountName) != null){
+	    		if (this.userData.get(accountName) != null){
 	    			System.out.println("Username already exists, please choose another");
 	    			continue;
 	    		}
@@ -267,7 +278,7 @@ public class Website {
 	    		System.out.print("Please enter a password: ");
 	    		String password = input.nextLine();
 	    		Account a1 = new Account(name, email, accountName, password, this);
-	    		userData.put(accountName, a1);
+	    		this.userData.put(accountName, a1);
 	    		BufferedWriter out = null;
 	    		
 	    		try {
@@ -304,6 +315,8 @@ public class Website {
 	
 	}
 
+	// pre: a scanner input
+	// post: logs in the user
 	public void logIn(Scanner input) {
     	while(true) {
     		System.out.println("Login Menu");
@@ -312,7 +325,7 @@ public class Website {
 	    	if(response.equals("y") || response.equals("Y")) {
 	    		System.out.println("Enter Username");
 	    		String accountName = input.nextLine();
-	    		if (userData.get(accountName) == null){
+	    		if (this.userData.get(accountName) == null){
 	    			System.out.println("Username does not exist");
 	    			continue;
 	    		}
@@ -335,7 +348,9 @@ public class Website {
     	}
 	}
 
-	public void findReservation( ) {
+	// pre: 
+	// post:
+	public void findReservation() {
 		// TODO should be implemented
 	}
 
@@ -378,7 +393,7 @@ public class Website {
 			for (int i = 0; i < possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().size(); i++) {
 				if (possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i).getDepartureDate().isAfter(possibleRoutes.get(j).getFlights().get(0).getArrivalDate()) 
 /*makes sure is cheap*/ && possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i).calculatePrice(data) + possibleRoutes.get(j).getFlights().get(0).calculatePrice(data) < minPrice
-						&& possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i).getArriving().getCity().equals(data.getDestinationCity())) {
+						&& possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i).getArriving().getCity().equalsIgnoreCase(data.getDestinationCity())) {
 					possibleRoutes.get(j).addFlight(possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i));
 					routes.add(possibleRoutes.get(j));
 					break;
@@ -391,14 +406,13 @@ public class Website {
 		possibleRoutes = new ArrayList<Route>();
 		routes = new ArrayList<Route>();
 		routed = new HashMap<String,Airport>();
-		//minDirectPrice = 300000000;
 		minPrice = 1000000000;
 		routed.put(a.getName(), a);
 		for (int i = 0; i < a.getDepartureList().size(); i++) { //now do the same thing but the other direction
 			if(a.getDepartureList().get(i).getDepartureDate().isAfter(data.getReturnDate().atStartOfDay())
 				&& a.getDepartureList().get(i).hasEnoughSeats(data.getPassengers(), data.getSeatPriority())
 				&& a.getDepartureList().get(i).getDepartureDate().isBefore(data.getReturnDate().plusDays(1).atStartOfDay())) {
-				if (a.getDepartureList().get(i).getArriving().getName().equals(b.getName())) {
+				if (a.getDepartureList().get(i).getArriving().getName().equalsIgnoreCase(b.getName())) {
 					routes.add(new Route(a.getDepartureList().get(i)));
 					if (a.getDepartureList().get(i).calculatePrice(data) < minPrice)
 						minPrice = a.getDepartureList().get(i).calculatePrice(data);	
@@ -417,7 +431,7 @@ public class Website {
 			for (int i = 0; i < possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().size(); i++) {
 				if (possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i).getDepartureDate().isAfter(possibleRoutes.get(j).getFlights().get(0).getArrivalDate()) 
 /*makes sure is cheap*/ && possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i).calculatePrice(data) + possibleRoutes.get(j).getFlights().get(0).calculatePrice(data) < minPrice
-						&& possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i).getArriving().getName().equals(b.getName())) {
+						&& possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i).getArriving().getName().equalsIgnoreCase(b.getName())) {
 					possibleRoutes.get(j).addFlight(possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i));
 					routes.add(possibleRoutes.get(j));
 					break;
@@ -426,8 +440,9 @@ public class Website {
 		}
 		this.setReturnRouteList(routes);
 	}
-	//pre: airport list generated, date and base airport given
-	//post: 3 days of flights generated at nexus and connecting airports.
+	
+	// pre: airport list generated, date and base airport given
+	// post: 3 days of flights generated at nexus and connecting airports.
 	public void generateFlights(LocalDateTime aDate, Airport nexus) {
 		ArrayList<Airport> todo = new ArrayList<Airport>();
 		todo.add(nexus);
@@ -469,13 +484,13 @@ public class Website {
 			    	String accountName = line.nextToken();
 			    	String password = line.nextToken();
 			    	Account account = new Account(name, email, accountName, password, this);
-			    	userData.put(accountName, account);
+			    	this.userData.put(accountName, account);
 			    }
 			    scanner.close();	
 	}
 	
-	//pre: files exist to be read from, generate called from driver
-	//post: airportList generated airports have cities, latitude and longitude, connections, and names
+	// pre: files exist to be read from, generate called from driver
+	// post: airportList generated airports have cities, latitude and longitude, connections, and names
 	public void generateAirports(ArrayList<Airline> airLineList) throws IOException {
 		String name = "", city = "", latitude = "", longitude = "", line = "";
 		double multiplier = 0;		
@@ -525,4 +540,3 @@ public class Website {
 	//out.close();
 	}
 }
-

@@ -58,12 +58,12 @@ public class Car {
 		this.rentalCarCompany = rentalCarCompany;
 	}	
 		
-	public Car(int i) {
+	public Car(int carClass) {
 		this.make = null;
 		this.model = null;
 		this.licensePlate = null;
 		this.isAvailable = true;
-		this.carClass = i;
+		this.carClass = carClass;
 		this.renter = new Account();
 		this.mpg = 0;
 		this.stars = 0;
@@ -243,17 +243,17 @@ public class Car {
 	// post: calculates the price of the rental car using factors, returns as double
 	public double calculateCarPrice(Entry entry) {
 		
-		Period rentalDuration = Period.between(entry.getGiveBackDate(), entry.getTakeDate());
-		Period urgencyFactor = Period.between(LocalDate.now(), entry.getTakeDate());
-		double classMultiplier;
+		Period rentalDuration = Period.between(entry.getTakeDate(), entry.getGiveBackDate()); // positive
+		Period urgencyFactor = Period.between(LocalDate.now(), entry.getTakeDate()); // positve
+		double classMultiplier = 0;
 		
 		switch(this.getCarClass()) {
 		case(1):
-			classMultiplier = 1.0; break;
-		case(2):
-			classMultiplier = 1.5; break;
-		case(3):
 			classMultiplier = 2.0; break;
+		case(2):
+			classMultiplier = 4.0; break;
+		case(3):
+			classMultiplier = 5.0; break;
 		default:
 			classMultiplier = 0;
 			System.out.println("Error. carClass should be between 1 and 3 but it actually is " +
@@ -261,7 +261,8 @@ public class Car {
 		}
 		
 		double price =  classMultiplier * this.getRentalCarCompany().getMultiplier() * 
-		rentalDuration.getDays() * (1 + (5.0 * Math.exp(-1.0 * (double)urgencyFactor.getDays())));
+		rentalDuration.getDays() * rentalDuration.getDays() *
+		(1 + (5.0 * Math.exp(-1.0 * (double)urgencyFactor.getDays())));
 		this.setPrice(price);
 		return price;
 		
