@@ -378,7 +378,7 @@ public class Website {
 			for (int i = 0; i < possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().size(); i++) {
 				if (possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i).getDepartureDate().isAfter(possibleRoutes.get(j).getFlights().get(0).getArrivalDate()) 
 /*makes sure is cheap*/ && possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i).calculatePrice(data) + possibleRoutes.get(j).getFlights().get(0).calculatePrice(data) < minPrice
-						&& possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i).getArriving().getName().equals(data.getDestinationCity())) {
+						&& possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i).getArriving().getCity().equals(data.getDestinationCity())) {
 					possibleRoutes.get(j).addFlight(possibleRoutes.get(j).getFlights().get(0).getArriving().getDepartureList().get(i));
 					routes.add(possibleRoutes.get(j));
 					break;

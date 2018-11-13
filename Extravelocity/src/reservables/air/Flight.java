@@ -362,7 +362,7 @@ public class Flight {
 		double sum = this.getAirline().getMultiplier() + randomNumber - (0.7 * duration);
 		double product = (1 + Math.exp(urgencyFactor.getDays())) * this.getArriving().getAirportMultiplier()
 				* this.getDeparting().getAirportMultiplier() * entry.getSeatPriority()
-				* this.getDistancePrice();
+				* this.getDistancePrice() * 3;
 		
 		double price = Math.max(50, product * sum);
 		

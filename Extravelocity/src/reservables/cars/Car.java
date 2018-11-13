@@ -260,8 +260,8 @@ public class Car {
 			this.getCarClass() + "."); break;
 		}
 		
-		double price =  classMultiplier * carRentalLocation.getCompany().getMultiplier() * 
-		rentalDuration.getDays() * (1 + (5.0 * Math.exp((double)urgencyFactor.getDays())));
+		double price =  classMultiplier * this.getRentalCarCompany().getMultiplier() * 
+		rentalDuration.getDays() * (1 + (5.0 * Math.exp(-1.0 * (double)urgencyFactor.getDays())));
 		this.setPrice(price);
 		return price;
 		
