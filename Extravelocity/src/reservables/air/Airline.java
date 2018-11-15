@@ -26,6 +26,13 @@ public class Airline extends Company implements Serializable {
 	}
 	
 	// pre: nothing
+	// post: sets the name and multiplier, email address, and initializes the object
+	public Airline(String name, double multiplier, String emailAddress) {
+		super(name, 1, multiplier, 1111111111, emailAddress);
+		this.airports = new ArrayList<Airport>();
+	}
+	
+	// pre: nothing
 	// post: returns airports
 	public ArrayList<Airport> getAirports() {
 		return this.airports;

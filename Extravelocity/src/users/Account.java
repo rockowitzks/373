@@ -227,7 +227,7 @@ public class Account {
 				this.addRerservation(reservation);
 				return true;
 			} else if(answer.equalsIgnoreCase("n") || answer.equalsIgnoreCase("no")) {
-				System.out.println("Reservation not added. Returning to main menu");
+				System.out.println("Reservation not added. Ending program.");
 				return false;
 			}
 			System.out.println("Please enter y, yes, n, or no. You entered " + answer + ".");

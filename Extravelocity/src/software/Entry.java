@@ -14,7 +14,7 @@ public class Entry {
 	private Airport departureAirport;
 	private Airport returnAirport;
 	private int passengers;
-	private int seatPriority;
+	private double seatPriority;
 	private boolean flight;
 	private boolean hotel;
 	private boolean car;
@@ -210,7 +210,7 @@ public class Entry {
 			} else if(response.toLowerCase().equalsIgnoreCase("Business")) {
 				this.seatPriority = 2;
 			} else if(response.toLowerCase().equalsIgnoreCase("Economy")) {
-				this.seatPriority = 1;
+				this.seatPriority = 0.65;
 			} else {
 				System.out.println("Please enter First Class, Business, or Economy");
 				continue;
@@ -416,7 +416,7 @@ public class Entry {
 	
 	// pre: nothing
 	// post: returns seatPriority
-	public int getSeatPriority() {
+	public double getSeatPriority() {
 		return this.seatPriority;
 	}
 	
@@ -497,28 +497,45 @@ public class Entry {
 	public void setCarClass(int carClass) {
 		this.carClass = carClass;
 	}
+	
+	// pre: nothing
+	// post: returns flight
 	public boolean getFlight() {
 		return this.flight;
 	}
+	
+	// pre: nothing
+	// post: returns hotel
 	public boolean getHotel() {
 		return this.hotel;
 	}
+	
+	// pre: nothing
+	// post: returns car
 	public boolean getCar() {
 		return this.car;
 	}
 
+	// pre: nothing
+	// post: returns destinationCity
 	public String getDestinationCity() {
-		return destinationCity;
+		return this.destinationCity;
 	}
 
+	// pre: a String destinationCity
+	// post: sets the field destinationCity to the parameter destinationCity
 	public void setDestinationCity(String destinationCity) {
 		this.destinationCity = destinationCity;
 	}
 
+	// pre: nothing
+	// post: returns departingCity
 	public String getDepartingCity() {
 		return this.departingCity;
 	}
 
+	// pre: a String departingCity
+	// post: sets the field departingCity to the parameter departingCity
 	public void setDepartingCity(String departingCity) {
 		this.departingCity = departingCity;
 	}

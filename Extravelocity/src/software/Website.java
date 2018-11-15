@@ -3,6 +3,7 @@ package software;
 import java.util.*;
 import java.io.*;
 import java.time.LocalDateTime;
+import users.*;
 
 import reservables.Location;
 import reservables.air.Aircraft;
@@ -15,7 +16,6 @@ import reservables.cars.*;
 import reservables.hotels.Hotel;
 import reservables.hotels.HotelCompany;
 import reservables.hotels.Room;
-import users.Account;
 
 public class Website {
 	private ArrayList<HotelCompany> hotelCompanyList;
@@ -37,7 +37,7 @@ public class Website {
 		departureRouteList = new ArrayList<Route>();
 		hotelList = new ArrayList<Hotel>();
 		carList = new ArrayList<Car>();
-		currentAccount = new Account();
+		currentAccount = new Account("Guest", "No Email", "Guest Name", "No Password", this);
 		userData = new HashMap<String, Account>();
 	}
 	
@@ -85,7 +85,7 @@ public class Website {
 		ArrayList<Room> randomRooms = new ArrayList<Room>();
 		int randomInt = random.nextInt(100);
 	    
-	    // gen rooms with random room numbers
+	    // generate rooms with random room numbers
 		randomInt = random.nextInt(100);
 	    Room r1 = new Room(1.0, false, randomInt, null, null);
 	    randomInt = random.nextInt(100) + 100;
@@ -139,8 +139,7 @@ public class Website {
 		this.hotelList.add(h4);
 		this.hotelList.add(h5);
 		this.hotelList.add(h6);
-		
-			
+	
 	}
 	
 	// pre: an Entry entry
@@ -314,10 +313,20 @@ public class Website {
     	}
 	
 	}
+	
+	// pre: nothing
+	// post: sets up airlines and car companies
+	public void setUpDataBases(ArrayList<Airline> airlines, ArrayList<RentalCarCompany> 
+	carCompanies) throws IOException {
+		this.generateAirports(airlines);	
+		this.setCarCompanyList(carCompanies);
+	}
 
 	// pre: a scanner input
 	// post: logs in the user
-	public void logIn(Scanner input) {
+	public void logIn(Scanner input) throws FileNotFoundException{
+		this.fetchUserData();
+		this.createAccount(input);
     	while(true) {
     		System.out.println("Login Menu");
     		System.out.print("Would you like to login? (y/n): ");
@@ -348,11 +357,6 @@ public class Website {
     	}
 	}
 
-	// pre: 
-	// post:
-	public void findReservation() {
-		// TODO should be implemented
-	}
 
 	//pre: airports and flights generated, user gives return date and departure dates, return and departure airports.
 	//post: generates list of viable routes for passenger to take
@@ -539,4 +543,110 @@ public class Website {
 	in.close();
 	//out.close();
 	}
+	
+
+	// pre: a Scanner input
+	// post: Asks the user for information to put into entry
+	public Entry getEntry(Scanner input) {
+		Entry entry = new Entry();
+		System.out.println("Main Menu");
+		entry.askFlight(input);
+		entry.askHotel(input);
+		entry.askCar(input);
+		
+		if(entry.getFlight()) {
+			System.out.println("Flight Selection Menu");
+			entry.askFlightDepartDate(input);
+			entry.askFlightReturnDate(input);
+			entry.askDepartCity(input);
+			entry.askDestinationCity(input);
+			entry.askSeatPriority(input);
+			entry.findAirportFromCity(this);//find airport function that adds airport to entry.
+			// display
+		}
+		
+		if(entry.getHotel()) {
+			System.out.println("Hotel Selection Menu");
+			entry.askHotelCheckInDate(input);
+			entry.askHotelCheckOutDate(input);
+			entry.askRoomType(input);
+		}
+		
+		if(entry.getCar()) {
+			System.out.println("Car Selection Menu");
+			entry.askCarRentalDate(input);
+			entry.askCarReturnDate(input);
+			entry.askCarClass(input);
+		}
+		
+		if(!(entry.getFlight()) && !(entry.getCar()) && !(entry.getHotel())) {
+			return null;
+		}
+		return entry;
+	}
+	
+	
+	// pre: an Entry entry and a Scanner input
+	// post: creates a reservation based on the user's input to entry
+	public void findReservation(Entry entry, Scanner input) {
+		if(entry == null) {
+			System.out.println("You have chosen not to reserve anything. Ending program now.");
+			return;
+		}
+		
+		Reservation reservation = new Reservation();
+		//generate the departing flights
+				if(entry.getFlight()) { 
+					this.generateFlights(entry.getDepartureDate().atStartOfDay(), entry.getDepartureAirport());
+					this.generateFlights(entry.getReturnDate().atStartOfDay(), entry.getReturnAirport());
+					
+					/// calculates the routes
+					this.calculateRoutes(entry);
+					// this calculates price and prints the departing routes
+					for(int i = 0; i < this.getDepartureRouteList().size(); i++) {
+						this.getDepartureRouteList().get(i).calculatePrice(entry);
+						System.out.print(i + " " + this.getDepartureRouteList().get(i));
+					}
+					// this selects the departing routes
+					reservation.setDepartingRoute(this.getCurrentAccount().selectDepartingRoute(input));
+					// this calculates price and prints the returning routes
+					for(int i = 0; i < this.getReturnRouteList().size(); i++) {
+						this.getReturnRouteList().get(i).calculatePrice(entry);
+						System.out.print(i + " " + this.getReturnRouteList().get(i));
+					}
+				
+					// this selects the returning routes
+					reservation.setReturningRoute(this.getCurrentAccount().selectReturningRoute(input));
+				}
+				
+				
+				
+				// start hotels
+				if(entry.getHotel()) {
+					this.generateHotels();
+					for(int i = 0; i < this.getHotelList().size(); i++) {
+						this.getHotelList().get(i).calculateHotelPrice(entry);
+						System.out.println(i + " " + this.getHotelList().get(i));
+					}
+					reservation.setHotel(this.getCurrentAccount().selectHotel(input));
+				}
+
+					
+					
+				// start cars
+					if(entry.getCar() && entry.getFlight()) { // changed this
+						this.generateCars(entry.getDestinationCity());
+						this.populateCarList(entry);
+						for(int i = 0; i < this.getCarList().size(); i++) {
+							this.getCarList().get(i).calculateCarPrice(entry);
+							System.out.println(i + " " + this.getCarList().get(i));
+						}
+						reservation.setCar(this.getCurrentAccount().selectCar(input));
+					}
+
+				// this confirms the reservation
+				reservation.setAccount(this.getCurrentAccount());
+				 this.getCurrentAccount().confirmReservation(reservation, input);
+	}
+	
 }
