@@ -15,6 +15,8 @@ public class Hotel {
 	private double price;
 	private HotelCompany company;
 	private Location location;
+	
+	
 	// pre: nothing
 	// post: instantiation of Hotel class, all fields set by default.
 	public  Hotel() {

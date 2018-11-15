@@ -358,8 +358,8 @@ public class Website {
 	}
 
 
-	//pre: airports and flights generated, user gives return date and departure dates, return and departure airports.
-	//post: generates list of viable routes for passenger to take
+	// pre: airports and flights generated, user gives return date and departure dates, return and departure airports.
+	// post: generates list of viable routes for passenger to take
 	public void calculateRoutes(Entry data) {
 		HashMap<String, Airport> routed = new HashMap<String,Airport>();
 		double minPrice = 1000000000;
@@ -390,6 +390,7 @@ public class Website {
 			}
 			}
 		}
+		
 		//Airport a; //literally do not even ask
 		for (int j = 0; j < possibleRoutes.size(); j++) {
 			//loops through possible routes looking for acceptable connections
@@ -588,7 +589,8 @@ public class Website {
 	
 	// pre: an Entry entry and a Scanner input
 	// post: creates a reservation based on the user's input to entry
-	public void findReservation(Entry entry, Scanner input) {
+	public void findReservation(Scanner input) {
+		Entry entry = this.getEntry(input);
 		if(entry == null) {
 			System.out.println("You have chosen not to reserve anything. Ending program now.");
 			return;
@@ -619,8 +621,6 @@ public class Website {
 					reservation.setReturningRoute(this.getCurrentAccount().selectReturningRoute(input));
 				}
 				
-				
-				
 				// start hotels
 				if(entry.getHotel()) {
 					this.generateHotels();
@@ -631,8 +631,6 @@ public class Website {
 					reservation.setHotel(this.getCurrentAccount().selectHotel(input));
 				}
 
-					
-					
 				// start cars
 					if(entry.getCar() && entry.getFlight()) { // changed this
 						this.generateCars(entry.getDestinationCity());

@@ -144,12 +144,6 @@ public class Flight {
 		double longitude2 = scanner.nextDouble();
 		String eastWestHemisphere2 = scanner.next().trim();
 		
-		
-//		hemisphere1.trim();
-//		eastWestHemisphere1.trim();
-//		hemisphere2.trim();
-//		eastWestHemisphere2.trim();
-		
 		if (hemisphere1.equals("S")) {
 			latitude1 = -latitude1;
 		}
@@ -170,12 +164,6 @@ public class Flight {
 		double distance = Math.sin(Math.toRadians(latitude1)) * Math.sin(Math.toRadians(latitude2)) + 
 			Math.cos(Math.toRadians(latitude1)) * Math.cos(Math.toRadians(latitude2)) * 
 			Math.cos(Math.toRadians(theta));
-		
-//		distance = Math.acos(distance);
-//		distance = Math.toDegrees(distance);
-//		distance = distance * 60 * 1.1515;
-//		distance = distance * 1.609344;
-		
 		distance = 119.019 * Math.toDegrees(Math.acos(distance));
 		this.setDistance(distance);
 		scanner.close();

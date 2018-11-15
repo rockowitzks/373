@@ -42,6 +42,5 @@ public class HotelCompany extends Company {
 		}
 		hotel.setCompany(this);
 		return this.hotels.add(hotel);
-
 	}
 }

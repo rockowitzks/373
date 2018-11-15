@@ -80,6 +80,8 @@ public class Entry {
 		}
 	}
 	
+	// pre: a Scanner input
+	// post: asks for flight information
 	public void askFlight(Scanner input) {
 		while(true) {
 			System.out.print("Would you like to search flights? (y/n): ");
@@ -102,6 +104,8 @@ public class Entry {
 		
 	}
 	
+	// pre: A Scanner input
+	// post: asks for hotel information 
 	public void askHotel(Scanner input) {
 		while(true) {
 			System.out.print("Would you like to search hotels? (y/n): ");
@@ -123,6 +127,8 @@ public class Entry {
 		}
 	}
 	
+	// pre: a Scanner input
+	// post: asks for the car information
 	public void askCar(Scanner input) {
 		while(true) {
 			System.out.print("Would you like to search cars? (y/n): ");
@@ -143,6 +149,8 @@ public class Entry {
 		}
 	}
 	
+	// pre: a Scanner input
+	// post: asks for the fligth departing date
 	public void askFlightDepartDate(Scanner input) {
 		while(true) {
 		System.out.print("Please enter your departure date (YYYY MM DD): ");
@@ -164,6 +172,8 @@ public class Entry {
 		}
 	}
 	
+	// pre: a Scanner iput 
+	// post: asks for a flight return date
 	public void askFlightReturnDate(Scanner input) {
 		while(true) {
 			System.out.print("Please enter your return date (YYYY MM DD): ");
@@ -185,6 +195,8 @@ public class Entry {
 		}
 	}
 	
+	// pre: a Scanner input
+	// post: asks for the departing city
 	public void askDepartCity(Scanner input) {
 		System.out.print("Please enter the city from which you are leaving: ");
 		String response = input.nextLine().trim();
@@ -193,6 +205,8 @@ public class Entry {
 
 	}
 
+	// pre: a Scanner input
+	// post: asks for the destination city
 	public void askDestinationCity(Scanner input) {
 		System.out.print("Please enter your destination: ");
 		String response = input.nextLine().trim();
@@ -201,6 +215,8 @@ public class Entry {
 
 	}
 	
+	// pre: a Scanner input
+	// post: asks for the seat priority
 	public void askSeatPriority(Scanner input) {
 		while(true) {
 			System.out.print("Would you like First Class, Business, or Economy seating? ");
@@ -246,8 +262,6 @@ public class Entry {
 			this.checkInDate = hotelCheckIn;
 			break;
 		}
-		
-
 	}
 	
 	// pre: a Scanner input
@@ -294,6 +308,8 @@ public class Entry {
 		}
 	}
 	
+	// pre: a Scanner input
+	// post: asks for the car information
 	public void askCarRentalDate(Scanner input) {
 		while(true) {
 			System.out.print("Please enter your Rental date (YYYY MM DD): ");
@@ -313,6 +329,8 @@ public class Entry {
 	
 	}
 	
+	// pre: a Scanner input
+	// post: asks for the car information
 	public void askCarReturnDate(Scanner input) {
 		while(true) {
 			System.out.print("Please enter your Return date (YYYY MM DD): ");

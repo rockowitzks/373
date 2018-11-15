@@ -10,16 +10,19 @@ import software.*;
 public class Driver {
 
 	public static void main(String[] args) throws IOException {
+		RunProgram();
+	}
+	
+	// pre: nothing
+	// post: runs the program
+	public static void RunProgram() throws IOException {
 		Scanner input = new Scanner(System.in);
 		Website website = new Website();	
 		website.setUpDataBases(createAirlines(), createCarCompanies());
 		website.logIn(input);
-		Entry entry = website.getEntry(input);
-		website.findReservation(entry, input);
+		website.findReservation(input);
 		input.close();
 	}
-	
-	
 	// pre: nothing
 	// post: returns an ArrayList<Airline> called airlines
 	public static ArrayList<Airline> createAirlines() {
