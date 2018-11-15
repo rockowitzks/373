@@ -171,7 +171,7 @@ public class Route {
 		}
 		
 		double price = (Math.round(this.getPrice() * 100)) / 100.0;
-		answer = answer + ("		$" + price + "\n");
+		answer = answer + ("	$" + price + "\n");
 		return answer;
 	} 
 }

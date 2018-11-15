@@ -223,7 +223,8 @@ public class Account {
 			String answer = input.nextLine().trim();
 			if(answer.equalsIgnoreCase("y") || answer.equalsIgnoreCase("yes")) {
 				// ProcessPayment
-				System.out.println("Alright, reservation added");
+				
+				System.out.println(reservation + "Alright, reservation added");
 				this.addRerservation(reservation);
 				return true;
 			} else if(answer.equalsIgnoreCase("n") || answer.equalsIgnoreCase("no")) {
