@@ -28,13 +28,14 @@ public class Account {
 	
 	// pre: parameters corresponding the fields
 	// post: sets the fields to the parameters and instantiates the object
-	public Account(String name, String email, String accountName, String password, Website website) {
+	public Account(String name, String email, String accountName, String password, Website website, Card card) {
 		this.name = name;
 		this.email = email;
 		this.accountName = accountName;
 		this.password = password;
 		this.reservations = new ArrayList<Reservation>();
 		this.website = website;
+		this.card = card;
 	}
 	
 	// pre: nothing

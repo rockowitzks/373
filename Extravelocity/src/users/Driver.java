@@ -11,18 +11,22 @@ public class Driver {
 
 	public static void main(String[] args) throws IOException {
 		RunProgram();
+		
 	}
 	
 	// pre: nothing
 	// post: runs the program
 	public static void RunProgram() throws IOException {
-		Scanner input = new Scanner(System.in);
-		Website website = new Website();	
+		//Scanner input = new Scanner(System.in);
+		Website website = new Website();
+		website.fetchUserData();
 		website.setUpDataBases(createAirlines(), createCarCompanies());
-		website.logIn(input);
-		website.findReservation(input);
-		input.close();
+		//website.logIn(input);
+		//website.findReservation(input);
+		//input.close();
+		TravelGUI webGUI = new TravelGUI("ExTraveLux", website);
 	}
+	
 	// pre: nothing
 	// post: returns an ArrayList<Airline> called airlines
 	public static ArrayList<Airline> createAirlines() {
@@ -59,4 +63,5 @@ public class Driver {
 				"wecare@Budget", new HashMap<String, CarRentalLocation>()));
 		return rentalCarCompanyList;
 	}
+	
 }

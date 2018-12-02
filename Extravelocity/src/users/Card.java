@@ -23,9 +23,9 @@ public class Card {
 	
 	// pre: parameters corresponding to the fields
 	// post: initializes the objects with the given fields as parameters
-	public Card(String type, double bankMultiplier, String securityCode, String cardNumber, String expirationDate) {
+	public Card(String type, String bank, String securityCode, String cardNumber, String expirationDate) {
 		this.type = type;
-		this.bankMultiplier = bankMultiplier;
+		this.bank = bank;
 		this.securityCode = securityCode;
 		this.cardNumber = cardNumber;
 		this.expirationDate = expirationDate;

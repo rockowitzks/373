@@ -135,4 +135,24 @@ public class Reservation {
 		double totalCost = carPrice + hotelPrice + departingRoutePrice + returningRoutePrice;
 		System.out.printf("The total cost is $ %.2f.\n", totalCost);
 	}
+	
+	// pre: nothing
+	// post: returns a string consisting of the fields
+	public String toString() {
+		String answer = "\nYour reservation is as follows:\n"; 
+		answer = answer + "Name:    " + this.getAccount().getName() + "\n\n";
+		if(this.getDepartingRoute() != null) {
+			answer = answer + this.getDepartingRoute() + "\n";
+			answer = answer + this.getReturningRoute() + "\n";
+		}
+		
+		if(this.getHotel() != null) {
+			answer = answer + this.getHotel() + "\n";
+		}
+		
+		if(this.getCar() != null) {
+			answer = answer + this.getCar() + ".\n";
+		}
+		return answer;
+	}
 }

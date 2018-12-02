@@ -5,7 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.io.*;
 import java.time.LocalDateTime;
 import users.*;
-import java.util.Random;
+
 import reservables.Location;
 import reservables.air.Aircraft;
 import reservables.air.Airline;
@@ -18,8 +18,7 @@ import reservables.hotels.Hotel;
 import reservables.hotels.HotelCompany;
 import reservables.hotels.Room;
 
-public class Website implements Serializable {
-	private static final long serialVersionUID = 7716689835739760187L;
+public class Website {
 	private ArrayList<HotelCompany> hotelCompanyList;
 	private ArrayList<RentalCarCompany> carCompanyList;
 	private ArrayList<Airport> airportList;
@@ -33,20 +32,26 @@ public class Website implements Serializable {
 	// pre: nothing
 	// post: instantiates the object Website
 	public Website() {
-		this.hotelCompanyList = new ArrayList<HotelCompany>();
-		this.airportList = new ArrayList<Airport>();
-		this.returnRouteList = new ArrayList<Route>();
-		this.departureRouteList = new ArrayList<Route>();
-		this.hotelList = new ArrayList<Hotel>();
-		this.carList = new ArrayList<Car>();
-		this.currentAccount = new Account("Guest", "No Email", "Guest Name", "No Password", this);
-		this.userData = new HashMap<String, Account>();
+		hotelCompanyList = new ArrayList<HotelCompany>();
+		airportList = new ArrayList<Airport>();
+		returnRouteList = new ArrayList<Route>();
+		departureRouteList = new ArrayList<Route>();
+		hotelList = new ArrayList<Hotel>();
+		carList = new ArrayList<Car>();
+		currentAccount = new Account("Guest", "No Email", "Guest Name", "No Password", this, null);
+		userData = new HashMap<String, Account>();
 	}
 	
 	// pre: nothing
 	// post: returns companyList
 	public ArrayList<HotelCompany> getHotelCompanyList() {
 		return this.hotelCompanyList;
+	}
+	
+	// pre: nothing
+	// post: adds a user to the userData hash map
+	public void addNewUser(Account account) {
+		this.userData.put(account.getAccountName(), account);
 	}
 
 	// pre: nothing
@@ -200,6 +205,12 @@ public class Website implements Serializable {
 	public Account getCurrentAccount() {
 		return this.currentAccount;
 	}
+	
+	// pre: nothing
+	// post: returns the userData hash map
+	public HashMap<String, Account> getUserData() {
+		return this.userData;
+	}
 
 	// pre: nothing
 	// post: returns car company list
@@ -278,7 +289,7 @@ public class Website implements Serializable {
 
 	    		System.out.print("Please enter a password: ");
 	    		String password = input.nextLine();
-	    		Account a1 = new Account(name, email, accountName, password, this);
+	    		Account a1 = new Account(name, email, accountName, password, this, null);
 	    		this.userData.put(accountName, a1);
 	    		BufferedWriter out = null;
 	    		
@@ -300,7 +311,7 @@ public class Website implements Serializable {
 				}
 	    		
 	    		System.out.println("Account successfully created. Welcome " + name);
-	    		this.currentAccount = new Account(userData.get(accountName).getName(), userData.get(accountName).getEmail(), accountName, password, this);
+	    		this.currentAccount = new Account(userData.get(accountName).getName(), userData.get(accountName).getEmail(), accountName, password, this, null);
 	    		return;
 	    	}
 	    	
@@ -348,7 +359,6 @@ public class Website implements Serializable {
 	    			continue;
 	    		}
 	    		System.out.println("Login Successful. Welcome back " + userData.get(accountName).getName());
-	    		this.setCurrentAccount(this.userData.get(accountName));
 	    		return;
 	    	}
 	    	else if(response.equals("n") || response.equals("N")) {	
@@ -384,7 +394,6 @@ public class Website implements Serializable {
 				if (data.getDepartureAirport().getDepartureList().get(i).calculatePrice(data) < minPrice) {
 					minPrice = data.getDepartureAirport().getDepartureList().get(i).calculatePrice(data);
 				}
-				
 			} //if route through airport not already started being built start building, only if price less than default flight.
 			else if (!routed.containsKey(data.getDepartureAirport().getDepartureList().get(i).getArriving().getName()) && data.getDepartureAirport().getDepartureList().get(i).hasEnoughSeats(data.getPassengers(), data.getSeatPriority())) {
 				if (data.getDepartureAirport().getDepartureList().get(i).calculatePrice(data) < minPrice) {
@@ -453,8 +462,6 @@ public class Website implements Serializable {
 	// pre: airport list generated, date and base airport given
 	// post: 3 days of flights generated at nexus and connecting airports.
 	public void generateFlights(LocalDateTime aDate, Airport nexus) {
-		Random rand = new Random();
-		
 		ArrayList<Airport> todo = new ArrayList<Airport>();
 		todo.add(nexus);
 		//Flight f = null;
@@ -471,7 +478,7 @@ public class Website implements Serializable {
 					for (int l = 0; l < todo.get(j).getConnections().get(k).getFlightsPerDay(); l++) {
 						new Flight(todo.get(j), todo.get(j).getConnections().get(k).getDestination(), 
 								todo.get(j).getAirlineList().get(ThreadLocalRandom.current().nextInt(0, todo.get(j).getAirlineList().size())), craft, 
-								aDate.plusHours((long) (Math.random() * 24)), String.valueOf(rand.nextInt(900) + 100), 300, 0);
+								aDate.plusHours((long) (Math.random() * 24)), "111", 300, 0);
 						
 					}
 					
@@ -479,6 +486,22 @@ public class Website implements Serializable {
 			}
 			aDate.equals(aDate.plusDays(1));
 		}
+	}
+	// pre: receives user entered string for username
+	// post: if username string matches stored username, return true, else return false
+	public boolean validateUsername(String username) {
+		if(this.userData.get(username) != null) {
+			return true;
+		}
+		return false;
+	}
+	// pre: receives user entered string for username and password
+	// post: if password string matches stored password at stored username, return true, else return false
+	public boolean validatePassword(String username, String password) {
+		if(this.userData.get(username).getPassword().equals(password)) {
+			return true;
+		}
+		return false;
 	}
 	
 	// pre: nothing
@@ -494,7 +517,7 @@ public class Website implements Serializable {
 			    	String email = line.nextToken();
 			    	String accountName = line.nextToken();
 			    	String password = line.nextToken();
-			    	Account account = new Account(name, email, accountName, password, this);
+			    	Account account = new Account(name, email, accountName, password, this, null);
 			    	this.userData.put(accountName, account);
 			    }
 			    scanner.close();	
@@ -620,6 +643,7 @@ public class Website implements Serializable {
 		}
 		return routeList;
 	}
+   
 	// pre: an Entry entry and a Scanner input
 	// post: creates a reservation based on the user's input to entry
 	public void findReservation(Scanner input) {
@@ -693,5 +717,22 @@ public class Website implements Serializable {
 				reservation.setAccount(this.getCurrentAccount());
 				 this.getCurrentAccount().confirmReservation(reservation, input);
 	}
+   
+   // pre: a String string
+   // post: returns true if it is numeric, false otherwise 
+	public static boolean isNumeric(String string)  
+	{  
+	  try  
+	  {  
+	    int number = Integer.parseInt(string);  
+	  }  
+	  catch(NumberFormatException numberFormatException)  
+	  {  
+	    return false;  
+	  }  
+	  return true;  
+	}
+
+
 	
 }
