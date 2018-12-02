@@ -4,10 +4,14 @@ package software;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.*;
 
 import javax.swing.*;
+
+
 
 import users.Account;
 import users.Card;
@@ -341,32 +345,57 @@ public class TravelGUI extends JFrame {
 		
 //		private void handleAdminPrint() 
 //		{
-//			if( emp1!=null)
+//			if( univ!=null)
 //			{
-//				emp1.Print();
+//			
+//		        JTextArea output4 = new JTextArea(25, 80);
+//		        output4.setEditable (false);
+//		        PrintStream printStream4 = new PrintStream(new OutStream(output4));
+//		        PrintStream stdout = System.out;
+//		        System.setOut(printStream4);
+//		        System.setErr(printStream4);
+//				univ.printAll();
+//				JFrame frame = new JFrame("University Info");
+//				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//		        
+//
+//			    JScrollPane jScrollPane = new JScrollPane(output4);
+//
+//			    jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+//			    jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+//			    
+//
+//			    frame.add(jScrollPane, BorderLayout.CENTER);
+//			    frame.setPreferredSize(new Dimension(500, 600));
+//			    frame.pack();
+//		        frame.setLocationRelativeTo(null);
+//			    frame.setVisible(true);
+//		        System.setOut(stdout);
+//		        System.setErr(stdout);
 //			}
 //			else
 //			{
 //				JOptionPane.showMessageDialog(null, 
-//						"No Employee", 
-//						"Error", 
-//						JOptionPane.PLAIN_MESSAGE);
+//						"Nothing to Print", 
+//						"Error : Printing All", 
+//						JOptionPane.ERROR_MESSAGE);
 //			}
 //		}
-//		
-//		public boolean containsEmployee(String name)
-//		{		
-//			for(int n = 0; n < empList.size(); n++) 
-//			{
-//				if ((empList.get(n).getName().equals( name)))
-//				{
-//					return true;
-//				}
-//			}
-//			return false;	
-//	    }
-//		
-//	}
 	}
+	public class OutStream extends OutputStream {
+	    private JTextArea textArea;
+
+	    public OutStream(JTextArea textArea) {
+	        this.textArea = textArea;
+	    }
+
+	    @Override
+	    public void write(int b) throws IOException {
+	        textArea.append(String.valueOf((char)b));
+	        textArea.setCaretPosition(textArea.getDocument().getLength());
+	        textArea.update(textArea.getGraphics());
+	    }
+	}
+
 
 }
