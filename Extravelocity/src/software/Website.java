@@ -5,7 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.io.*;
 import java.time.LocalDateTime;
 import users.*;
-
+import java.util.Random;
 import reservables.Location;
 import reservables.air.Aircraft;
 import reservables.air.Airline;
@@ -18,7 +18,8 @@ import reservables.hotels.Hotel;
 import reservables.hotels.HotelCompany;
 import reservables.hotels.Room;
 
-public class Website {
+public class Website implements Serializable {
+	private static final long serialVersionUID = 7716689835739760187L;
 	private ArrayList<HotelCompany> hotelCompanyList;
 	private ArrayList<RentalCarCompany> carCompanyList;
 	private ArrayList<Airport> airportList;
@@ -32,14 +33,14 @@ public class Website {
 	// pre: nothing
 	// post: instantiates the object Website
 	public Website() {
-		hotelCompanyList = new ArrayList<HotelCompany>();
-		airportList = new ArrayList<Airport>();
-		returnRouteList = new ArrayList<Route>();
-		departureRouteList = new ArrayList<Route>();
-		hotelList = new ArrayList<Hotel>();
-		carList = new ArrayList<Car>();
-		currentAccount = new Account("Guest", "No Email", "Guest Name", "No Password", this);
-		userData = new HashMap<String, Account>();
+		this.hotelCompanyList = new ArrayList<HotelCompany>();
+		this.airportList = new ArrayList<Airport>();
+		this.returnRouteList = new ArrayList<Route>();
+		this.departureRouteList = new ArrayList<Route>();
+		this.hotelList = new ArrayList<Hotel>();
+		this.carList = new ArrayList<Car>();
+		this.currentAccount = new Account("Guest", "No Email", "Guest Name", "No Password", this);
+		this.userData = new HashMap<String, Account>();
 	}
 	
 	// pre: nothing
@@ -347,6 +348,7 @@ public class Website {
 	    			continue;
 	    		}
 	    		System.out.println("Login Successful. Welcome back " + userData.get(accountName).getName());
+	    		this.setCurrentAccount(this.userData.get(accountName));
 	    		return;
 	    	}
 	    	else if(response.equals("n") || response.equals("N")) {	
@@ -382,6 +384,7 @@ public class Website {
 				if (data.getDepartureAirport().getDepartureList().get(i).calculatePrice(data) < minPrice) {
 					minPrice = data.getDepartureAirport().getDepartureList().get(i).calculatePrice(data);
 				}
+				
 			} //if route through airport not already started being built start building, only if price less than default flight.
 			else if (!routed.containsKey(data.getDepartureAirport().getDepartureList().get(i).getArriving().getName()) && data.getDepartureAirport().getDepartureList().get(i).hasEnoughSeats(data.getPassengers(), data.getSeatPriority())) {
 				if (data.getDepartureAirport().getDepartureList().get(i).calculatePrice(data) < minPrice) {
@@ -450,6 +453,8 @@ public class Website {
 	// pre: airport list generated, date and base airport given
 	// post: 3 days of flights generated at nexus and connecting airports.
 	public void generateFlights(LocalDateTime aDate, Airport nexus) {
+		Random rand = new Random();
+		
 		ArrayList<Airport> todo = new ArrayList<Airport>();
 		todo.add(nexus);
 		//Flight f = null;
@@ -466,7 +471,7 @@ public class Website {
 					for (int l = 0; l < todo.get(j).getConnections().get(k).getFlightsPerDay(); l++) {
 						new Flight(todo.get(j), todo.get(j).getConnections().get(k).getDestination(), 
 								todo.get(j).getAirlineList().get(ThreadLocalRandom.current().nextInt(0, todo.get(j).getAirlineList().size())), craft, 
-								aDate.plusHours((long) (Math.random() * 24)), "111", 300, 0);
+								aDate.plusHours((long) (Math.random() * 24)), String.valueOf(rand.nextInt(900) + 100), 300, 0);
 						
 					}
 					
@@ -587,7 +592,34 @@ public class Website {
 		return entry;
 	}
 	
+	// pre: a Scanner input
+	// post: asks the user how they want their flights to be sorted. Returns true for price, flase for time
+	public boolean askHowToSort(Scanner input) {
+		System.out.println("Would you like to sort your flights by price, or by time?");
+		String answer = "";
+		while(true) {
+			 answer = input.nextLine().trim();
+			if(answer.equalsIgnoreCase("price") || answer.equalsIgnoreCase("p")) {
+				return true;
+			} else if (answer.equalsIgnoreCase("time") || answer.equalsIgnoreCase("t") 
+					|| answer.equalsIgnoreCase("date") || answer.equalsIgnoreCase("d")) {
+				return false;
+			} else {
+				System.out.println("Not a valid answer. Please enter price or time");
+			}
+		}
+	}
 	
+	// pre: an ArrayList of Route routeList, and a boolean sortByPrice
+	// post: either sorts the routeList by price or by time, and returns routeList
+	public ArrayList<Route> SortRoute(ArrayList<Route> routeList, boolean sortByPrice) {
+		if(sortByPrice) {
+			Collections.sort(routeList, new PriceComparator());
+		} else {
+			Collections.sort(routeList, new TimeComparator());
+		}
+		return routeList;
+	}
 	// pre: an Entry entry and a Scanner input
 	// post: creates a reservation based on the user's input to entry
 	public void findReservation(Scanner input) {
@@ -597,6 +629,7 @@ public class Website {
 			return;
 		}
 		
+		boolean sortByPrice = askHowToSort(input);
 		Reservation reservation = new Reservation();
 		//generate the departing flights
 				if(entry.getFlight()) { 
@@ -606,15 +639,28 @@ public class Website {
 					/// calculates the routes
 					this.calculateRoutes(entry);
 					// this calculates price and prints the departing routes
+					
+					
+					
 					for(int i = 0; i < this.getDepartureRouteList().size(); i++) {
 						this.getDepartureRouteList().get(i).calculatePrice(entry);
+					}
+					
+					this.setDepartureRouteList(this.SortRoute(this.getDepartureRouteList(), sortByPrice));
+
+					for(int i = 0; i < this.getDepartureRouteList().size(); i++) {
 						System.out.print(i + " " + this.getDepartureRouteList().get(i));
 					}
 					// this selects the departing routes
 					reservation.setDepartingRoute(this.getCurrentAccount().selectDepartingRoute(input));
 					// this calculates price and prints the returning routes
+					
 					for(int i = 0; i < this.getReturnRouteList().size(); i++) {
 						this.getReturnRouteList().get(i).calculatePrice(entry);
+					}
+					
+					this.setReturnRouteList(this.SortRoute(this.getReturnRouteList(), sortByPrice));
+					for(int i = 0; i < this.getReturnRouteList().size(); i++) {
 						System.out.print(i + " " + this.getReturnRouteList().get(i));
 					}
 				

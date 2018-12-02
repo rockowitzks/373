@@ -1,0 +1,19 @@
+package software;
+import java.util.*;
+import reservables.air.*;
+public class PriceComparator implements Comparator<Route>{
+
+	// pre: 2 Routes, route1 and route1
+	// post: returns a comparison of the Routes' price
+	public int compare(Route route1, Route route2) {
+		double answer = (route1.getPrice() - route2.getPrice());
+		if(answer < 0) {
+			return -1;
+		} else if(answer < 0.0000001 && answer >= 0) {
+			return 0;
+		} else {
+			return 1;
+		}	
+	}
+
+}
