@@ -162,8 +162,6 @@ public class TravelGUI extends JFrame {
 					return;	
 				}
 				else { 
-					//handleNewReservation();
-				}
 				//Employee.saveData(emp1);
 			}
 //			else if (source.equals(adminLoad)) {
@@ -363,7 +361,11 @@ public class TravelGUI extends JFrame {
 			}
 			
 		}
-		
+		private void handleViewReservation() {
+			JLabel title = new JLabel("<HTML><center>Your Reservation is displayed below</center></HTML>");
+			web1.getCurrentAccount().getReservations().get(0).printReservation();
+			//JScrollPane reservationPane = new JScrollPane("Reservation View");
+		}
 //		private void handleAdminPrint() 
 //		{
 //			if( emp1!=null)
