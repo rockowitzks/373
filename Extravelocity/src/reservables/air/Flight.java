@@ -102,8 +102,9 @@ public class Flight {
 	// post: returns true if there are enough seats to accommodate the amount people in the given seatClass
 	public boolean hasEnoughSeats(int people, double seatClass) {
 		int available = 0;
+		
 		for(Seat seat: this.getSeats()) {
-			if(seat.getAvailable() && seat.getPriority() == seatClass) {
+			if(seat.getAvailable()) {
 				available++;
 			}
 		}

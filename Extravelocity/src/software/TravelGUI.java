@@ -19,6 +19,7 @@ import users.Reservation;
 
 
 public class TravelGUI extends JFrame {
+	private Reservation reservation;
 	private JMenuBar menuBar;
 	private JMenu accountMenu;
 	private JMenu fileMenu;
@@ -44,13 +45,13 @@ public class TravelGUI extends JFrame {
 
     private ImageIcon univIcon = new ImageIcon("univIcon.png");
     private JLabel imageLabel1 = new JLabel(univIcon);
-	private JComboBox departureCities;
-	private JComboBox seatClasses;
-	private JComboBox carClasses;
-	private JComboBox hotelClasses;
-	private JComboBox arrivalCities;
-	private JComboBox hotelCities;
-	private JComboBox carCities;
+	private JComboBox<String> departureCities;
+	private JComboBox<String> seatClasses;
+	private JComboBox<String> carClasses;
+	private JComboBox<String> hotelClasses;
+	private JComboBox<String> arrivalCities;
+	private JComboBox<String> hotelCities;
+	private JComboBox<String> carCities;
 	private JFormattedTextField adateTextField;
 	private JFormattedTextField ddateTextField;
 	private JFormattedTextField h1dateTextField;
@@ -65,7 +66,14 @@ public class TravelGUI extends JFrame {
 	private JCheckBox flightButton;
 	private JCheckBox hotelButton;
 	private JCheckBox carButton;
-	private JTextField numPassengersTextField; 
+	private JTextField numPassengersTextField;
+	public JPanel FlightSelection;
+	public ScrollPane FlightScroller;
+	public ArrayList<JButton> dep;
+	public boolean hotel;
+	public boolean car;
+	public boolean flight;
+	private ArrayList<JButton> ret; 
 
 
 
@@ -76,7 +84,7 @@ public class TravelGUI extends JFrame {
 		super(windowTitle);
 
 		web1 = website;
-
+		reservation = new Reservation();
 
 		
 		setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -163,6 +171,7 @@ public class TravelGUI extends JFrame {
 				}
 				else { 
 				//Employee.saveData(emp1);
+				}
 			}
 //			else if (source.equals(adminLoad)) {
 //				emp1 = Employee.loadData();
@@ -424,22 +433,22 @@ public class TravelGUI extends JFrame {
 		}
 		String[] cityNames = temp.toArray(new String[temp.size()]);
 		departureCities = new JComboBox<>(cityNames);
-		departureCities.setEditable(true);
+		departureCities.setEditable(false);
 		String[] sc = {"First Class", "Business", "Economy"};
 		seatClasses = new JComboBox<>(sc);
-		seatClasses.setEditable(true);
+		seatClasses.setEditable(false);
 		String[] cc = {"Luxury", "Standard", "Economy"};
 		carClasses = new JComboBox<>(cc);
-		carClasses.setEditable(true);
+		carClasses.setEditable(false);
 		//String[] hc = {"First Class", "Business", "Economy"};
 		hotelClasses = new JComboBox<>(cc);
-		hotelClasses.setEditable(true);
+		hotelClasses.setEditable(false);
 		arrivalCities = new JComboBox<>(cityNames);
-		arrivalCities.setEditable(true);
+		arrivalCities.setEditable(false);
 		hotelCities = new JComboBox<>(cityNames);
-		hotelCities.setEditable(true);
+		hotelCities.setEditable(false);
 		carCities = new JComboBox<>(cityNames);
-		carCities.setEditable(true);
+		carCities.setEditable(false);
 		DateFormat format = new SimpleDateFormat("dd/mm/yyyy");
 		adateTextField = new JFormattedTextField(format);
 		adateTextField.setColumns(10);
@@ -524,6 +533,14 @@ public class TravelGUI extends JFrame {
 		
 	}
 	
+	public Reservation getReservation() {
+		return reservation;
+	}
+
+
+	public void setReservation(Reservation reservation) {
+		this.reservation = reservation;
+	}
 	private class SubmitButtonListener implements ActionListener
 	{
 	        
@@ -535,16 +552,27 @@ public class TravelGUI extends JFrame {
 
 		public void actionPerformed(ActionEvent e)
 	      {
+			if (flightButton.isSelected()) {
+   		 try { //makes sure numpassenegers is int
+					Integer.parseInt(numPassengersTextField.getText());
+				} catch (NumberFormatException | NullPointerException nfe) {
+					JPanel panel1 = new JPanel();
+					JOptionPane.showMessageDialog(panel1, "number of passengers must be integer");
+					return;
+				}
+			}
 			JButton source = (JButton)e.getSource();
 	         if(source.equals(ResOk)) {
 	        	 Entry entry = web1.getEntry();
+	        	 frame.remove(ResOk);
+	        	 frame.remove(ResCancel);
+	        	 frame.remove(airplaneData);
+	        	 frame.remove(hotelData);
+	        	 frame.remove(carData);
+//	        	 frame.setVisible(false);
+//	        	 frame.setVisible(true);
 	        	 if (flightButton.isSelected()) { // if flight button is selected populates fields
-	        		 try {
-							Integer.parseInt(numPassengersTextField.getText());
-						} catch (NumberFormatException | NullPointerException nfe) {
-							JPanel panel1 = new JPanel();
-							JOptionPane.showMessageDialog(panel1, "number of passengers must be integer");
-						}
+	        		 flight = true;
 	        		 entry.setDepartingCity((String) departureCities.getSelectedItem());
 	        		 entry.setDestinationCity((String)arrivalCities.getSelectedItem());
 	        		 entry.setDepartureDate(entry.convertDate(ddateTextField.getText()));
@@ -555,19 +583,43 @@ public class TravelGUI extends JFrame {
 	        		 web1.generateFlights(entry.getDepartureDate().atStartOfDay(), entry.getDepartureAirport());
 	        		 web1.generateFlights(entry.getReturnDate().atStartOfDay(), entry.getReturnAirport());
 	        		 web1.calculateRoutes(entry);
+	        		 web1.SortRoute(web1.getDepartureRouteList(), true);
+	        		 web1.SortRoute(web1.getReturnRouteList(), true);
+	        		 FlightSelection = new JPanel();
+	             	 FlightScroller = new ScrollPane();
+	             	 FlightSelection.setLayout(new BoxLayout(FlightSelection, BoxLayout.Y_AXIS));
+	             	 FlightSelection.setPreferredSize(new Dimension(475, 330));
+	             	 FlightScroller.setPreferredSize(new Dimension(700, 350));
+	             	 dep = new ArrayList<JButton>();
+	             	 for (int i = 0; i < web1.getDepartureRouteList().size(); i++) {
+	             		 dep.add(new JButton(web1.getDepartureRouteList().get(i).toString()));
+	             		 dep.get(i).addActionListener(new SubmitButtonListener(frame));
+	             		 FlightSelection.add(dep.get(i));
+	             	 }
+	             	 
+	             	 
+	             	 FlightScroller.add(FlightSelection);
+	             	 frame.add(FlightScroller);
+		        	 frame.setVisible(false);
+		        	 frame.setVisible(true);
 	        	 }
 	        	 if (hotelButton.isSelected()) {
+	        		 hotel = true;
 	        		 entry.setCheckInDate(entry.convertDate(h1dateTextField.getText()));
 	        		 entry.setCheckOutDate(entry.convertDate(h2dateTextField.getText()));
 	        		 entry.assignRoomType((String)hotelClasses.getSelectedItem());
 	        	 }
+	        	 else 
+	        		 hotel = false;
 	        	 if (carButton.isSelected()) {
+	        		 car = true;
 	        		 entry.assignCarClass((String)carClasses.getSelectedItem());
 	        		 entry.setTakeDate(entry.convertDate(c1dateTextField.getText()));
 	        		 entry.setGiveBackDate(entry.convertDate(c2dateTextField.getText()));
 	        		 web1.generateCars((String)carCities.getSelectedItem());
 	        	 }
-	        	 
+	        	 else 
+	        		 car = false;
 	        	 frame.remove(ResOk);
 	        	 frame.remove(ResCancel);
 	        	 frame.remove(airplaneData);
@@ -577,7 +629,7 @@ public class TravelGUI extends JFrame {
 	        	 frame.setVisible(true);
 	        	 
 	         }
-	         if (source.equals(ResCancel)) {
+	         else if (source.equals(ResCancel)) {
 	        	 frame.remove(ResOk);
 	        	 frame.remove(ResCancel);
 	        	 frame.remove(airplaneData);
@@ -587,7 +639,48 @@ public class TravelGUI extends JFrame {
 	        	 frame.setVisible(true);
 
 	         }
+	         else {
+	        	 for (int i = 0; i < dep.size(); i++) {
+	        		 if( source.equals(dep.get(i)));
+	        		 int dialogButton = JOptionPane.YES_NO_OPTION;
+					int dialogResult = JOptionPane.showConfirmDialog (null, "You've selected " + web1.getDepartureRouteList().get(i) + "is this ok", "Confirm flight", dialogButton );
+					if (dialogResult == JOptionPane.YES_OPTION)
+					{
+		        		 reservation.setDepartingRoute(web1.getDepartureRouteList().get(i));
+		        		 selectReturnRoute();
+		        		 return;
+					} else return;
+
+	        	}
+	        	 for (int i = 0; i < ret.size(); i++) {
+	        		 if( source.equals(ret.get(i)));
+	        		 int dialogButton = JOptionPane.YES_NO_OPTION;
+					int dialogResult = JOptionPane.showConfirmDialog (null, "You've selected " + web1.getReturnRouteList().get(i) + "is this ok", "Confirm flight", dialogButton );
+					if (dialogResult == JOptionPane.YES_OPTION)
+					{
+		        		 reservation.setDepartingRoute(web1.getDepartureRouteList().get(i));
+		        		 return;
+					} else return;
+
+	        	}
+	         }
 	      }
 	  }
+	public void selectReturnRoute() {
+		FlightScroller.remove(FlightSelection);
+		FlightSelection = new JPanel();
+		FlightSelection.setLayout(new BoxLayout(FlightSelection, BoxLayout.Y_AXIS));
+    	FlightSelection.setPreferredSize(new Dimension(475, 230));
+    	 ret = new ArrayList<JButton>();
+     	 for (int i = 0; i < web1.getReturnRouteList().size(); i++) {
+     		 ret.add(new JButton(web1.getReturnRouteList().get(i).toString()));
+     		 ret.get(i).addActionListener(new SubmitButtonListener(this));
+     		 FlightSelection.add(ret.get(i));
+     	 }
+     	 this.setVisible(false);
+     	 this.setVisible(true);
+
+		
+	}
 
 }

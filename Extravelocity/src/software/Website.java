@@ -385,7 +385,8 @@ public class Website {
 		ArrayList<Route> routes = new ArrayList<Route>();
 		for (int i = 0; i < data.getDepartureAirport().getDepartureList().size(); i++) {
 			//makes sure flight is in the right day and not already goners
-			if(data.getDepartureAirport().getDepartureList().get(i).getDepartureDate().isAfter(t1) && data.getDepartureAirport().getDepartureList().get(i).getDepartureDate().isAfter(data.getDepartureDate().atStartOfDay()) && data.getDepartureAirport().getDepartureList().get(i).getDepartureDate().isBefore(data.getDepartureDate().plusDays(1).atStartOfDay())) {
+			if(data.getDepartureAirport().getDepartureList().get(i).getDepartureDate().isAfter(t1) && data.getDepartureAirport().getDepartureList().get(i).getDepartureDate().isAfter(data.getDepartureDate().atStartOfDay())
+					&& data.getDepartureAirport().getDepartureList().get(i).getDepartureDate().isBefore(data.getDepartureDate().plusDays(1).atStartOfDay())) {
 			//if direct flight has available seats always shown, checks pricing to find minimum price.
 			if (data.getDepartureAirport().getDepartureList().get(i).getArriving().getName() == data.getReturnAirport().getName() 
 			&& data.getDepartureAirport().getDepartureList().get(i).hasEnoughSeats(data.getPassengers(), data.getSeatPriority())) {
@@ -459,6 +460,14 @@ public class Website {
 			}
 		}
 		this.setReturnRouteList(routes);
+		for(int i = 0; i < this.getDepartureRouteList().size(); i++) {
+			this.getDepartureRouteList().get(i).calculatePrice(entry);
+			
+		}
+		
+		for(int i = 0; i < this.getReturnRouteList().size(); i++) {
+			this.getReturnRouteList().get(i).calculatePrice(entry);
+		}
 	}
 	
 	// pre: airport list generated, date and base airport given
@@ -673,8 +682,7 @@ public class Website {
 					/// calculates the routes
 					this.calculateRoutes(entry);
 					// this calculates price and prints the departing routes
-					
-					
+
 					
 					for(int i = 0; i < this.getDepartureRouteList().size(); i++) {
 						this.getDepartureRouteList().get(i).calculatePrice(entry);
@@ -701,7 +709,8 @@ public class Website {
 					// this selects the returning routes
 					reservation.setReturningRoute(this.getCurrentAccount().selectReturningRoute(input));
 				}
-				
+
+									
 				// start hotels
 				if(entry.getHotel()) {
 					this.generateHotels();

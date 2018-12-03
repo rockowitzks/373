@@ -256,7 +256,7 @@ public class Entry {
 	}
 	public void assignSeatPriority(String response) {
 		while(true) {
-			System.out.print("Would you like First Class, Business, or Economy seating? ");
+			//System.out.print("Would you like First Class, Business, or Economy seating? ");
 			//String response = input.nextLine().trim();	
 			if(response.toLowerCase().equalsIgnoreCase("First Class")) {
 				this.seatPriority = 5;
@@ -265,7 +265,7 @@ public class Entry {
 			} else if(response.toLowerCase().equalsIgnoreCase("Economy")) {
 				this.seatPriority = 0.65;
 			} else {
-				System.out.println("Please enter First Class, Business, or Economy");
+				//System.out.println("Please enter First Class, Business, or Economy");
 				continue;
 			}
 			break;
