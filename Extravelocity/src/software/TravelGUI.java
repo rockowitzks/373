@@ -4,20 +4,16 @@ package software;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import javax.swing.*;
-
-
-
 import users.Account;
 import users.Card;
 import users.Reservation;
-
-
 //import org.university.software.UniversityGUI.OutStream;
 
 
@@ -47,7 +43,29 @@ public class TravelGUI extends JFrame {
 	private JMenuItem newReservation;
 
     private ImageIcon univIcon = new ImageIcon("univIcon.png");
-    private JLabel imageLabel1 = new JLabel(univIcon); 
+    private JLabel imageLabel1 = new JLabel(univIcon);
+	private JComboBox departureCities;
+	private JComboBox seatClasses;
+	private JComboBox carClasses;
+	private JComboBox hotelClasses;
+	private JComboBox arrivalCities;
+	private JComboBox hotelCities;
+	private JComboBox carCities;
+	private JFormattedTextField adateTextField;
+	private JFormattedTextField ddateTextField;
+	private JFormattedTextField h1dateTextField;
+	private JFormattedTextField h2dateTextField;
+	private JFormattedTextField c1dateTextField;
+	private JFormattedTextField c2dateTextField;
+	private JButton ResOk;
+	private JButton ResCancel;
+	private JPanel carData;
+	private JPanel airplaneData;
+	private JPanel hotelData;
+	private JCheckBox flightButton;
+	private JCheckBox hotelButton;
+	private JCheckBox carButton;
+	private JTextField numPassengersTextField; 
 
 
 
@@ -69,7 +87,7 @@ public class TravelGUI extends JFrame {
 				"<BR>Suspiciously expensive travel to just about anywhere we have programmed</center><BR></HTML>"), BorderLayout.CENTER);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		setPreferredSize(new Dimension(600,400));
+		setPreferredSize(new Dimension(760,550));
         pack();
         setLocationRelativeTo(null);
 		buildGUI();	
@@ -144,12 +162,15 @@ public class TravelGUI extends JFrame {
 					return;	
 				}
 				else { 
-					//handleViewReservation();
+					//handleNewReservation();
 				}
-	
+				//Employee.saveData(emp1);
 			}
+//			else if (source.equals(adminLoad)) {
+//				emp1 = Employee.loadData();
+//			}
 			else if (source.equals(newReservation)) {
-				//handleViewReservation();
+				handleNewReservation();
 			}
 			//if you want more items, more if elses for them
 		}
@@ -283,14 +304,14 @@ public class TravelGUI extends JFrame {
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				if(cardType.getText().equals("") || !(cardType.getText().equalsIgnoreCase("Debit")) && !(cardType.getText().equalsIgnoreCase("Credit"))) {
+				if(cardType.getText().equals("") || !(cardType.getText().equalsIgnoreCase("Debit")) || !(cardType.getText().equalsIgnoreCase("Credit"))) {
 					JOptionPane.showMessageDialog(null,
 							"Please enter either Debit or Credit " +cardType.getText(),
 							"Error : Card Type Entry",
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				if(cardBank.getText().equals("") || !(cardBank.getText().equalsIgnoreCase("Visa")) && !(cardBank.getText().equalsIgnoreCase("Mastercard")) && !(cardBank.getText().equalsIgnoreCase("American Express")) && !(cardBank.getText().equalsIgnoreCase("Discover"))) {
+				if(cardBank.getText().equals("") || !(cardBank.getText().equalsIgnoreCase("Visa")) || !(cardBank.getText().equalsIgnoreCase("Mastercard")) || !(cardBank.getText().equalsIgnoreCase("American Express")) || !(cardBank.getText().equalsIgnoreCase("Discover"))) {
 					JOptionPane.showMessageDialog(null,
 							"Please enter either Visa, Mastercard, American Express, or Discover",
 							"Error : Card Institution Entry",
@@ -345,57 +366,226 @@ public class TravelGUI extends JFrame {
 		
 //		private void handleAdminPrint() 
 //		{
-//			if( univ!=null)
+//			if( emp1!=null)
 //			{
-//			
-//		        JTextArea output4 = new JTextArea(25, 80);
-//		        output4.setEditable (false);
-//		        PrintStream printStream4 = new PrintStream(new OutStream(output4));
-//		        PrintStream stdout = System.out;
-//		        System.setOut(printStream4);
-//		        System.setErr(printStream4);
-//				univ.printAll();
-//				JFrame frame = new JFrame("University Info");
-//				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//		        
-//
-//			    JScrollPane jScrollPane = new JScrollPane(output4);
-//
-//			    jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-//			    jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-//			    
-//
-//			    frame.add(jScrollPane, BorderLayout.CENTER);
-//			    frame.setPreferredSize(new Dimension(500, 600));
-//			    frame.pack();
-//		        frame.setLocationRelativeTo(null);
-//			    frame.setVisible(true);
-//		        System.setOut(stdout);
-//		        System.setErr(stdout);
+//				emp1.Print();
 //			}
 //			else
 //			{
 //				JOptionPane.showMessageDialog(null, 
-//						"Nothing to Print", 
-//						"Error : Printing All", 
-//						JOptionPane.ERROR_MESSAGE);
+//						"No Employee", 
+//						"Error", 
+//						JOptionPane.PLAIN_MESSAGE);
 //			}
 //		}
+//		
+//		public boolean containsEmployee(String name)
+//		{		
+//			for(int n = 0; n < empList.size(); n++) 
+//			{
+//				if ((empList.get(n).getName().equals( name)))
+//				{
+//					return true;
+//				}
+//			}
+//			return false;	
+//	    }
+//		
+//	}
 	}
-	public class OutStream extends OutputStream {
-	    private JTextArea textArea;
+	//pre user selects make reservation
+	//post panel appears to take in reservation data for search
+	public void handleNewReservation() {
+		airplaneData = new JPanel();
+		carData = new JPanel();
+		hotelData = new JPanel();		
+		airplaneData.setSize(250,400);
+		carData.setSize(250,400);
+		hotelData.setSize(250,400);
+		this.setLayout(new FlowLayout());
+		//GroupLayout Layout = new GroupLayout(airplaneData);
+		//BoxLayout Layout = new BoxLayout(airplaneData, BoxLayout.X_AXIS);
+		airplaneData.setLayout( new WrapLayout(FlowLayout.LEFT));
+		carData.setLayout( new WrapLayout(FlowLayout.LEFT));
+		hotelData.setLayout(new WrapLayout(FlowLayout.LEFT));
+		
+		flightButton = new JCheckBox("Flight");
+		flightButton.setSelected(true);
+		hotelButton = new JCheckBox("Hotel");
+		hotelButton.setSelected(true);
+		carButton = new JCheckBox("Car");
+		carButton.setSelected(true);
+		
+		ArrayList<String> temp = new ArrayList<String>();
+		for (int i = 0; i < web1.getAirportList().size(); i++) {
+			temp.add(web1.getAirportList().get(i).getCity());
+		}
+		String[] cityNames = temp.toArray(new String[temp.size()]);
+		departureCities = new JComboBox<>(cityNames);
+		departureCities.setEditable(true);
+		String[] sc = {"First Class", "Business", "Economy"};
+		seatClasses = new JComboBox<>(sc);
+		seatClasses.setEditable(true);
+		String[] cc = {"Luxury", "Standard", "Economy"};
+		carClasses = new JComboBox<>(cc);
+		carClasses.setEditable(true);
+		//String[] hc = {"First Class", "Business", "Economy"};
+		hotelClasses = new JComboBox<>(cc);
+		hotelClasses.setEditable(true);
+		arrivalCities = new JComboBox<>(cityNames);
+		arrivalCities.setEditable(true);
+		hotelCities = new JComboBox<>(cityNames);
+		hotelCities.setEditable(true);
+		carCities = new JComboBox<>(cityNames);
+		carCities.setEditable(true);
+		DateFormat format = new SimpleDateFormat("dd/mm/yyyy");
+		adateTextField = new JFormattedTextField(format);
+		adateTextField.setColumns(10);
+		adateTextField.setText(LocalDateTime.now().getMonthValue() + "/" + LocalDateTime.now().getDayOfMonth() + "/" + LocalDateTime.now().getYear());
+		ddateTextField = new JFormattedTextField(format);
+		ddateTextField.setColumns(10);
+		ddateTextField.setText(LocalDateTime.now().getMonthValue() + "/" + LocalDateTime.now().getDayOfMonth() + "/" + LocalDateTime.now().getYear());
+		h1dateTextField = new JFormattedTextField(format);
+		h1dateTextField.setColumns(10);
+		h1dateTextField.setText(LocalDateTime.now().getMonthValue() + "/" + LocalDateTime.now().getDayOfMonth() + "/" + LocalDateTime.now().getYear());
+		h2dateTextField = new JFormattedTextField(format);
+		h2dateTextField.setColumns(10);
+		h2dateTextField.setText(LocalDateTime.now().getMonthValue() + "/" + LocalDateTime.now().getDayOfMonth() + "/" + LocalDateTime.now().getYear());
+		c1dateTextField = new JFormattedTextField(format);
+		c1dateTextField.setColumns(10);
+		c1dateTextField.setText(LocalDateTime.now().getMonthValue() + "/" + LocalDateTime.now().getDayOfMonth() + "/" + LocalDateTime.now().getYear());
+		c2dateTextField = new JFormattedTextField(format);
+		c2dateTextField.setColumns(10);
+		c2dateTextField.setText(LocalDateTime.now().getMonthValue() + "/" + LocalDateTime.now().getDayOfMonth() + "/" + LocalDateTime.now().getYear());
+		numPassengersTextField = new JTextField("1");
+		numPassengersTextField.setColumns(3);
+		//airplane block
+		airplaneData.add(new JLabel("Do you want a flight"));
+		airplaneData.add(flightButton);
+		airplaneData.add(new JLabel("Departing: "));
+		airplaneData.add(departureCities);
+		airplaneData.add(new JLabel("Arriving: "));
+		airplaneData.add(arrivalCities);
+		airplaneData.add(new JLabel("Departure date"));
+		airplaneData.add(ddateTextField);
+		airplaneData.add(new JLabel("Returning date"));
+		airplaneData.add(adateTextField);
+		airplaneData.add(seatClasses);
+		airplaneData.add(new JLabel("Number of Passengers"));
+		airplaneData.add(numPassengersTextField);
+		
 
-	    public OutStream(JTextArea textArea) {
-	        this.textArea = textArea;
-	    }
+		//hotel block
+		//new BoxLayout(BoxLayout.Y_AXIS);
+		hotelData.add(new JLabel("Do you want a hotel?"));
+		hotelData.add(hotelButton);
+		hotelData.add(new JLabel("For City:"));
+		hotelData.add(hotelCities);
+		hotelData.add(new JLabel("Check-in Date"));
+		hotelData.add(h1dateTextField);
+		hotelData.add(new JLabel("Check-Out Date"));
+		hotelData.add(h2dateTextField);
+		hotelData.add(hotelClasses);
+		
+		//car block	
+		carData.add(new JLabel("Do you want a rental car?"));
+		carData.add(carButton);
+		carData.add(new JLabel("For City:"));
+		carData.add(carCities);
+		carData.add(new JLabel("Rental Date:"));
+		carData.add(c1dateTextField);
+		carData.add(new JLabel("Return Date:"));
+		carData.add(c2dateTextField);
+		carData.add(carClasses);
 
-	    @Override
-	    public void write(int b) throws IOException {
-	        textArea.append(String.valueOf((char)b));
-	        textArea.setCaretPosition(textArea.getDocument().getLength());
-	        textArea.update(textArea.getGraphics());
-	    }
+		
+				
+
+//		add(hotelData);
+//		add(carData);
+//		hotelData.setBorder(BorderFactory.createLineBorder(Color.black));
+//		carData.setBorder(BorderFactory.createLineBorder(Color.black));
+//		airplaneData.setBorder(BorderFactory.createLineBorder(Color.black));
+		//airplaneData.setBo
+
+		add(airplaneData);
+		add(hotelData);
+		add(carData);
+		ResOk = new JButton("ok");
+		ResOk.addActionListener(new SubmitButtonListener(this));
+		this.add(ResOk);
+		
+		ResCancel = new JButton("cancel");
+		add(ResCancel);
+//		pack();
+		setVisible(true);
+		
 	}
+	
+	private class SubmitButtonListener implements ActionListener
+	{
+	        
+		private TravelGUI frame;
 
+		public SubmitButtonListener(TravelGUI travelGUI) {
+			frame = travelGUI;
+		}
+
+		public void actionPerformed(ActionEvent e)
+	      {
+			JButton source = (JButton)e.getSource();
+	         if(source.equals(ResOk)) {
+	        	 Entry entry = web1.getEntry();
+	        	 if (flightButton.isSelected()) { // if flight button is selected populates fields
+	        		 try {
+							Integer.parseInt(numPassengersTextField.getText());
+						} catch (NumberFormatException | NullPointerException nfe) {
+							JPanel panel1 = new JPanel();
+							JOptionPane.showMessageDialog(panel1, "number of passengers must be integer");
+						}
+	        		 entry.setDepartingCity((String) departureCities.getSelectedItem());
+	        		 entry.setDestinationCity((String)arrivalCities.getSelectedItem());
+	        		 entry.setDepartureDate(entry.convertDate(ddateTextField.getText()));
+	        		 entry.setReturnDate(entry.convertDate(adateTextField.getText()));
+	        		 entry.setPassengers(Integer.parseInt(numPassengersTextField.getText()));
+	        		 entry.assignSeatPriority((String)seatClasses.getSelectedItem());
+	        		 entry.findAirportFromCity(web1);
+	        		 web1.generateFlights(entry.getDepartureDate().atStartOfDay(), entry.getDepartureAirport());
+	        		 web1.generateFlights(entry.getReturnDate().atStartOfDay(), entry.getReturnAirport());
+	        		 web1.calculateRoutes(entry);
+	        	 }
+	        	 if (hotelButton.isSelected()) {
+	        		 entry.setCheckInDate(entry.convertDate(h1dateTextField.getText()));
+	        		 entry.setCheckOutDate(entry.convertDate(h2dateTextField.getText()));
+	        		 entry.assignRoomType((String)hotelClasses.getSelectedItem());
+	        	 }
+	        	 if (carButton.isSelected()) {
+	        		 entry.assignCarClass((String)carClasses.getSelectedItem());
+	        		 entry.setTakeDate(entry.convertDate(c1dateTextField.getText()));
+	        		 entry.setGiveBackDate(entry.convertDate(c2dateTextField.getText()));
+	        		 web1.generateCars((String)carCities.getSelectedItem());
+	        	 }
+	        	 
+	        	 frame.remove(ResOk);
+	        	 frame.remove(ResCancel);
+	        	 frame.remove(airplaneData);
+	        	 frame.remove(hotelData);
+	        	 frame.remove(carData);
+	        	 frame.setVisible(false);
+	        	 frame.setVisible(true);
+	        	 
+	         }
+	         if (source.equals(ResCancel)) {
+	        	 frame.remove(ResOk);
+	        	 frame.remove(ResCancel);
+	        	 frame.remove(airplaneData);
+	        	 frame.remove(hotelData);
+	        	 frame.remove(carData);
+	        	 frame.setVisible(false);
+	        	 frame.setVisible(true);
+
+	         }
+	      }
+	  }
 
 }

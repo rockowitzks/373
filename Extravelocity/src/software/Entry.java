@@ -1,6 +1,7 @@
 package software;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -170,6 +171,25 @@ public class Entry {
 		this.departureDate = departDate;
 		break;
 		}
+	} //TODO add error checking
+	//pre string input
+	//post localdate output
+	public LocalDate convertDate(String string) {
+		//while(true) {
+		//System.out.print("Please enter your departure date (YYYY MM DD): ");
+		//String date = input.nextLine().trim();
+		StringTokenizer line = new StringTokenizer(string, "/");
+		String token = line.nextToken();
+    	int month = Integer.parseInt(token);
+    	token = line.nextToken();
+    	int day = Integer.parseInt(token);
+    	token = line.nextToken();
+		int year = Integer.parseInt(token);
+		LocalDate departDate = LocalDate.of(year, month, day);
+		//if(departDate.compareTo(LocalDate.now()) < 0) {
+			System.out.println("Please enter a date after today's date");
+		return departDate;
+	
 	}
 	
 	// pre: a Scanner iput 
@@ -221,6 +241,23 @@ public class Entry {
 		while(true) {
 			System.out.print("Would you like First Class, Business, or Economy seating? ");
 			String response = input.nextLine().trim();	
+			if(response.toLowerCase().equalsIgnoreCase("First Class")) {
+				this.seatPriority = 5;
+			} else if(response.toLowerCase().equalsIgnoreCase("Business")) {
+				this.seatPriority = 2;
+			} else if(response.toLowerCase().equalsIgnoreCase("Economy")) {
+				this.seatPriority = 0.65;
+			} else {
+				System.out.println("Please enter First Class, Business, or Economy");
+				continue;
+			}
+			break;
+		}
+	}
+	public void assignSeatPriority(String response) {
+		while(true) {
+			System.out.print("Would you like First Class, Business, or Economy seating? ");
+			//String response = input.nextLine().trim();	
 			if(response.toLowerCase().equalsIgnoreCase("First Class")) {
 				this.seatPriority = 5;
 			} else if(response.toLowerCase().equalsIgnoreCase("Business")) {
@@ -556,5 +593,29 @@ public class Entry {
 	// post: sets the field departingCity to the parameter departingCity
 	public void setDepartingCity(String departingCity) {
 		this.departingCity = departingCity;
+	}
+
+	public void assignRoomType(String response) {
+		if(response.equalsIgnoreCase("Luxury")) {
+			this.roomType = 3;
+		}
+		else if(response.equalsIgnoreCase("Standard")) {
+			this.roomType = 2;
+		}
+		else if(response.equalsIgnoreCase("Economy")) {
+			this.roomType = 1;
+		}		
+	}
+
+	public void assignCarClass(String response) {
+		if(response.equalsIgnoreCase("Luxury")) {
+			this.carClass = 3;
+		}
+		else if(response.equalsIgnoreCase("Standard")) {
+			this.carClass = 2;
+		}
+		else if(response.equalsIgnoreCase("Economy")) {
+			this.carClass = 1;
+		}
 	}
 }

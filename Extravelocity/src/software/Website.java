@@ -28,6 +28,7 @@ public class Website {
 	private ArrayList<Car> carList;
 	private Account currentAccount;
 	private HashMap<String, Account> userData;
+	private Entry entry;
 	
 	// pre: nothing
 	// post: instantiates the object Website
@@ -40,6 +41,7 @@ public class Website {
 		carList = new ArrayList<Car>();
 		currentAccount = new Account("Guest", "No Email", "Guest Name", "No Password", this, null);
 		userData = new HashMap<String, Account>();
+		entry = new Entry();
 	}
 	
 	// pre: nothing
@@ -507,7 +509,7 @@ public class Website {
 	// pre: nothing
 	// post: retrieves the user account data
 	public void fetchUserData() throws FileNotFoundException {
-		File file = new File("UserData.txt"); 
+		File file = new File("userData.txt"); 
 		
 			    Scanner scanner = new Scanner(file); 
 			    
@@ -575,8 +577,8 @@ public class Website {
 	}
 	
 
-	// pre: a Scanner input
-	// post: Asks the user for information to put into entry
+//	 pre: a Scanner input
+//	 post: Asks the user for information to put into entry
 	public Entry getEntry(Scanner input) {
 		Entry entry = new Entry();
 		System.out.println("Main Menu");
@@ -615,6 +617,14 @@ public class Website {
 		return entry;
 	}
 	
+	public Entry getEntry() {
+		return entry;
+	}
+
+	public void setEntry(Entry entry) {
+		this.entry = entry;
+	}
+
 	// pre: a Scanner input
 	// post: asks the user how they want their flights to be sorted. Returns true for price, flase for time
 	public boolean askHowToSort(Scanner input) {
