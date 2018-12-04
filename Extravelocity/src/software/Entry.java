@@ -186,8 +186,8 @@ public class Entry {
     	token = line.nextToken();
 		int year = Integer.parseInt(token);
 		LocalDate departDate = LocalDate.of(year, month, day);
-		//if(departDate.compareTo(LocalDate.now()) < 0) {
-			System.out.println("Please enter a date after today's date");
+		if(departDate.compareTo(LocalDate.now()) < 0) {
+			System.out.println("Please enter a date after today's date");}
 		return departDate;
 	
 	}
