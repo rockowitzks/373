@@ -194,10 +194,13 @@ public class Website {
 	public void populateCarList(Entry data) {
 		CarRentalLocation carRentalLocation;
 		for (int i = 0; i < this.getCarCompanyList().size(); i++) {
-			carRentalLocation =this.getCarCompanyList().get(i).getLocations().get(data.getDestinationCity());
+			carRentalLocation =this.getCarCompanyList().get(i).getLocations().get(data.getCarCity());
 			for (int j = 0; j < carRentalLocation.getCars().size(); j++) {
-				if (carRentalLocation.getCars().get(j).getCarClass() == data.getCarClass())
-					carList.add(carRentalLocation.getCars().get(j));
+				if (carRentalLocation.getCars().get(j).getCarClass() == data.getCarClass()) {
+					carRentalLocation.getCars().get(j).calculateCarPrice(data);
+					this.carList.add(carRentalLocation.getCars().get(j));
+				}
+					
 			}
 		}
 	}
