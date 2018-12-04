@@ -33,6 +33,7 @@ public class Entry {
 	private java.time.LocalDate takeDate;
 	private java.time.LocalDate giveBackDate;
 	private int carClass;
+	private String carCity;
 	
 	// pre: nothing
 	// post: instantiates the object
@@ -617,5 +618,14 @@ public class Entry {
 		else if(response.equalsIgnoreCase("Economy")) {
 			this.carClass = 1;
 		}
+	}
+
+	public void setCarCity(String selectedItem) {
+		carCity = selectedItem;
+		
+	}
+
+	public String getCarCity() {
+		return carCity;
 	}
 }

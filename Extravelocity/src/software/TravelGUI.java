@@ -78,10 +78,12 @@ public class TravelGUI extends JFrame {
 	public boolean dflight;
 	public boolean hotelfound;
 	public boolean carfound;
-	private ArrayList<JButton> hotelButtons;
-	private ArrayList<JButton> carButtons;
+	private ButtonGroup hotelButtons;
+	private ButtonGroup carButtons;
 	public JButton returnOk;
-	private JButton departOk; 
+	private JButton departOk;
+	private JButton hotelOk;
+	private JButton carOk; 
 
 
 
@@ -90,7 +92,11 @@ public class TravelGUI extends JFrame {
 	public TravelGUI(String windowTitle, Website website) 
 	{
 		super(windowTitle);
-
+		FlightScroller = new ScrollPane();
+		JFrame kkk = new JFrame();
+		kkk.add(FlightScroller);
+		 FlightSelection = new JPanel();
+     	 FlightScroller.setPreferredSize(new Dimension(700, 350));
 		web1 = website;
 		reservation = new Reservation();
 		rflight = true;
@@ -615,7 +621,9 @@ public class TravelGUI extends JFrame {
 	        		 entry.assignCarClass((String)carClasses.getSelectedItem());
 	        		 entry.setTakeDate(entry.convertDate(c1dateTextField.getText()));
 	        		 entry.setGiveBackDate(entry.convertDate(c2dateTextField.getText()));
-	        		 web1.generateCars((String)carCities.getSelectedItem());
+	        		 entry.setCarCity((String)carCities.getSelectedItem());
+	        		 web1.generateCars(entry.getCarCity());
+	        		 web1.populateCarList(entry);
 	        	 }
 	        	 else 
 	        		 car = false;
@@ -651,6 +659,7 @@ public class TravelGUI extends JFrame {
 						int dialogResult = JOptionPane.showConfirmDialog (null, "You've selected " + web1.getReturnRouteList().get(i).toString() + "is this ok", "Confirm return route", dialogButton );
 						if (dialogResult == JOptionPane.YES_OPTION)
 						{
+							 frame.remove(returnOk);
 			        		 reservation.setReturningRoute(web1.getReturnRouteList().get(i));
 			        		 rflight = true;
 			        		 displayOptions();
@@ -671,6 +680,7 @@ public class TravelGUI extends JFrame {
 						int dialogResult = JOptionPane.showConfirmDialog (null, "You've selected " + web1.getDepartureRouteList().get(i).toString() + "is this ok", "Confirm return route", dialogButton );
 						if (dialogResult == JOptionPane.YES_OPTION)
 						{
+							 frame.remove(departOk);
 			        		 reservation.setDepartingRoute(web1.getDepartureRouteList().get(i));
 			        		 dflight = true;
 			        		 displayOptions();
@@ -699,7 +709,7 @@ public class TravelGUI extends JFrame {
      	 }
      	 returnOk = new JButton("Select Return Route");
      	 returnOk.addActionListener(new SubmitButtonListener(this));
-     	 FlightSelection.add(returnOk);
+     	 this.add(returnOk);
      	 FlightScroller.add(FlightSelection);
      	 this.setVisible(false);
      	 this.setVisible(true);
@@ -708,23 +718,18 @@ public class TravelGUI extends JFrame {
 	//pre route list populated
 	//user wants to view flights
 	private void selectDepartRoute() {
-		 FlightSelection = new JPanel();
-     	 FlightScroller = new ScrollPane();
+		
+     	 
      	 FlightSelection.setLayout(new BoxLayout(FlightSelection, BoxLayout.Y_AXIS));
      	 FlightSelection.setPreferredSize(new Dimension(475, 330));
-     	 FlightScroller.setPreferredSize(new Dimension(700, 350));
      	 dep = new ButtonGroup();
      	 for (int i = 0; i < web1.getDepartureRouteList().size(); i++) {
-     		 JRadioButton button = new JRadioButton(web1.getReturnRouteList().get(i).toString());
+     		 JRadioButton button = new JRadioButton(web1.getDepartureRouteList().get(i).toString());
      		 dep.add(button);
      		 FlightSelection.add(button);
      	 }
      	 departOk = new JButton("Confirm Departure Route");
      	 departOk.addActionListener(new SubmitButtonListener(this));
-     	 //FlightSelection.add(departOk);
-//     	 FlightScroller.add(FlightSelection);
-//     	 this.setVisible(false);
-//     	 this.setVisible(true);
      	 FlightScroller.add(FlightSelection);
      	 this.add(FlightScroller);
      	 this.add(departOk);
@@ -733,6 +738,115 @@ public class TravelGUI extends JFrame {
 		
 	}
 	
+	
+	//pre user wants car
+	//bader gets his car
+
+	private void selectCar() {
+		if (FlightSelection.getParent() == FlightScroller) 
+			FlightScroller.remove(FlightSelection);
+		FlightSelection = new JPanel();
+		FlightSelection.setLayout(new BoxLayout(FlightSelection, BoxLayout.Y_AXIS));
+		FlightSelection.setPreferredSize(new Dimension(475, 330));
+		carButtons = new ButtonGroup();
+     	 for (int i = 0; i < web1.getCarList().size(); i++) {
+     		 JRadioButton button = new JRadioButton(web1.getCarList().get(i).toString());
+     		 carButtons.add(button);
+     		 FlightSelection.add(button);
+     	 }
+    	 carOk = new JButton("Select Car");
+    	 if (!this.FlightScroller.getParent().equals(this)) {
+    		 this.add(FlightScroller);
+    	 }
+     	 carOk.addActionListener(new carHotelListener(this));
+     	 this.add(carOk);
+     	 FlightScroller.add(FlightSelection);
+     	 this.setVisible(false);
+     	 this.setVisible(true);
+		
+	}
+
+	
+	//user watns a hotel, hotel list populated
+	//user selects hotel handled by buttons
+	private void selectHotel() {
+		if (FlightSelection.getParent() == FlightScroller) 
+			FlightScroller.remove(FlightSelection);
+		FlightSelection = new JPanel();
+		FlightSelection.setLayout(new BoxLayout(FlightSelection, BoxLayout.Y_AXIS));
+		FlightSelection.setPreferredSize(new Dimension(475, 330));
+		hotelButtons = new ButtonGroup();
+     	 for (int i = 0; i < web1.getHotelList().size(); i++) {
+     		 JRadioButton button = new JRadioButton(web1.getHotelList().get(i).toString());
+     		 hotelButtons.add(button);
+     		 FlightSelection.add(button);
+     	 }
+    	 hotelOk = new JButton("Select Hotel");
+     	 hotelOk.addActionListener(new carHotelListener(this));
+     	 this.add(hotelOk);
+     	 FlightScroller.add(FlightSelection);
+    	 if (!this.FlightScroller.getParent().equals(this)) {
+    		 this.add(FlightScroller);
+    	 }
+     	 this.setVisible(false);
+     	 this.setVisible(true);
+	}
+
+	
+	private class carHotelListener implements ActionListener
+	{
+		 private TravelGUI frame;
+		public carHotelListener(TravelGUI travelGUI) {
+			frame = travelGUI;
+		}
+
+		public void actionPerformed(ActionEvent e)
+	      {
+			JButton source = (JButton)e.getSource();
+			  if (source.equals(hotelOk)){
+	        	 Enumeration<AbstractButton> elements = hotelButtons.getElements();
+	        	 AbstractButton button = (AbstractButton)elements.nextElement();
+	        	 int i = 0;
+	        	 while (elements.hasMoreElements()) {
+	        		if (button.isSelected()) {
+		        		int dialogButton = JOptionPane.YES_NO_OPTION;
+						int dialogResult = JOptionPane.showConfirmDialog (null, "You've selected " + web1.getHotelList().get(i).toString() + "is this ok", "Confirm return route", dialogButton );
+						if (dialogResult == JOptionPane.YES_OPTION)
+						{
+							 frame.remove(hotelOk);
+			        		 reservation.setHotel(web1.getHotelList().get(i));
+			        		 hotelfound = true;
+			        		 displayOptions();
+			        		 return;
+						} else return;
+					}
+	        		button = elements.nextElement();
+	        		i++;
+	        	}
+	         }
+			  else if (source.equals(carOk)){
+		        	 Enumeration<AbstractButton> elements = carButtons.getElements();
+		        	 AbstractButton button = (AbstractButton)elements.nextElement();
+		        	 int i = 0;
+		        	 while (elements.hasMoreElements()) {
+		        		if (button.isSelected()) {
+			        		int dialogButton = JOptionPane.YES_NO_OPTION;
+							int dialogResult = JOptionPane.showConfirmDialog (null, "You've selected " + web1.getCarList().get(i).toString() + " is this ok", "Confirm return route", dialogButton );
+							if (dialogResult == JOptionPane.YES_OPTION)
+							{
+								 frame.remove(carOk);
+				        		 reservation.setCar(web1.getCarList().get(i));
+				        		 carfound = true;
+				        		 displayOptions();
+				        		 return;
+							} else return;
+						}
+		        		button = elements.nextElement();
+		        		i++;
+		        	}
+		         }		
+	      }
+	}
 	//pre user has selected things to reserve
 	//post one at a time user is displayed selections
 	
@@ -752,76 +866,5 @@ public class TravelGUI extends JFrame {
 	}
 
 
-	private void selectCar() {
-		if (FlightSelection.getParent() == FlightScroller) 
-			FlightScroller.remove(FlightSelection);
-		FlightSelection = new JPanel();
-		FlightSelection.setLayout(new BoxLayout(FlightSelection, BoxLayout.Y_AXIS));
-		FlightSelection.setPreferredSize(new Dimension(475, 330));
-		carButtons = new ArrayList<JButton>();
-		for (int i = 0; i < web1.getCarList().size(); i++) {
-			carButtons.add(new JButton(web1.getCarList().get(i).toString()));
-			carButtons.get(i).addActionListener(new carHotelListener());
-			FlightSelection.add(carButtons.get(i));
-		}
-	}
-	
-	//user watns a hotel, hotel list populated
-	//user selects hotel handled by buttons
-	private void selectHotel() {
-		if (FlightSelection.getParent() == FlightScroller) 
-			FlightScroller.remove(FlightSelection);
-		FlightSelection = new JPanel();
-		FlightSelection.setLayout(new BoxLayout(FlightSelection, BoxLayout.Y_AXIS));
-		FlightSelection.setPreferredSize(new Dimension(475, 330));
-		hotelButtons = new ArrayList<JButton>();
-		for (int i = 0; i < web1.getHotelList().size(); i++) {
-			hotelButtons.add(new JButton(web1.getHotelList().get(i).toString()));
-			hotelButtons.get(i).addActionListener(new carHotelListener());
-			FlightSelection.add(hotelButtons.get(i));
-		}
-	}
-
-	
-	private class carHotelListener implements ActionListener
-	{
-
-		public void actionPerformed(ActionEvent e)
-	      {
-			JButton source = (JButton)e.getSource();
-	        for(int i = 0; i < hotelButtons.size(); i++) {
-	        	if (source.equals(hotelButtons.get(i))) {
-	        		int dialogButton = JOptionPane.YES_NO_OPTION;
-					int dialogResult = JOptionPane.showConfirmDialog (null, "You've selected " + web1.getHotelList().get(i).toString() + "is this ok", "Confirm hotel", dialogButton );
-					if (dialogResult == JOptionPane.YES_OPTION)
-					{
-		        		 reservation.setHotel(web1.getHotelList().get(i));
-		        		 hotelfound = true;
-		        		 displayOptions();
-		        		 return;
-					} else return;
-
-	        		
-	        	}
-	        	
-	        }
-	        for(int i = 0; i < carButtons.size(); i++) {
-	        	if (source.equals(carButtons.get(i))) {
-	        		int dialogButton = JOptionPane.YES_NO_OPTION;
-					int dialogResult = JOptionPane.showConfirmDialog (null, "You've selected " + web1.getCarList().get(i).toString() + "is this ok", "Confirm car", dialogButton );
-					if (dialogResult == JOptionPane.YES_OPTION)
-					{
-		        		 reservation.setCar(web1.getCarList().get(i));
-		        		 carfound = true;
-		        		 displayOptions();
-		        		 return;
-					} else return;
-
-	        		
-	        	}
-	        	
-	        }
-	      }
-	}
 
 }
