@@ -651,25 +651,6 @@ public class TravelGUI extends JFrame {
 						if (dialogResult == JOptionPane.YES_OPTION)
 						{
 			        		 reservation.setReturningRoute(web1.getReturnRouteList().get(i));
-			        		 carfound = true;
-			        		 displayOptions();
-			        		 return;
-						} else return;
-					}
-	        		i++;
-	        	}
-	         }
-	         else if (source.equals(returnOk)){
-	        	 Enumeration<AbstractButton> elements = ret.getElements();
-	        	 AbstractButton button = (AbstractButton)elements.nextElement();
-	        	 int i = 0;
-	        	 while (elements.hasMoreElements()) {
-	        		if (button.isSelected()) {
-		        		int dialogButton = JOptionPane.YES_NO_OPTION;
-						int dialogResult = JOptionPane.showConfirmDialog (null, "You've selected " + web1.getReturnRouteList().get(i).toString() + "is this ok", "Confirm return route", dialogButton );
-						if (dialogResult == JOptionPane.YES_OPTION)
-						{
-			        		 reservation.setReturningRoute(web1.getReturnRouteList().get(i));
 			        		 rflight = true;
 			        		 displayOptions();
 			        		 return;
