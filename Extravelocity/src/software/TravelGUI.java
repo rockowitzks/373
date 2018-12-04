@@ -640,6 +640,7 @@ public class TravelGUI extends JFrame {
 	        	 frame.setVisible(true);
 
 	         }
+	         
 	         else if (source.equals(returnOk)){
 	        	 Enumeration<AbstractButton> elements = ret.getElements();
 	        	 AbstractButton button = (AbstractButton)elements.nextElement();
