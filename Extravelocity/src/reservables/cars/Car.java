@@ -272,6 +272,6 @@ public class Car {
 	// post: prints the car 
 	public String toString() {
 		double price = (Math.round(this.getPrice() * 100.0)) / 100.0 ;
-		return (" Company: " +  this.getRentalCarCompany().getName() + " Class: " + this.getCarClassString() + "Price: $" + price);
+		return (" Company: " +  this.getRentalCarCompany().getName() + "    Class: " + this.getCarClassString() + "    Price: $" + price);
 	}
 }
