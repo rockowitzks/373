@@ -51,7 +51,7 @@ public class TravelGUI extends JFrame {
 	private JMenuItem viewReservation;
 	private JMenuItem newReservation;
 
-    private ImageIcon univIcon = new ImageIcon("univIcon.png");
+    private ImageIcon univIcon = new ImageIcon("globe.png");
     private JLabel imageLabel1 = new JLabel(univIcon);
 	private JComboBox<String> departureCities;
 	private JComboBox<String> seatClasses;
@@ -92,6 +92,8 @@ public class TravelGUI extends JFrame {
 	private JButton departOk;
 	private JButton hotelOk;
 	private JButton carOk; 
+	private JLabel titleText;
+	private boolean amdone;
 
 
 
@@ -100,6 +102,7 @@ public class TravelGUI extends JFrame {
 	public TravelGUI(String windowTitle, Website website) 
 	{
 		super(windowTitle);
+		amdone = true;
 		this.FlightScroller = new ScrollPane();
 		JFrame kkk = new JFrame();
 		kkk.add(FlightScroller);
@@ -117,9 +120,9 @@ public class TravelGUI extends JFrame {
 		setLayout(new FlowLayout(FlowLayout.CENTER));
 
         add(imageLabel1, BorderLayout.CENTER);
-		
-		add(new JLabel("<HTML><center>Welcome to ExTraveLux" +
-				"<BR>Suspiciously expensive travel to just about anywhere we have programmed</center><BR></HTML>"), BorderLayout.CENTER);
+        titleText = new JLabel("<HTML><center>Welcome to ExTraveLux" +
+				"<BR>Suspiciously expensive travel to just about anywhere we have programmed</center><BR></HTML>");
+		add(titleText, BorderLayout.CENTER);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		setPreferredSize(new Dimension(760,550));
@@ -203,7 +206,7 @@ public class TravelGUI extends JFrame {
 //			else if (source.equals(adminLoad)) {
 //				emp1 = Employee.loadData();
 //			}
-			else if (source.equals(newReservation)) {
+			else if (source.equals(newReservation) && amdone) {
 				handleNewReservation();
 			}
 			else if (source.equals(fileExit)) {
@@ -440,7 +443,9 @@ public class TravelGUI extends JFrame {
 	//pre user selects make reservation
 	//post panel appears to take in reservation data for search
 	public void handleNewReservation() {
-		
+		amdone = false;
+		this.remove(this.imageLabel1);
+		this.titleText.setText("Please enter data, for flight, hotel, and/or car search. Thank you for choosing us!");
 		airplaneData = new JPanel();
 		carData = new JPanel();
 		hotelData = new JPanel();		
@@ -602,10 +607,14 @@ public class TravelGUI extends JFrame {
 			
 			// You can add card functionality above this comment
 			JOptionPane.showMessageDialog(null, "Reservation added!", "Confirmed", JOptionPane.PLAIN_MESSAGE);
+			this.titleText.setText("Thank you for using Extravelux!");
+			this.add(this.imageLabel1);
 			// account.addRerservation(reservation);
 			 web1.getCurrentAccount().addRerservation(reservation);
+			 amdone = true;
 		} else if (yes == 2) {
 			// Actions you want to do if user selects cancel
+			amdone = true;
 		} else {
 			System.out.println("Something wrong happened in handleConfirmReservation");
 			System.exit(-1);
@@ -795,6 +804,7 @@ public class TravelGUI extends JFrame {
 	//pre route list populated user is searching flight
 	//post list of return routes shows
 	public void selectReturnRoute() {
+		this.titleText.setText("Please select a return flight");
 		FlightScroller.remove(FlightSelection);
 		FlightSelection = new JPanel();
 		FlightSelection.setLayout(new BoxLayout(FlightSelection, BoxLayout.Y_AXIS));
@@ -817,7 +827,7 @@ public class TravelGUI extends JFrame {
 	//user wants to view flights
 	private void selectDepartRoute() {
 		
-     	 
+     	 this.titleText.setText("Please select a departing flight");
      	 FlightSelection.setLayout(new BoxLayout(FlightSelection, BoxLayout.Y_AXIS));
      	 FlightSelection.setPreferredSize(new Dimension(475, 330));
      	 dep = new ButtonGroup();
@@ -841,6 +851,7 @@ public class TravelGUI extends JFrame {
 	//bader gets his car
 
 	private void selectCar() {
+		this.titleText.setText("Please select a Car");
 		if (FlightSelection.getParent() == FlightScroller) 
 			FlightScroller.remove(FlightSelection);
 		FlightSelection = new JPanel();
@@ -868,6 +879,7 @@ public class TravelGUI extends JFrame {
 	//user watns a hotel, hotel list populated
 	//user selects hotel handled by buttons
 	private void selectHotel() {
+		this.titleText.setText("Please select a hotel");
 		if (FlightSelection.getParent() == FlightScroller) 
 			FlightScroller.remove(FlightSelection);
 		FlightSelection = new JPanel();
