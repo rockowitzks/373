@@ -2,8 +2,6 @@ package software;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
-
-
 import java.io.*;
 import java.time.LocalDateTime;
 import users.*;
@@ -661,6 +659,7 @@ public class Website {
 		}
 	}
 	
+	
 	// pre: an ArrayList of Route routeList, and a boolean sortByPrice
 	// post: either sorts the routeList by price or by time, and returns routeList
 	public ArrayList<Route> SortRoute(ArrayList<Route> routeList, boolean sortByPrice) {
@@ -670,6 +669,20 @@ public class Website {
 			Collections.sort(routeList, new TimeComparator());
 		}
 		return routeList;
+	}
+	
+	// pre: an ArrayList of Hotel hotelList 
+	// post: sorts hotelList and returns it
+	public ArrayList<Hotel> SortHotel(ArrayList<Hotel> hotelList) {
+		Collections.sort(hotelList, new HotelComparator());
+		return hotelList;
+	}
+	
+	// pre: an ArrayList of Car carList
+	// post: sorts carList and returns it
+	public ArrayList<Car> SortCar(ArrayList<Car> carList) {
+		Collections.sort(carList, new CarComparator());
+		return carList;
 	}
    
 	// pre: an Entry entry and a Scanner input
@@ -760,41 +773,9 @@ public class Website {
 	  }  
 	  return true;  
 	}
-	//added try catch 
-		public static void saveData(Website web) {
-			try {
-				FileOutputStream fileOut = new FileOutputStream("website.ser");
-				ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
-				objOut.writeObject(web);
-				objOut.close();
-				fileOut.close();
-			}
-			catch(IOException ex) {
-				ex.printStackTrace();
-			}
-		}
-		
-		// then added this
-		public static Website loadData() {
-			FileInputStream fileIn = null;
-			ObjectInputStream objIn = null;
-			Website web = null;
-			
-			try {
-				fileIn = new FileInputStream("university.ser");
-				objIn = new ObjectInputStream(fileIn);
-				web = (Website) objIn.readObject();
-				objIn.close();
-				fileIn.close();
-			}
-			catch (IOException ex){
-				ex.printStackTrace();	
-			}
-			catch(ClassNotFoundException c){
-				c.printStackTrace();	
-			}
-			return web;
-		}
+	
+	
+
 
 	
 }
