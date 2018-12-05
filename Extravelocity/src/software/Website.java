@@ -2,6 +2,8 @@ package software;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+
+
 import java.io.*;
 import java.time.LocalDateTime;
 import users.*;
@@ -758,7 +760,41 @@ public class Website {
 	  }  
 	  return true;  
 	}
-
+	//added try catch 
+		public static void saveData(Website web) {
+			try {
+				FileOutputStream fileOut = new FileOutputStream("website.ser");
+				ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
+				objOut.writeObject(web);
+				objOut.close();
+				fileOut.close();
+			}
+			catch(IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+		
+		// then added this
+		public static Website loadData() {
+			FileInputStream fileIn = null;
+			ObjectInputStream objIn = null;
+			Website web = null;
+			
+			try {
+				fileIn = new FileInputStream("university.ser");
+				objIn = new ObjectInputStream(fileIn);
+				web = (Website) objIn.readObject();
+				objIn.close();
+				fileIn.close();
+			}
+			catch (IOException ex){
+				ex.printStackTrace();	
+			}
+			catch(ClassNotFoundException c){
+				c.printStackTrace();	
+			}
+			return web;
+		}
 
 	
 }
