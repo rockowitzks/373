@@ -118,7 +118,7 @@ public class Account {
 	// pre: a Reservation reservation 
 	// post: adds the reservation to the account's reservation list and set's the reservation's account to this
 	public void addRerservation(Reservation reservation) {
-		this.getReservations().add(reservation);
+		this.reservations.add(reservation);
 		reservation.setAccount(this);
 	}
 
