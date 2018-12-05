@@ -23,13 +23,9 @@ public class Driver implements Serializable{
 	// pre: nothing
 	// post: runs the program
 	public static void RunProgram() throws IOException {
-		//Scanner input = new Scanner(System.in);
 		Website website = new Website();
 		website.fetchUserData();
 		website.setUpDataBases(createAirlines(), createCarCompanies());
-		//website.logIn(input);
-		//website.findReservation(input);
-		//input.close();
 		new TravelGUI("ExTraveLux", website);
 	}
 	

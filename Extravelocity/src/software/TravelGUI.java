@@ -277,7 +277,7 @@ public class TravelGUI extends JFrame {
 		private void handleSignIn(){
 		
 			JTextField username = new JTextField();
-			JTextField password = new JTextField();
+			JTextField password = new JPasswordField();
 			Object[] loginFields = {
 			    "Username:", username,
 			    "Password:", password
