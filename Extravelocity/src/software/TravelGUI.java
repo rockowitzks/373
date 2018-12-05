@@ -666,7 +666,7 @@ public class TravelGUI extends JFrame {
 	        	 while (elements.hasMoreElements()) {
 	        		if (button.isSelected()) {
 		        		int dialogButton = JOptionPane.YES_NO_OPTION;
-						int dialogResult = JOptionPane.showConfirmDialog (null, "You've selected " + web1.getReturnRouteList().get(i).toString() + "is this ok", "Confirm return route", dialogButton );
+						int dialogResult = JOptionPane.showConfirmDialog (null, "You've selected " + web1.getReturnRouteList().get(i).toString() + " is this ok", "Confirm return route", dialogButton );
 						if (dialogResult == JOptionPane.YES_OPTION)
 						{
 							 frame.remove(returnOk);
@@ -687,7 +687,7 @@ public class TravelGUI extends JFrame {
 	        	 while (elements.hasMoreElements()) {
 	        		if (button.isSelected()) {
 		        		int dialogButton = JOptionPane.YES_NO_OPTION;
-						int dialogResult = JOptionPane.showConfirmDialog (null, "You've selected " + web1.getDepartureRouteList().get(i).toString() + "is this ok", "Confirm return route", dialogButton );
+						int dialogResult = JOptionPane.showConfirmDialog (null, "You've selected " + web1.getDepartureRouteList().get(i).toString() + " is this ok", "Confirm return route", dialogButton );
 						if (dialogResult == JOptionPane.YES_OPTION)
 						{
 							 frame.remove(departOk);
@@ -794,8 +794,9 @@ public class TravelGUI extends JFrame {
      	 }
     	 hotelOk = new JButton("Select Hotel");
      	 hotelOk.addActionListener(new carHotelListener(this));
-     	 this.add(hotelOk);
+     	
      	 FlightScroller.add(FlightSelection);
+     	 this.add(hotelOk);
     	 if (!this.FlightScroller.getParent().equals(this)) {
     		 this.add(FlightScroller);
     	 }
@@ -821,7 +822,7 @@ public class TravelGUI extends JFrame {
 	        	 while (elements.hasMoreElements()) {
 	        		if (button.isSelected()) {
 		        		int dialogButton = JOptionPane.YES_NO_OPTION;
-						int dialogResult = JOptionPane.showConfirmDialog (null, "You've selected " + web1.getHotelList().get(i).toString() + "is this ok", "Confirm return route", dialogButton );
+						int dialogResult = JOptionPane.showConfirmDialog (null, "You've selected " + web1.getHotelList().get(i).toString() + " is this ok", "Confirm return route", dialogButton );
 						if (dialogResult == JOptionPane.YES_OPTION)
 						{
 							 frame.remove(hotelOk);
