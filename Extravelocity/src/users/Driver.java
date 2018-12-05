@@ -24,7 +24,7 @@ public class Driver {
 		//website.logIn(input);
 		//website.findReservation(input);
 		//input.close();
-		TravelGUI webGUI = new TravelGUI("ExTraveLux", website);
+		new TravelGUI("ExTraveLux", website);
 	}
 	
 	// pre: nothing
