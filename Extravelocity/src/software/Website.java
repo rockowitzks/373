@@ -488,6 +488,7 @@ public class Website {
 		} //quadruple nested loop runs 3 times for 3 days through every todo and creates l flgihts for every connection
 		for (int i = 0; i <3; i++) {
 			for ( int j= 0; j < todo.size(); j++) {
+				if (!todo.get(j).getGenerated().containsKey(aDate)) {
 				for (int k = 0; k < todo.get(j).getConnections().size(); k++) {
 					for (int l = 0; l < todo.get(j).getConnections().get(k).getFlightsPerDay(); l++) {
 						new Flight(todo.get(j), todo.get(j).getConnections().get(k).getDestination(), 
@@ -498,8 +499,11 @@ public class Website {
 					
 				}
 			}
+			
+			todo.get(j).getGenerated().put(aDate, true);
 			aDate.equals(aDate.plusDays(1));
-		}
+			}
+			}
 	}
 	// pre: receives user entered string for username
 	// post: if username string matches stored username, return true, else return false

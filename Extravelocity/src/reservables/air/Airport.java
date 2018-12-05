@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -15,6 +16,7 @@ public class Airport implements Serializable {
 	private ArrayList<Airline> airlineList;
 	private ArrayList<Connection> connections;
 	private String longitude;
+	private HashMap<LocalDateTime, Boolean> generated;
 	private String latitude;
 	private String name;
 	private int group;
@@ -27,7 +29,8 @@ public class Airport implements Serializable {
 		arrivalList = new ArrayList<Flight>();
 		departureList = new ArrayList<Flight>();
 		airlineList = new ArrayList<Airline>();
-		connections = new ArrayList<Connection>();
+		connections = new ArrayList<Connection>();	
+		this.generated = new HashMap<LocalDateTime, Boolean>();
 		this.group = 0;
 	}
 	
@@ -42,8 +45,17 @@ public class Airport implements Serializable {
 		this.airlineList = airlineList;
 		this.group = group;
 		this.name = name;
+		this.generated = new HashMap<LocalDateTime, Boolean>();
 	}
 	
+	public HashMap<LocalDateTime, Boolean> getGenerated() {
+		return generated;
+	}
+
+	public void setGenerated(HashMap<LocalDateTime, Boolean> generated) {
+		this.generated = generated;
+	}
+
 	//pre: parameters correspond to fields found in file
 	//post: sets fields to parameters
 	public Airport(String name, String city, String lat, String ln, double multiplier) {
@@ -56,7 +68,7 @@ public class Airport implements Serializable {
 		this.latitude = lat;
 		this.longitude = ln;
 		this.airportMultiplier = multiplier;
-		
+		this.generated = new HashMap<LocalDateTime, Boolean>();
 	}
 
 	// pre: nothing
