@@ -139,20 +139,27 @@ public class Reservation {
 	// pre: nothing
 	// post: returns a string consisting of the fields
 	public String toString() {
+		double totalPrice = 0;
 		String answer = "\nYour reservation is as follows:\n"; 
 		answer = answer + "Name:    " + this.getAccount().getName() + "\n\n";
 		if(this.getDepartingRoute() != null) {
 			answer = answer + this.getDepartingRoute() + "\n";
 			answer = answer + this.getReturningRoute() + "\n";
+			totalPrice += this.getDepartingRoute().getPrice() + this.getReturningRoute().getPrice();
 		}
 		
 		if(this.getHotel() != null) {
 			answer = answer + this.getHotel() + "\n";
+			totalPrice += this.getHotel().getPrice();
 		}
 		
 		if(this.getCar() != null) {
 			answer = answer + this.getCar() + ".\n";
+			totalPrice += this.getCar().getPrice();
 		}
+		
+		answer = answer + "\n\n The total price is $" + ((Math.round(totalPrice * 100)) / 100.00) + ".\n";
 		return answer;
+		
 	}
 }

@@ -584,7 +584,7 @@ public class TravelGUI extends JFrame {
 		jTextArea.setEditable(false);
 		JScrollPane scroll = new JScrollPane(jTextArea);
 		scroll.setSize(300,300);
-		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		
 		PrintStream printStream = new PrintStream(new OutStream(jTextArea));

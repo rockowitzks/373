@@ -372,13 +372,13 @@ public class Flight {
 	// pre: nothing
 	// post: converts the flight's information to a String 
 	public String toString() {
-		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		String answer = "";
 		answer = answer + (this.getDeparting().getName() + "  " + 
 		this.getFlightNumber() + "  " + this.getAirline().getName());
 		
 		answer = answer + (" Departure Date: " + this.getDepartureDate().format(dateFormatter) + 
-				", Arrival date: " + this.getArrivalDate().format(dateFormatter));
+				",\n Arrival date: " + this.getArrivalDate().format(dateFormatter));
 		return answer;
 	}
 }
