@@ -17,7 +17,6 @@ import javax.swing.*;
 //import org.university.software.UniversityGUI.OutStream;
 //import org.university.software.UniversityGUI.OutStream;
 
-import reservables.hotels.Hotel;
 import users.Account;
 import users.Card;
 import users.Reservation;
@@ -1114,7 +1113,5 @@ public class TravelGUI extends JFrame {
 		}
 		
 	}
-
-
 
 }
