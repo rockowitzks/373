@@ -106,26 +106,27 @@ public class Website {
 	    randomRooms.add(r2);
 	    randomRooms.add(r3);
 	    
-	    HotelCompany hilton = new HotelCompany("Hilton", 5.0, 3.0, 0,
+	    HotelCompany hilton = new HotelCompany("Hilton", 5.0, 110, 0,
 	    		"service@hilton.com", null);
-	    HotelCompany bestWestern = new HotelCompany("Best Western", 3.0, 2.0, 0,
+	    HotelCompany bestWestern = new HotelCompany("Best Western", 3.0, 45, 0,
 	    		"service@bestwestern.com", null);
-	    HotelCompany travelLodge = new HotelCompany("Travel Lodge", 2.5, 1.75, 0,
+	    HotelCompany travelLodge = new HotelCompany("Travel Lodge", 2.5, 55, 0,
 	    		"service@travellodge.com", null);
-	    HotelCompany motel6 = new HotelCompany("motel6", 2.0, 1.25, 0,
+	    HotelCompany motel6 = new HotelCompany("motel6", 2.0, 35, 0,
 	    		"service@motel6.com", null);
-	    HotelCompany windham = new HotelCompany("Windham", 3.0, 2.5, 0,
+	    HotelCompany windham = new HotelCompany("Windham", 3.0, 79, 0,
 	    		"service@windham.com", null);
-	    HotelCompany howardJohnson = new HotelCompany("Howard Johnson", 5.0, 3.2, 0,
+	    HotelCompany howardJohnson = new HotelCompany("Howard Johnson", 5.0, 92, 0,
 	    		"service@howardjohnson.com", null);
 	    
-		Hotel h1 = new Hotel(randomRooms, null, 5, 3, hilton, 0, null);
-		Hotel h2 = new Hotel(randomRooms, null, 3, 2, bestWestern, 0, null);
-		Hotel h3 = new Hotel(randomRooms, null, 2, 2, travelLodge, 10, null);
-		Hotel h4 = new Hotel(randomRooms, null, 1, 1, motel6, 0, null);
-		Hotel h5 = new Hotel(randomRooms, null, 3, 3, windham, 0, null);
-		Hotel h6 = new Hotel(randomRooms, null, 5, 3, howardJohnson, 0, null);
+		Hotel h1 = new Hotel(randomRooms, null, 5, 3, hilton, 250, null);
+		Hotel h2 = new Hotel(randomRooms, null, 3, 2, bestWestern, 100, null);
+		Hotel h3 = new Hotel(randomRooms, null, 2, 2, travelLodge, 120, null);
+		Hotel h4 = new Hotel(randomRooms, null, 1, 1, motel6, 60, null);
+		Hotel h5 = new Hotel(randomRooms, null, 3, 3, windham, 170, null);
+		Hotel h6 = new Hotel(randomRooms, null, 5, 3, howardJohnson, 195, null);
 		
+
 		hilton.addHotel(h1);
 		
 		bestWestern.addHotel(h2);
