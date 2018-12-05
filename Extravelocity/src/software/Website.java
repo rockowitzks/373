@@ -49,6 +49,9 @@ public class Website {
 	public ArrayList<HotelCompany> getHotelCompanyList() {
 		return this.hotelCompanyList;
 	}
+	public void setUserData(HashMap<String, Account> userData){
+		this.userData = userData;
+	}
 	
 	// pre: nothing
 	// post: adds a user to the userData hash map
@@ -773,7 +776,44 @@ public class Website {
 	  }  
 	  return true;  
 	}
-	
+	public static void saveData(Website web) {
+		try {
+			FileOutputStream fileOut = new FileOutputStream("website.ser");
+			ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
+			objOut.writeObject(web);
+			objOut.close();
+			fileOut.close();
+		}
+		catch(IOException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	// then added this
+	public static Website loadData() {
+		FileInputStream fileIn = null;
+		ObjectInputStream objIn = null;
+		Website web = null;
+		
+		try {
+			fileIn = new FileInputStream("website.ser");
+			objIn = new ObjectInputStream(fileIn);
+			web = (Website) objIn.readObject();
+			objIn.close();
+			fileIn.close();
+		}
+		catch (IOException ex){
+			ex.printStackTrace();	
+		}
+		catch(ClassNotFoundException c){
+			c.printStackTrace();	
+		}
+		return web;
+	}
+			
+		
+
+
 	
 
 
