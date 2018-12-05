@@ -4,6 +4,8 @@ package software;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -568,6 +570,61 @@ public class TravelGUI extends JFrame {
 	public void setReservation(Reservation reservation) {
 		this.reservation = reservation;
 	}
+	
+	
+	
+	// pre: nothing
+	// post: handles confirmReservation
+	public void handleConfirmReservation() {
+		JTextArea jTextArea = new JTextArea(25,50);
+		jTextArea.setEditable(false);
+		JScrollPane scroll = new JScrollPane(jTextArea);
+		scroll.setSize(300,300);
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		
+		PrintStream printStream = new PrintStream(new OutStream(jTextArea));
+		PrintStream stdout = System.out;
+		System.setOut(printStream);
+		System.setErr(printStream);
+		System.out.println("\t\tIs this resrvation satisfactory?\n\n");
+		System.out.println(this.reservation);
+		System.setOut(stdout);
+		System.setErr(stdout);
+		int yes = JOptionPane.showConfirmDialog(null, scroll, "Confirm Reservation", JOptionPane.OK_CANCEL_OPTION);
+		if(yes == 0) {
+			
+			
+			// You can add card functionality above this comment
+			JOptionPane.showMessageDialog(null, "Reservation added!", "Confirmed", JOptionPane.PLAIN_MESSAGE);
+			// account.addRerservation(reservation);
+			 web1.getCurrentAccount().addRerservation(reservation);
+		} else if (yes == 2) {
+			// Actions you want to do if user selects cancel
+		} else {
+			System.out.println("Something wrong happened in handleConfirmReservation");
+			System.exit(-1);
+		}
+
+	}
+	
+	
+	// pre: nothing
+	// post: creates outstream functionality
+	private class OutStream extends OutputStream {
+	    private JTextArea textArea;
+
+	    public OutStream(JTextArea textArea) {
+	        this.textArea = textArea;
+	    }
+
+	    public void write(int b) throws IOException {
+	        this.textArea.append(String.valueOf((char)b));
+	        this.textArea.setCaretPosition(this.textArea.getDocument().getLength());
+	        this.textArea.update(this.textArea.getGraphics());
+	    }
+	}
+	
 	private class SubmitButtonListener implements ActionListener
 	{
 	        
