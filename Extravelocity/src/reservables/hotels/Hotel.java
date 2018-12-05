@@ -150,8 +150,9 @@ public class Hotel {
 		LocalDate now = LocalDate.now();
 		Period stayDuration = Period.between(entry.getCheckInDate(), entry.getCheckOutDate());
 		Period urgencyFactor = Period.between(now, entry.getCheckInDate());
-		double price = company.getMultiplier() * entry.getRoomType() * 
+		double price = company.getMultiplier() * entry.getRoomType() *
 				stayDuration.getDays() * (1 + (5.0 * Math.exp(-1 * (double)urgencyFactor.getDays())));
+		//
 		this.setPrice(price);
 		return price;
 	}
