@@ -468,10 +468,10 @@ public class TravelGUI extends JFrame {
 		String[] cityNames = temp.toArray(new String[temp.size()]);
 		departureCities = new JComboBox<>(cityNames);
 		departureCities.setEditable(false);
-		String[] sc = {"First Class", "Business", "Economy"};
+		String[] sc = { "Economy", "Business", "First Class"};
 		seatClasses = new JComboBox<>(sc);
 		seatClasses.setEditable(false);
-		String[] cc = {"Luxury", "Standard", "Economy"};
+		String[] cc = {"Economy", "Standard", "Luxury"};
 		carClasses = new JComboBox<>(cc);
 		carClasses.setEditable(false);
 		//String[] hc = {"First Class", "Business", "Economy"};
