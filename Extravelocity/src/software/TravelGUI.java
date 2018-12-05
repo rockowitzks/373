@@ -92,6 +92,7 @@ public class TravelGUI extends JFrame {
 	private JButton departOk;
 	private JButton hotelOk;
 	private JButton carOk; 
+	private JLabel titleText;
 
 
 
@@ -117,9 +118,9 @@ public class TravelGUI extends JFrame {
 		setLayout(new FlowLayout(FlowLayout.CENTER));
 
         add(imageLabel1, BorderLayout.CENTER);
-		
-		add(new JLabel("<HTML><center>Welcome to ExTraveLux" +
-				"<BR>Suspiciously expensive travel to just about anywhere we have programmed</center><BR></HTML>"), BorderLayout.CENTER);
+        titleText = new JLabel("<HTML><center>Welcome to ExTraveLux" +
+				"<BR>Suspiciously expensive travel to just about anywhere we have programmed</center><BR></HTML>");
+		add(titleText, BorderLayout.CENTER);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		setPreferredSize(new Dimension(760,550));
