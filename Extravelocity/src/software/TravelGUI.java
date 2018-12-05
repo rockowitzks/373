@@ -16,6 +16,8 @@ import javax.swing.*;
 
 //import org.university.software.UniversityGUI.OutStream;
 
+//import org.university.software.UniversityGUI.OutStream;
+
 import reservables.hotels.Hotel;
 import users.Account;
 import users.Card;
@@ -32,6 +34,7 @@ public class TravelGUI extends JFrame {
 	private JMenu accountMenu;
 	private JMenu fileMenu;
 	private JMenu reservationMenu;
+	private JMenu About;
 	private Website web1;
 
 	// File submenus
@@ -44,6 +47,8 @@ public class TravelGUI extends JFrame {
 	
 	private JMenuItem signIn;
 	private JMenuItem createAccount;
+	private JMenuItem LogOut;
+	private JMenuItem AboutUs;
 	
 	
 	// Reservations 
@@ -94,6 +99,7 @@ public class TravelGUI extends JFrame {
 	private JButton carOk; 
 	private JLabel titleText;
 	private boolean amdone;
+	private Account Guest = new Account("Guest","Guest@email.com", "GuestAccount", "asdf",web1,new Card());
 
 
 
@@ -109,7 +115,7 @@ public class TravelGUI extends JFrame {
 		this.FlightSelection = new JPanel();
      	this.FlightScroller.setPreferredSize(new Dimension(700, 350));
 		this.web1 = website;
-		this.web1.setCurrentAccount(new Account("Guest","Guest@email.com", "GuestAccount", "asdf",web1,new Card()));
+		this.web1.setCurrentAccount(Guest);
 		this.reservation = new Reservation();
 		this.reservation.setAccount(this.web1.getCurrentAccount());
 		this.rflight = true;
@@ -140,6 +146,7 @@ public class TravelGUI extends JFrame {
      	
 		// menus
 		fileMenu = new JMenu("File");
+		About = new JMenu("About");
 		accountMenu = new JMenu("Account");
 		reservationMenu = new JMenu("Reservations");
 
@@ -151,6 +158,8 @@ public class TravelGUI extends JFrame {
 		viewReservation = new JMenuItem("View Reservation");
 		fileExit = new JMenuItem("Exit");
 		newReservation = new JMenuItem("Create a new Reservation");
+		LogOut = new JMenuItem("LogOut");
+		AboutUs = new JMenuItem("About Us");
 
 		// listeners
 		signIn.addActionListener(new MenuListener());		
@@ -160,26 +169,33 @@ public class TravelGUI extends JFrame {
 		viewReservation.addActionListener(new MenuListener());
 		fileExit.addActionListener(new MenuListener());
 		newReservation.addActionListener(new MenuListener());
+		LogOut.addActionListener(new MenuListener());
+		AboutUs.addActionListener(new MenuListener());
 		
 		// add items to menu
 		fileMenu.add(fileSave);
 		fileMenu.add(fileLoad);
 		fileMenu.add(fileExit);
+		
 		accountMenu.add(signIn);
 		accountMenu.add(createAccount);
+		accountMenu.add(LogOut);
 		
 		reservationMenu.add(viewReservation);
 		reservationMenu.add(newReservation);
+		About.add(AboutUs);
 		//adminMenu.add(adminPrintAll);
 		
 		// add menus to menu bar
+		menuBar.add(About);
 	    menuBar.add(fileMenu);
 	    menuBar.add(accountMenu);
 	    menuBar.add(reservationMenu);
+	    menuBar.add(About);
 
 		setJMenuBar(menuBar);
 	}
-	private class MenuListener implements ActionListener {
+	protected class MenuListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			JMenuItem source = (JMenuItem)(e.getSource());
 			
@@ -203,14 +219,55 @@ public class TravelGUI extends JFrame {
 					handleViewReservation();
 				}
 			}
-//			else if (source.equals(adminLoad)) {
-//				emp1 = Employee.loadData();
-//			}
+			else if (source.equals(LogOut)) {
+				if(!web1.getCurrentAccount().equals(Guest)) {
+					web1.setCurrentAccount(Guest);
+					JOptionPane.showMessageDialog(null,
+							"You have successfully logged out",
+							"Log Out Successful",
+							JOptionPane.PLAIN_MESSAGE);
+				}
+				else {
+					JOptionPane.showMessageDialog(null,
+							"Cannot Log Out of Guest Account",
+							"Guest Account",
+							JOptionPane.PLAIN_MESSAGE);
+				}
+			}
 			else if (source.equals(newReservation) && amdone) {
 				handleNewReservation();
+//				if(web1.getCurrentAccount().getAccountName().equalsIgnoreCase("GuestAccount")) {
+//					Reservation tempRes = web1.getCurrentAccount().getReservations().get(0);
+//					handleCreateAccount();
+//					handleSignIn();
+//					web1.getCurrentAccount().addRerservation(tempRes);
+//					
+//					JOptionPane.showMessageDialog(null,
+//							"Thanks for signing in! Your reservation has been added.",
+//							"Account Creation and Sign In Complete",
+//							JOptionPane.OK_OPTION);
+//				}
 			}
 			else if (source.equals(fileExit)) {
 				System.exit(0);
+			}
+			else if (source.equals(AboutUs)) {
+				JTextArea output = new JTextArea();
+		        output.setEditable (false);
+		        PrintStream stdout = System.out;
+		        PrintStream printStream = new PrintStream(new OutStream(output));
+		        System.setOut(printStream);
+		        System.setErr(printStream);
+		        System.out.println("ExTraveLux was created by Bill Brooks, Bader Jeragh, and Kris Rockowitz");
+		        System.out.println("Our Proprietary Software is capable of generating hundreds of flights to many\n"
+		        		+ "destinations and coordinatiing them with popular hotels and cars");
+		        System.out.println("Current Version : 3.73");
+		        System.setOut(stdout);
+		        System.setErr(stdout);
+				JOptionPane.showMessageDialog(null,
+						output,
+						"About Us",
+						JOptionPane.PLAIN_MESSAGE);
 			}
 				
 			//if you want more items, more if elses for them
@@ -259,7 +316,21 @@ public class TravelGUI extends JFrame {
 					return;
 				}
 				if(web1.validateUsername(username.getText()) && web1.validatePassword(username.getText(), password.getText())) {
+					ArrayList<Reservation> temp = new ArrayList<Reservation>();
+					if(web1.getCurrentAccount().getAccountName().equalsIgnoreCase("GuestAccount") && !(web1.getCurrentAccount().getReservations().isEmpty())) {
+						
+						for(Reservation r: web1.getCurrentAccount().getReservations()) {
+							temp.add(r);
+						}
+					}
 					web1.setCurrentAccount(web1.getUserData().get(username.getText()));
+					if(!temp.isEmpty()) {
+						for(Reservation r: temp) {
+							r.setAccount(web1.getCurrentAccount());
+							web1.getCurrentAccount().addRerservation(r);
+						}
+						
+					}
 					JOptionPane.showMessageDialog(null,
 							"Welcome back "+username.getText(),
 							"Sign In Successful",
@@ -273,7 +344,7 @@ public class TravelGUI extends JFrame {
 			}
 			
 		}
-		private void handleCreateAccount(){
+		protected void handleCreateAccount(){
 //			private String name;
 //			private String email;
 //			private String accountName;
@@ -424,17 +495,34 @@ public class TravelGUI extends JFrame {
 
 		    JScrollPane jScrollPane = new JScrollPane(outputReservation);
 
-		    jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		    jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		    jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		    
 		    //frame.add(title);
-		    frame.add(jScrollPane, BorderLayout.CENTER);
-		    frame.setPreferredSize(new Dimension(500, 600));
-		    frame.pack();
-	        frame.setLocationRelativeTo(null);
-		    frame.setVisible(true);
+		    
+//		    frame.add(jScrollPane, BorderLayout.CENTER);
+//		    frame.setPreferredSize(new Dimension(500, 600));
+//		    frame.pack();
+//	        frame.setLocationRelativeTo(null);
+//		    frame.setVisible(true);
 	        System.setOut(stdout);
 	        System.setErr(stdout);
+	        ImageIcon icon = new ImageIcon("printIcon.png");
+	        int option = JOptionPane.showConfirmDialog(null, jScrollPane, "Viewing Reservations", JOptionPane.OK_CANCEL_OPTION, JOptionPane.NO_OPTION,icon);
+			if (option == JOptionPane.OK_OPTION) {
+			}
+			else {
+				int option2 = JOptionPane.showConfirmDialog(null, "Would you like to Cancel Reservation?", "Viewing Reservations", JOptionPane.OK_CANCEL_OPTION, JOptionPane.NO_OPTION,icon);
+				if (option2 == JOptionPane.OK_OPTION) {
+					ArrayList<Reservation> empty = new ArrayList<Reservation>();
+					web1.getCurrentAccount().setReservations(empty);
+					JOptionPane.showMessageDialog(null,
+							"Your Reservation has been successfully Canceled.",
+							"Reservation Canceled",
+							JOptionPane.OK_CANCEL_OPTION);
+						return;
+				}
+			}
 		
 			//JScrollPane reservationPane = new JScrollPane("Reservation View");
 		}
@@ -603,8 +691,20 @@ public class TravelGUI extends JFrame {
 		System.setErr(stdout);
 		int yes = JOptionPane.showConfirmDialog(null, scroll, "Confirm Reservation", JOptionPane.OK_CANCEL_OPTION);
 		if(yes == 0) {
+			System.out.println(web1.getCurrentAccount().getAccountName());
+			if(web1.getCurrentAccount().getAccountName().equalsIgnoreCase("GuestAccount")){
+				web1.getCurrentAccount().addRerservation(reservation);
+				JOptionPane.showMessageDialog(null,
+						"To Confirm your reservation, please create an Account and Sign In",
+						"Guest Account",
+						JOptionPane.PLAIN_MESSAGE);
+				this.titleText.setText("Thank you for using Extravelux!");
+				this.add(this.imageLabel1);
+				amdone = true;
+				return;
+			}
 			
-			
+				
 			// You can add card functionality above this comment
 			JOptionPane.showMessageDialog(null, "Reservation added!", "Confirmed", JOptionPane.PLAIN_MESSAGE);
 			this.titleText.setText("Thank you for using Extravelux!");
