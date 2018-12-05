@@ -662,6 +662,7 @@ public class TravelGUI extends JFrame {
 			}
 			JButton source = (JButton)e.getSource();
 	         if(source.equals(ResOk)) {
+	        	 
 	        	 Entry entry = web1.getEntry();
 	        	 frame.remove(ResOk);
 	        	 frame.remove(ResCancel);
@@ -670,6 +671,10 @@ public class TravelGUI extends JFrame {
 	        	 frame.remove(carData);
 //	        	 frame.setVisible(false);
 //	        	 frame.setVisible(true);	
+	        	 if (!flightButton.isSelected() && !hotelButton.isSelected() && !hotelButton.isSelected()) {
+	        		 amdone = true;
+	        		 return;
+	        	 }
 	        	 if (flightButton.isSelected()) { // if flight button is selected populates fields
 	        		 flight = true;
 	        		 dflight = false;
