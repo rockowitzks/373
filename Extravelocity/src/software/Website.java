@@ -750,7 +750,7 @@ public class Website {
 	{  
 	  try  
 	  {  
-	    int number = Integer.parseInt(string);  
+	    Integer.parseInt(string);  
 	  }  
 	  catch(NumberFormatException numberFormatException)  
 	  {  
