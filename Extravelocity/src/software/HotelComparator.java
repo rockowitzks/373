@@ -1,8 +1,9 @@
 package software;
 
+import java.io.Serializable;
 import java.util.*;
 import reservables.hotels.*;
-public class HotelComparator implements Comparator<Hotel> {
+public class HotelComparator implements Comparator<Hotel> ,Serializable{
 
 	public int compare(Hotel hotel1, Hotel hotel2) {
 

@@ -1,9 +1,10 @@
 package reservables.cars;
 
+import java.io.Serializable;
 import java.util.*;
 import reservables.*;
 
-public class CarRentalLocation extends Location {
+public class CarRentalLocation extends Location implements Serializable{
 	private ArrayList<Car> cars;
 	private RentalCarCompany company;
 

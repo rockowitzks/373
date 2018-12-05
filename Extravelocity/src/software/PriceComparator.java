@@ -1,7 +1,8 @@
 package software;
+import java.io.Serializable;
 import java.util.*;
 import reservables.air.*;
-public class PriceComparator implements Comparator<Route>{
+public class PriceComparator implements Comparator<Route>, Serializable{
 
 	// pre: 2 Routes, route1 and route1
 	// post: returns a comparison of the Routes' price

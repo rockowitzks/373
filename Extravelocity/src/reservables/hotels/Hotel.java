@@ -1,4 +1,5 @@
 package reservables.hotels;
+import java.io.Serializable;
 import java.time.*;
 
 import java.util.*;
@@ -7,7 +8,7 @@ import reservables.Location;
 
 import users.*;
 
-public class Hotel {
+public class Hotel implements Serializable{
 	private ArrayList<Room> rooms;
 	private ArrayList<Account> guests;
 	private int stars;

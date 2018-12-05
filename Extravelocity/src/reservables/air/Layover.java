@@ -1,7 +1,8 @@
 package reservables.air;
 
+import java.io.Serializable;
 import java.time.*;
-public class Layover {
+public class Layover implements Serializable{
 	private Airport airport;
 	private Flight previous;
 	private Flight next;

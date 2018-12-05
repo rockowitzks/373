@@ -1,8 +1,10 @@
 package reservables.hotels;
 
+import java.io.Serializable;
+
 import users.Account;
 
-public class Room {
+public class Room implements Serializable{
 	private double multiplier;
 	private boolean occupied;
 	private int number;

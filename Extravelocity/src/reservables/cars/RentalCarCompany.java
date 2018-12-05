@@ -1,10 +1,11 @@
 package reservables.cars;
 
+import java.io.Serializable;
 import java.util.*;
 
 import reservables.*;
 
-public class RentalCarCompany extends Company {
+public class RentalCarCompany extends Company implements Serializable{
 	private HashMap<String, CarRentalLocation> locations;
 
 

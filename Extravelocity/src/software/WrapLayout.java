@@ -1,13 +1,15 @@
 package software;
 
 import java.awt.*;
+import java.io.Serializable;
+
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
 /**
  *  FlowLayout subclass that fully supports wrapping of components.
  */
-public class WrapLayout extends FlowLayout
+public class WrapLayout extends FlowLayout implements Serializable
 {
 	
 

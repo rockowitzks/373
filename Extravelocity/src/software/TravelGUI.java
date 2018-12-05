@@ -14,8 +14,6 @@ import java.util.*;
 
 import javax.swing.*;
 
-//import org.university.software.UniversityGUI.OutStream;
-//import org.university.software.UniversityGUI.OutStream;
 
 import reservables.hotels.Hotel;
 import users.Account;
@@ -205,6 +203,12 @@ public class TravelGUI extends JFrame {
 			else if(source.equals(createAccount))
 			{
 				handleCreateAccount();
+			}
+			else if (source.equals(fileSave)){
+				Website.saveData(web1);
+			}
+			else if (source.equals(fileLoad)) {
+				web1.setUserData(Website.loadData().getUserData());
 			}
 			else if (source.equals(viewReservation)){
 				if(web1.getCurrentAccount() == null || web1.getCurrentAccount().getReservations().isEmpty()) {
@@ -415,14 +419,14 @@ public class TravelGUI extends JFrame {
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				if(cardType.getText().equals("") || !(cardType.getText().equalsIgnoreCase("Debit")) || !(cardType.getText().equalsIgnoreCase("Credit"))) {
+				if(cardType.getText().equals("") || (!(cardType.getText().equalsIgnoreCase("Debit")) && !(cardType.getText().equalsIgnoreCase("Credit")))) {
 					JOptionPane.showMessageDialog(null,
 							"Please enter either Debit or Credit " +cardType.getText(),
 							"Error : Card Type Entry",
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				if(cardBank.getText().equals("") || !(cardBank.getText().equalsIgnoreCase("Visa")) || !(cardBank.getText().equalsIgnoreCase("Mastercard")) || !(cardBank.getText().equalsIgnoreCase("American Express")) || !(cardBank.getText().equalsIgnoreCase("Discover"))) {
+				if(cardBank.getText().equals("") || (!(cardBank.getText().equalsIgnoreCase("Visa")) && !(cardBank.getText().equalsIgnoreCase("Mastercard")) && !(cardBank.getText().equalsIgnoreCase("American Express")) && !(cardBank.getText().equalsIgnoreCase("Discover")))) {
 					JOptionPane.showMessageDialog(null,
 							"Please enter either Visa, Mastercard, American Express, or Discover",
 							"Error : Card Institution Entry",

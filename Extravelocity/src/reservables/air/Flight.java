@@ -1,12 +1,13 @@
 package reservables.air;
 
 import java.util.*;
+import java.io.Serializable;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 import software.*;
 
-public class Flight {
+public class Flight implements Serializable{
 	private String flightNumber;
 	private Airline airline;
 	private Aircraft aircraft;

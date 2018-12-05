@@ -1,10 +1,11 @@
 package reservables.hotels;
 
+import java.io.Serializable;
 import java.util.*;
 
 import reservables.*;
 
-public class HotelCompany extends Company {
+public class HotelCompany extends Company implements Serializable{
 	private ArrayList<Hotel> hotels;
 
 	// pre: nothing

@@ -1,8 +1,8 @@
 package users;
 
+import java.io.Serializable;
 
-
-public class Card {
+public class Card implements Serializable{
 	private String type;
 	private double bankMultiplier;
 	private String securityCode;

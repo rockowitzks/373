@@ -1,7 +1,8 @@
 package reservables;
 
+import java.io.Serializable;
 
-public class Company {
+public class Company implements Serializable{
 	private String name;
 	private double rating;
 	private double multiplier;

@@ -1,8 +1,10 @@
 package software;
 import java.util.*;
 import reservables.air.*;
+
+import java.io.Serializable;
 import java.time.*;
-public class TimeComparator implements Comparator<Route>{
+public class TimeComparator implements Comparator<Route>, Serializable{
 
 	// pre: 2 Routes, route1 and route2
 	// post: returns a comparison of the Routes' departureDate

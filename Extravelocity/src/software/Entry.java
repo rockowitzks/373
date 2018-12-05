@@ -1,11 +1,12 @@
 package software;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
 import reservables.air.*;
-public class Entry {
+public class Entry implements Serializable{
 
 	// basically delete the date class from reservables
 	// flight

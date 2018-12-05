@@ -1,13 +1,14 @@
 package users;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
 
 import reservables.air.Airline;
 import reservables.cars.*;
 import software.*;
 
-public class Driver {
+public class Driver implements Serializable{
 
 	public static void main(String[] args) throws IOException {
 		RunProgram();

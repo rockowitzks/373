@@ -1,7 +1,8 @@
 package reservables;
 
+import java.io.Serializable;
 
-public class Location {
+public class Location implements Serializable{
 	private String streetAddress;
 	private String city;
 	private String state;

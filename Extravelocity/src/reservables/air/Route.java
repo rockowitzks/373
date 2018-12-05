@@ -1,11 +1,12 @@
 package reservables.air;
 
+import java.io.Serializable;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import software.*;
 
 
-public class Route {
+public class Route implements Serializable{
 	private Airport begin;
 	private ArrayList<Flight> flights;
 	private Airport end;

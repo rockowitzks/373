@@ -18,7 +18,7 @@ import reservables.hotels.Hotel;
 import reservables.hotels.HotelCompany;
 import reservables.hotels.Room;
 
-public class Website {
+public class Website implements Serializable{
 	private ArrayList<HotelCompany> hotelCompanyList;
 	private ArrayList<RentalCarCompany> carCompanyList;
 	private ArrayList<Airport> airportList;

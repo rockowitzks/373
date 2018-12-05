@@ -2,12 +2,13 @@ package reservables.cars;
 
 import users.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 
 import software.*;
 
-public class Car {
+public class Car implements Serializable{
 	private String make;
 	private String model;
 	private String licensePlate;

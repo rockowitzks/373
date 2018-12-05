@@ -1,5 +1,6 @@
 package users;
 
+import java.io.Serializable;
 import java.util.*;
 
 import reservables.air.*;
@@ -7,7 +8,7 @@ import reservables.cars.*;
 import reservables.hotels.*;
 import software.*;
 
-public class Account {
+public class Account implements Serializable{
 	private String name;
 	private String email;
 	private String accountName;

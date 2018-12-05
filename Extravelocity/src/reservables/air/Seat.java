@@ -1,5 +1,8 @@
 package reservables.air;
-public class Seat {
+
+import java.io.Serializable;
+
+public class Seat implements Serializable{
 	private int number;
 	private boolean window;
 	private boolean available;

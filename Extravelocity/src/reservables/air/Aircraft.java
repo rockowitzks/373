@@ -1,6 +1,8 @@
 package reservables.air;
 
-public class Aircraft {
+import java.io.Serializable;
+
+public class Aircraft implements Serializable{
 	private String model;
 	private double fuelEfficiency; 
 	private double airspeed;

@@ -1,10 +1,12 @@
 package users;
 
+import java.io.Serializable;
+
 import reservables.air.Route;
 import reservables.cars.Car;
 import reservables.hotels.Hotel;
 
-public class Reservation {
+public class Reservation implements Serializable {
 	private Account account;
 	private Route departingRoute;
 	private Route returningRoute;
