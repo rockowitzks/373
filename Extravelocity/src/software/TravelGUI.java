@@ -14,6 +14,8 @@ import java.util.*;
 
 import javax.swing.*;
 
+//import org.university.software.UniversityGUI.OutStream;
+
 import reservables.hotels.Hotel;
 import users.Account;
 import users.Card;
@@ -195,7 +197,7 @@ public class TravelGUI extends JFrame {
 					return;	
 				}
 				else { 
-				//Employee.saveData(emp1);
+					handleViewReservation();
 				}
 			}
 //			else if (source.equals(adminLoad)) {
@@ -400,39 +402,41 @@ public class TravelGUI extends JFrame {
 			
 		}
 		private void handleViewReservation() {
-			JLabel title = new JLabel("<HTML><center>Your Reservation is displayed below</center></HTML>");
+			JLabel title = new JLabel("<HTML><center>Your Reservations are displayed below</center></HTML>");
 			web1.getCurrentAccount().getReservations().get(0).printReservation();
+			JTextArea outputReservation = new JTextArea(25, 80);
+	        outputReservation.setEditable(false);
+	        PrintStream printStream4 = new PrintStream(new OutStream(outputReservation));
+	        PrintStream stdout = System.out;
+	        System.setOut(printStream4);
+	        System.setErr(printStream4);
+	        for(Reservation r : web1.getCurrentAccount().getReservations()) {
+	        	r.toString();
+	        	System.out.println("\n");
+	        }
+			
+			JFrame frame = new JFrame("Reservation");
+			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	        
+
+		    JScrollPane jScrollPane = new JScrollPane(outputReservation);
+
+		    jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		    jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		    
+		    frame.add(title);
+		    frame.add(jScrollPane, BorderLayout.CENTER);
+		    frame.setPreferredSize(new Dimension(500, 600));
+		    frame.pack();
+	        frame.setLocationRelativeTo(null);
+		    frame.setVisible(true);
+	        System.setOut(stdout);
+	        System.setErr(stdout);
+		
 			//JScrollPane reservationPane = new JScrollPane("Reservation View");
 		}
-//		private void handleAdminPrint() 
-//		{
-//			if( emp1!=null)
-//			{
-//				emp1.Print();
-//			}
-//			else
-//			{
-//				JOptionPane.showMessageDialog(null, 
-//						"No Employee", 
-//						"Error", 
-//						JOptionPane.PLAIN_MESSAGE);
-//			}
-//		}
-//		
-//		public boolean containsEmployee(String name)
-//		{		
-//			for(int n = 0; n < empList.size(); n++) 
-//			{
-//				if ((empList.get(n).getName().equals( name)))
-//				{
-//					return true;
-//				}
-//			}
-//			return false;	
-//	    }
-//		
-//	}
 	}
+	
 	//pre user selects make reservation
 	//post panel appears to take in reservation data for search
 	public void handleNewReservation() {
@@ -607,6 +611,7 @@ public class TravelGUI extends JFrame {
 		}
 
 	}
+	
 	
 	
 	// pre: nothing

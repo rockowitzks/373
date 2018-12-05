@@ -17,6 +17,7 @@ public class Hotel {
 	private Location location;
 	
 	
+	
 	// pre: nothing
 	// post: instantiation of Hotel class, all fields set by default.
 	public  Hotel() {
@@ -161,7 +162,7 @@ public class Hotel {
 	// post: returns a String consisting of company, amenities, and cost
 	public String toString() {
 		double price = (Math.round(this.getPrice() * 100.0)) / 100.0;
-		return (this.getCompany().getName() + " " + this.getAmenityString() + " $" + price);
+		return (this.getCompany().getName() + "\n" + this.getAmenityString() + " $" + price);
 	}
 	
 }
