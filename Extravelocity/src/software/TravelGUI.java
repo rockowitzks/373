@@ -935,6 +935,7 @@ public class TravelGUI extends JFrame {
 	private void selectDepartRoute() {
 		
      	 this.titleText.setText("Please select a departing flight");
+     	 FlightSelection = new JPanel();
      	 FlightSelection.setLayout(new BoxLayout(FlightSelection, BoxLayout.Y_AXIS));
      	 FlightSelection.setPreferredSize(new Dimension(475, 330));
      	 dep = new ButtonGroup();
@@ -1003,10 +1004,11 @@ public class TravelGUI extends JFrame {
      	 hotelOk.addActionListener(new carHotelListener(this));
      	
      	 FlightScroller.add(FlightSelection);
-     	 this.add(hotelOk);
+     	 
     	 if (!this.FlightScroller.getParent().equals(this)) {
     		 this.add(FlightScroller);
     	 }
+    	 this.add(hotelOk);
      	 this.setVisible(false);
      	 this.setVisible(true);
 	}
@@ -1081,6 +1083,7 @@ public class TravelGUI extends JFrame {
 							if (dialogResult == JOptionPane.YES_OPTION)
 							{
 								 frame.remove(carOk);
+								 FlightScroller.remove(FlightSelection);
 				        		 reservation.setCar(web1.getCarList().get(i));
 				        		 carfound = true;
 				        		 displayOptions();
