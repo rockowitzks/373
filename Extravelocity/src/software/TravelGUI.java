@@ -198,8 +198,10 @@ public class TravelGUI extends JFrame {
 			else if (source.equals(newReservation)) {
 				handleNewReservation();
 			}
-			else if (source.equals(fileExit));
+			else if (source.equals(fileExit)) {
 				System.exit(0);
+			}
+				
 			//if you want more items, more if elses for them
 		}
 		private void handleSignIn(){
