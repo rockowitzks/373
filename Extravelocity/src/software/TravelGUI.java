@@ -741,6 +741,19 @@ public class TravelGUI extends JFrame {
 	        		button = elements.nextElement();
 	        		i++;
 	        	}
+	        		if (button.isSelected()) {
+		        		int dialogButton = JOptionPane.YES_NO_OPTION;
+						int dialogResult = JOptionPane.showConfirmDialog (null, "You've selected " + web1.getReturnRouteList().get(i).toString() + " is this ok", "Confirm return route", dialogButton );
+						if (dialogResult == JOptionPane.YES_OPTION)
+						{
+							 frame.remove(returnOk);
+			        		 reservation.setReturningRoute(web1.getReturnRouteList().get(i));
+			        		 rflight = true;
+			        		 displayOptions();
+			        		 return;
+						} else return;
+					}
+	        	 
 	         } 
 	         else if (source.equals(departOk)){
 	        	 Enumeration<AbstractButton> elements = dep.getElements();
@@ -762,6 +775,18 @@ public class TravelGUI extends JFrame {
 	        		button = elements.nextElement();
 	        		i++;
 	        	}
+	        	 if (button.isSelected()) {
+		        		int dialogButton = JOptionPane.YES_NO_OPTION;
+						int dialogResult = JOptionPane.showConfirmDialog (null, "You've selected " + web1.getDepartureRouteList().get(i).toString() + " is this ok", "Confirm return route", dialogButton );
+						if (dialogResult == JOptionPane.YES_OPTION)
+						{
+							 frame.remove(departOk);
+			        		 reservation.setDepartingRoute(web1.getDepartureRouteList().get(i));
+			        		 dflight = true;
+			        		 displayOptions();
+			        		 return;
+						} else return;
+					}
 	         }
 	      }
 	  }
@@ -897,6 +922,18 @@ public class TravelGUI extends JFrame {
 	        		button = elements.nextElement();
 	        		i++;
 	        	}
+	        	 if (button.isSelected()) {
+		        		int dialogButton = JOptionPane.YES_NO_OPTION;
+						int dialogResult = JOptionPane.showConfirmDialog (null, "You've selected " + web1.getHotelList().get(i).toString() + " is this ok", "Confirm return route", dialogButton );
+						if (dialogResult == JOptionPane.YES_OPTION)
+						{
+							 frame.remove(hotelOk);
+			        		 reservation.setHotel(web1.getHotelList().get(i));
+			        		 hotelfound = true;
+			        		 displayOptions();
+			        		 return;
+						} else return;
+					}
 	         }
 			  else if (source.equals(carOk)){
 		        	 Enumeration<AbstractButton> elements = carButtons.getElements();
@@ -918,6 +955,18 @@ public class TravelGUI extends JFrame {
 		        		button = elements.nextElement();
 		        		i++;
 		        	}
+		        	 if (button.isSelected()) {
+			        		int dialogButton = JOptionPane.YES_NO_OPTION;
+							int dialogResult = JOptionPane.showConfirmDialog (null, "You've selected " + web1.getCarList().get(i).toString() + " is this ok", "Confirm return route", dialogButton );
+							if (dialogResult == JOptionPane.YES_OPTION)
+							{
+								 frame.remove(carOk);
+				        		 reservation.setCar(web1.getCarList().get(i));
+				        		 carfound = true;
+				        		 displayOptions();
+				        		 return;
+							} else return;
+						}
 		         }		
 	      }
 	}
@@ -934,7 +983,11 @@ public class TravelGUI extends JFrame {
 		}else if (car && !carfound) {
 			selectCar(); //display car panel
 		} else if (carfound && dflight && rflight && hotelfound) {
-			//TODO user has found reservation confirm now
+			handleConfirmReservation();
+			FlightScroller.remove(FlightSelection);
+			this.remove(FlightScroller);
+			this.setVisible(false);
+			this.setVisible(true);
 		}
 		
 	}
