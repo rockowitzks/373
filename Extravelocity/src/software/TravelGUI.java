@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import javax.swing.*;
+
+import reservables.hotels.Hotel;
 import users.Account;
 import users.Card;
 import users.Reservation;
@@ -196,6 +198,8 @@ public class TravelGUI extends JFrame {
 			else if (source.equals(newReservation)) {
 				handleNewReservation();
 			}
+			else if (source.equals(fileExit));
+				System.exit(0);
 			//if you want more items, more if elses for them
 		}
 		private void handleSignIn(){
@@ -777,6 +781,7 @@ public class TravelGUI extends JFrame {
 		FlightSelection.setPreferredSize(new Dimension(475, 330));
 		hotelButtons = new ButtonGroup();
      	 for (int i = 0; i < web1.getHotelList().size(); i++) {
+     		 web1.getHotelList().get(i).calculateHotelPrice(web1.getEntry());
      		 JRadioButton button = new JRadioButton(web1.getHotelList().get(i).toString());
      		 hotelButtons.add(button);
      		 FlightSelection.add(button);
