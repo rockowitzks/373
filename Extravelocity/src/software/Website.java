@@ -119,12 +119,12 @@ public class Website {
 	    HotelCompany howardJohnson = new HotelCompany("Howard Johnson", 5.0, 3.2, 0,
 	    		"service@howardjohnson.com", null);
 	    
-		Hotel h1 = new Hotel(randomRooms, null, 5, 3, hilton, 100, null);
-		Hotel h2 = new Hotel(randomRooms, null, 3, 2, bestWestern, 60, null);
-		Hotel h3 = new Hotel(randomRooms, null, 2, 2, travelLodge, 50, null);
-		Hotel h4 = new Hotel(randomRooms, null, 1, 1, motel6, 40, null);
-		Hotel h5 = new Hotel(randomRooms, null, 3, 3, windham, 70, null);
-		Hotel h6 = new Hotel(randomRooms, null, 5, 3, howardJohnson, 95, null);
+		Hotel h1 = new Hotel(randomRooms, null, 5, 3, hilton, 250, null);
+		Hotel h2 = new Hotel(randomRooms, null, 3, 2, bestWestern, 100, null);
+		Hotel h3 = new Hotel(randomRooms, null, 2, 2, travelLodge, 120, null);
+		Hotel h4 = new Hotel(randomRooms, null, 1, 1, motel6, 60, null);
+		Hotel h5 = new Hotel(randomRooms, null, 3, 3, windham, 170, null);
+		Hotel h6 = new Hotel(randomRooms, null, 5, 3, howardJohnson, 195, null);
 		
 
 		hilton.addHotel(h1);
