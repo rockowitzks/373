@@ -378,7 +378,7 @@ public class Flight {
 		this.getFlightNumber() + "  " + this.getAirline().getName());
 		
 		answer = answer + (" Departure Date: " + this.getDepartureDate().format(dateFormatter) + 
-				",\n Arrival date: " + this.getArrivalDate().format(dateFormatter));
+				", Arrival date: " + this.getArrivalDate().format(dateFormatter));
 		return answer;
 	}
 }

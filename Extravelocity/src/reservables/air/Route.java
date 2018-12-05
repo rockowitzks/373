@@ -1,5 +1,6 @@
 package reservables.air;
 
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import software.*;
 
@@ -174,4 +175,17 @@ public class Route {
 		answer = answer + ("\n $" + price + "\n\n");
 		return answer;
 	} 
+	public String truncString() {
+		String s;
+		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM-dd HH:mm");
+		double price = (Math.round(this.getPrice() * 100)) / 100.0;
+		s =  "$" + price;
+
+		s = s+ " Flight: ";
+		s = s + this.flights.get(0).getFlightNumber() + " Departing " + this.flights.get(0).getDepartureDate().format(dateFormatter) + " Destination " + this.flights.get(0).getArriving().getName();
+		if (this.flights.size() == 2) {
+			s = s + " Connecting: " + this.flights.get(1).getFlightNumber() + " " + this.flights.get(1).getDeparting().getName()+ " " + this.flights.get(1).getDepartureDate().format(dateFormatter) + " Destination " + this.flights.get(0).getArriving().getName();
+		} 
+		return s;
+	}
 }
