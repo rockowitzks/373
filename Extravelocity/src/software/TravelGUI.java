@@ -15,7 +15,6 @@ import java.util.*;
 import javax.swing.*;
 
 
-import reservables.hotels.Hotel;
 import users.Account;
 import users.Card;
 import users.Reservation;
@@ -1118,7 +1117,5 @@ public class TravelGUI extends JFrame {
 		}
 		
 	}
-
-
 
 }
