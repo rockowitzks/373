@@ -15,7 +15,6 @@ import java.util.*;
 import javax.swing.*;
 
 //import org.university.software.UniversityGUI.OutStream;
-
 //import org.university.software.UniversityGUI.OutStream;
 
 import reservables.hotels.Hotel;
@@ -155,7 +154,7 @@ public class TravelGUI extends JFrame {
 		fileLoad = new JMenuItem("Load");
 		signIn = new JMenuItem("Sign In");
 		createAccount = new JMenuItem("Create an Account");
-		viewReservation = new JMenuItem("View Reservation");
+		viewReservation = new JMenuItem("View Reservations");
 		fileExit = new JMenuItem("Exit");
 		newReservation = new JMenuItem("Create a new Reservation");
 		LogOut = new JMenuItem("LogOut");
@@ -789,8 +788,8 @@ public class TravelGUI extends JFrame {
 	        		 web1.generateFlights(entry.getDepartureDate().atStartOfDay(), entry.getDepartureAirport());
 	        		 web1.generateFlights(entry.getReturnDate().atStartOfDay(), entry.getReturnAirport());
 	        		 web1.calculateRoutes(entry);
-	        		 web1.SortRoute(web1.getDepartureRouteList(), true);
-	        		 web1.SortRoute(web1.getReturnRouteList(), true);
+	        		 web1.setDepartureRouteList(web1.SortRoute(web1.getDepartureRouteList(), true));
+	        		 web1.setReturnRouteList(web1.SortRoute(web1.getReturnRouteList(), true)); // Changed
 	        	 }
 	        	 if (hotelButton.isSelected()) {
 	        		 hotelfound = false;
@@ -799,6 +798,8 @@ public class TravelGUI extends JFrame {
 	        		 entry.setCheckOutDate(entry.convertDate(h2dateTextField.getText()));
 	        		 entry.assignRoomType((String)hotelClasses.getSelectedItem());
 	        		 web1.generateHotels();
+	        		 web1.setHotelList(web1.SortHotel(web1.getHotelList()));
+	        		 
 	        	 }
 	        	 else 
 	        		 hotel = false;
@@ -811,6 +812,7 @@ public class TravelGUI extends JFrame {
 	        		 entry.setCarCity((String)carCities.getSelectedItem());
 	        		 web1.generateCars(entry.getCarCity());
 	        		 web1.populateCarList(entry);
+	        		 web1.setCarList(web1.SortCar(web1.getCarList()));
 	        	 }
 	        	 else 
 	        		 car = false;
