@@ -3,6 +3,10 @@ package reservables.air;
 import java.io.Serializable;
 
 public class Seat implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1737149022873147965L;
 	private int number;
 	private boolean window;
 	private boolean available;

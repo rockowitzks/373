@@ -5,6 +5,11 @@ import java.util.*;
 import reservables.hotels.*;
 public class HotelComparator implements Comparator<Hotel> ,Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8792629352957137002L;
+
 	public int compare(Hotel hotel1, Hotel hotel2) {
 
 		double answer = (hotel1.getPrice() - hotel2.getPrice());

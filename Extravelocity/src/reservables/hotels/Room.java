@@ -5,6 +5,10 @@ import java.io.Serializable;
 import users.Account;
 
 public class Room implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2549258136103137039L;
 	private double multiplier;
 	private boolean occupied;
 	private int number;

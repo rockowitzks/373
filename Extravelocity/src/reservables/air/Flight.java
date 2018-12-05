@@ -8,6 +8,10 @@ import java.time.format.DateTimeFormatter;
 import software.*;
 
 public class Flight implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1173262626356126041L;
 	private String flightNumber;
 	private Airline airline;
 	private Aircraft aircraft;

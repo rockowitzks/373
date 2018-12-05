@@ -3,6 +3,10 @@ package reservables.air;
 import java.io.Serializable;
 
 public class Aircraft implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4919680383770104111L;
 	private String model;
 	private double fuelEfficiency; 
 	private double airspeed;

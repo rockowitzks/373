@@ -6,6 +6,11 @@ import java.io.Serializable;
 import java.time.*;
 public class TimeComparator implements Comparator<Route>, Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4249369402099325164L;
+
 	// pre: 2 Routes, route1 and route2
 	// post: returns a comparison of the Routes' departureDate
 	public int compare(Route route1, Route route2) {

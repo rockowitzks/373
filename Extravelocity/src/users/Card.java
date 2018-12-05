@@ -3,6 +3,10 @@ package users;
 import java.io.Serializable;
 
 public class Card implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1306727647688829284L;
 	private String type;
 	private double bankMultiplier;
 	private String securityCode;

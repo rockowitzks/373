@@ -9,6 +9,10 @@ import reservables.Location;
 import users.*;
 
 public class Hotel implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5026733813740042715L;
 	private ArrayList<Room> rooms;
 	private ArrayList<Account> guests;
 	private int stars;

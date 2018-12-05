@@ -5,6 +5,10 @@ import java.util.*;
 import reservables.*;
 
 public class CarRentalLocation extends Location implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1325141727359488365L;
 	private ArrayList<Car> cars;
 	private RentalCarCompany company;
 

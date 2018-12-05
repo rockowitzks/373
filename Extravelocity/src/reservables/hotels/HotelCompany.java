@@ -6,6 +6,10 @@ import java.util.*;
 import reservables.*;
 
 public class HotelCompany extends Company implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7638609284942675841L;
 	private ArrayList<Hotel> hotels;
 
 	// pre: nothing

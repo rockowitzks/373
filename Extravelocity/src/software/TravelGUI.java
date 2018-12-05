@@ -334,7 +334,7 @@ public class TravelGUI extends JFrame {
 						
 					}
 					JOptionPane.showMessageDialog(null,
-							"Welcome back "+username.getText(),
+							"Welcome back "+web1.getCurrentAccount().getAccountName(),
 							"Sign In Successful",
 							JOptionPane.PLAIN_MESSAGE);
 				}
@@ -688,6 +688,7 @@ public class TravelGUI extends JFrame {
 		System.setOut(printStream);
 		System.setErr(printStream);
 		System.out.println("\t\tIs this resrvation satisfactory?\n\n");
+		reservation.setAccount(web1.getCurrentAccount());
 		System.out.println(this.reservation);
 		System.setOut(stdout);
 		System.setErr(stdout);

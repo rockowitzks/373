@@ -9,6 +9,10 @@ import java.time.Period;
 import software.*;
 
 public class Car implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1559834342536542492L;
 	private String make;
 	private String model;
 	private String licensePlate;

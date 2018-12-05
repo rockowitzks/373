@@ -8,6 +8,10 @@ import java.util.StringTokenizer;
 import reservables.air.*;
 public class Entry implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6509313801532472832L;
 	// basically delete the date class from reservables
 	// flight
 	private java.time.LocalDate departureDate;

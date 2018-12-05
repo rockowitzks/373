@@ -7,6 +7,10 @@ import software.*;
 
 
 public class Route implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5890501790618791484L;
 	private Airport begin;
 	private ArrayList<Flight> flights;
 	private Airport end;

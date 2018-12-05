@@ -19,6 +19,10 @@ import reservables.hotels.HotelCompany;
 import reservables.hotels.Room;
 
 public class Website implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2050308975674471844L;
 	private ArrayList<HotelCompany> hotelCompanyList;
 	private ArrayList<RentalCarCompany> carCompanyList;
 	private ArrayList<Airport> airportList;

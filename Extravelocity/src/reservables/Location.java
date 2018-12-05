@@ -3,6 +3,10 @@ package reservables;
 import java.io.Serializable;
 
 public class Location implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 310449543644675118L;
 	private String streetAddress;
 	private String city;
 	private String state;

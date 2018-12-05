@@ -3,6 +3,10 @@ package reservables;
 import java.io.Serializable;
 
 public class Company implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7300718572248744940L;
 	private String name;
 	private double rating;
 	private double multiplier;

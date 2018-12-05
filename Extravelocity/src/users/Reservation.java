@@ -7,6 +7,10 @@ import reservables.cars.Car;
 import reservables.hotels.Hotel;
 
 public class Reservation implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4484367157386690287L;
 	private Account account;
 	private Route departingRoute;
 	private Route returningRoute;
@@ -143,7 +147,7 @@ public class Reservation implements Serializable {
 	public String toString() {
 		double totalPrice = 0;
 		String answer = "\nYour reservation is as follows:\n"; 
-		answer = answer + "Name:    " + this.getAccount().getName() + "\n\n";
+		answer = answer + "Name:    " + this.getAccount().getAccountName() + "\n\n";
 		if(this.getDepartingRoute() != null) {
 			answer = answer + this.getDepartingRoute() + "\n";
 			answer = answer + this.getReturningRoute() + "\n";

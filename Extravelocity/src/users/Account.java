@@ -9,6 +9,10 @@ import reservables.hotels.*;
 import software.*;
 
 public class Account implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8828066709033856124L;
 	private String name;
 	private String email;
 	private String accountName;

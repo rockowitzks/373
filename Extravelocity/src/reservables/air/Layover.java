@@ -3,6 +3,10 @@ package reservables.air;
 import java.io.Serializable;
 import java.time.*;
 public class Layover implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2102170155481943292L;
 	private Airport airport;
 	private Flight previous;
 	private Flight next;
