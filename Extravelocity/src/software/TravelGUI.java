@@ -21,6 +21,8 @@ import users.Reservation;
 
 
 public class TravelGUI extends JFrame {
+
+	private static final long serialVersionUID = 5074659735953050L;
 	private Reservation reservation;
 	private JMenuBar menuBar;
 	private JMenu accountMenu;
@@ -94,17 +96,19 @@ public class TravelGUI extends JFrame {
 	public TravelGUI(String windowTitle, Website website) 
 	{
 		super(windowTitle);
-		FlightScroller = new ScrollPane();
+		this.FlightScroller = new ScrollPane();
 		JFrame kkk = new JFrame();
 		kkk.add(FlightScroller);
-		 FlightSelection = new JPanel();
-     	 FlightScroller.setPreferredSize(new Dimension(700, 350));
-		web1 = website;
-		reservation = new Reservation();
-		rflight = true;
-		dflight = true;
-		hotelfound = true;
-		carfound = true;
+		this.FlightSelection = new JPanel();
+     	this.FlightScroller.setPreferredSize(new Dimension(700, 350));
+		this.web1 = website;
+		this.web1.setCurrentAccount(new Account("Guest","Guest@email.com", "GuestAccount", "asdf",web1,new Card()));
+		this.reservation = new Reservation();
+		this.reservation.setAccount(this.web1.getCurrentAccount());
+		this.rflight = true;
+		this.dflight = true;
+		this.hotelfound = true;
+		this.carfound = true;
 		
 		setLayout(new FlowLayout(FlowLayout.CENTER));
 
