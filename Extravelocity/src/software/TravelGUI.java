@@ -402,8 +402,8 @@ public class TravelGUI extends JFrame {
 			
 		}
 		private void handleViewReservation() {
-			JLabel title = new JLabel("<HTML><center>Your Reservations are displayed below</center></HTML>");
-			web1.getCurrentAccount().getReservations().get(0).printReservation();
+			//JLabel title = new JLabel("<HTML><center>Your Reservations are displayed below</center></HTML>");
+			//web1.getCurrentAccount().getReservations().get(0).printReservation();
 			JTextArea outputReservation = new JTextArea(25, 80);
 	        outputReservation.setEditable(false);
 	        PrintStream printStream4 = new PrintStream(new OutStream(outputReservation));
@@ -411,7 +411,7 @@ public class TravelGUI extends JFrame {
 	        System.setOut(printStream4);
 	        System.setErr(printStream4);
 	        for(Reservation r : web1.getCurrentAccount().getReservations()) {
-	        	r.toString();
+	        	System.out.println(r.toString());
 	        	System.out.println("\n");
 	        }
 			
@@ -424,7 +424,7 @@ public class TravelGUI extends JFrame {
 		    jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		    jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		    
-		    frame.add(title);
+		    //frame.add(title);
 		    frame.add(jScrollPane, BorderLayout.CENTER);
 		    frame.setPreferredSize(new Dimension(500, 600));
 		    frame.pack();
