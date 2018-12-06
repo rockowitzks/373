@@ -167,7 +167,7 @@ public class Hotel implements Serializable{
 	// post: returns a String consisting of company, amenities, and cost
 	public String toString() {
 		double price = (Math.round(this.getPrice() * 100.0)) / 100.0;
-		return (this.getCompany().getName() + "\n" + this.getAmenityString() + " $" + price);
+		return (this.getCompany().getName() + " \n" + this.getAmenityString() + " $" + price);
 	}
 	
 }

@@ -147,8 +147,8 @@ public class TravelGUI extends JFrame {
 		reservationMenu = new JMenu("Reservations");
 
 		// menu items
-		fileSave = new JMenuItem("Save");
-		fileLoad = new JMenuItem("Load");
+		fileSave = new JMenuItem("Save User Data");
+		fileLoad = new JMenuItem("Load User Data");
 		signIn = new JMenuItem("Sign In");
 		createAccount = new JMenuItem("Create an Account");
 		viewReservation = new JMenuItem("View Reservations");
@@ -656,6 +656,7 @@ public class TravelGUI extends JFrame {
 		this.add(ResOk);
 		
 		ResCancel = new JButton("cancel");
+		ResCancel.addActionListener(new SubmitButtonListener(this));
 		add(ResCancel);
 //		pack();
 		setVisible(true);
@@ -765,7 +766,13 @@ public class TravelGUI extends JFrame {
 			}
 			JButton source = (JButton)e.getSource();
 	         if(source.equals(ResOk)) {
-	        	 
+	        	 if (!flightButton.isSelected() && !carButton.isSelected() && !hotelButton.isSelected()) {
+	        		 //amdone = true;
+	        		 //frame.setVisible(false);
+	        		 //frame.setVisible(true);
+	        		 return;
+	        	 }
+	        	 reservation = new Reservation();	
 	        	 Entry entry = web1.getEntry();
 	        	 frame.remove(ResOk);
 	        	 frame.remove(ResCancel);
@@ -774,10 +781,12 @@ public class TravelGUI extends JFrame {
 	        	 frame.remove(carData);
 //	        	 frame.setVisible(false);
 //	        	 frame.setVisible(true);	
-	        	 if (!flightButton.isSelected() && !hotelButton.isSelected() && !hotelButton.isSelected()) {
-	        		 amdone = true;
-	        		 return;
-	        	 }
+//	        	 if (!flightButton.isSelected() && !carButton.isSelected() && !hotelButton.isSelected()) {
+//	        		 amdone = true;
+//	        		 frame.setVisible(false);
+//	        		 frame.setVisible(true);
+//	        		 return;
+//	        	 }
 	        	 if (flightButton.isSelected()) { // if flight button is selected populates fields
 	        		 flight = true;
 	        		 dflight = false;
@@ -832,11 +841,15 @@ public class TravelGUI extends JFrame {
 	        	 }
 	         }
 	         else if (source.equals(ResCancel)) {
+	        	 amdone = true;
 	        	 frame.remove(ResOk);
 	        	 frame.remove(ResCancel);
 	        	 frame.remove(airplaneData);
 	        	 frame.remove(hotelData);
 	        	 frame.remove(carData);
+	        	 frame.titleText.setText("<HTML><center>Welcome to ExTraveLux" + "\n" + 
+	        	 		"<BR>Suspiciously expensive travel to just about anywhere we have programmed</center><BR></HTML>");
+	        	 frame.add(imageLabel1);
 	        	 frame.setVisible(false);
 	        	 frame.setVisible(true);
 
@@ -864,7 +877,7 @@ public class TravelGUI extends JFrame {
 	        	}
 	        		if (button.isSelected()) {
 		        		int dialogButton = JOptionPane.YES_NO_OPTION;
-						int dialogResult = JOptionPane.showConfirmDialog (null, "You've selected " + web1.getReturnRouteList().get(i).toString() + "Is this ok", "Confirm departing route", dialogButton );
+						int dialogResult = JOptionPane.showConfirmDialog (null, "You've selected " + web1.getReturnRouteList().get(i).toString() + "Is this ok?", "Confirm departing route", dialogButton );
 						if (dialogResult == JOptionPane.YES_OPTION)
 						{
 							 frame.remove(returnOk);
